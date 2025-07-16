@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/16 17:56:50 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/16 17:56:51 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/16 16:27:30 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/16 16:27:31 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#ifndef LIBFT_H
+#define LIBFT_H
 
-void	*ft_memset(void *s, int c, size_t n)
-{
-	size_t	i;
-	char	*str;
+# include <stdlib.h>
+# include <unistd.h>
 
-	i = 0;
-	str = s;
-	while (i < n)
-	{
-		str[i] = c;
-		i++;
-	}
-	return (s);
-}
+
+#endif
+
