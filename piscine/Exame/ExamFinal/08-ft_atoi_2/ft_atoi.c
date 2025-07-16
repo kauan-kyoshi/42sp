@@ -1,27 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/17 16:28:31 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/17 16:34:59 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+int	ft_atoi(const char *str)
 {
-	int	count;
-	int	i;
-
-	count = 0;
+	int i;
+	int signal;
+	int res;
+	
 	i = 0;
-	while (tab[i])
+	res = 0;
+	signal = 1;
+
+	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
 	{
-		if (f(tab[i]) == 1)
-			count++;
 		i++;
 	}
-	return (count);
+	if (str[i] == '-')
+	{
+		signal *= -1;
+		i++;
+	}
+	else if(str[i] == '+')
+	{
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <='9' && str[i] != '\0')
+	{
+		res = (str[i] - '0') + (res * 10);
+		i++;
+	}
+	return(res*signal);
+		
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_strupcase.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/02 00:20:35 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/02 00:28:23 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+char	*ft_strupcase(char *str)
 {
-	int	count;
 	int	i;
 
-	count = 0;
 	i = 0;
-	while (tab[i])
+	while (str[i] != '\0')
 	{
-		if (f(tab[i]) == 1)
-			count++;
+		if (str[i] >= 'a' && str[i] <= 'z')
+		{
+			str[i] -= 32;
+		}
 		i++;
 	}
-	return (count);
+	return (str);
 }

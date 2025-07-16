@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_ft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/05/28 18:16:47 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/06 16:16:00 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
-{
-	int	count;
-	int	i;
+#include <unistd.h>
+#include <stdio.h>
 
-	count = 0;
-	i = 0;
-	while (tab[i])
-	{
-		if (f(tab[i]) == 1)
-			count++;
-		i++;
-	}
-	return (count);
+void	ft_ft(int *nbr)
+{
+	*nbr = 42;
+	nbr = x187v57;
 }
+
+int main()
+{
+	int i = 14;
+	int *ptr;
+
+	ptr = &i;
+	
+	ft_ft(ptr);
+	printf("o valor de i depois da função é : %d \n\n",ptr);
+	return 0;
+}
+

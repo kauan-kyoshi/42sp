@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_print_alphabet.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/05/28 13:36:53 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/05/28 13:41:09 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
-{
-	int	count;
-	int	i;
+#include <unistd.h>
 
-	count = 0;
-	i = 0;
-	while (tab[i])
+void	ft_print_alphabet(void)
+{
+	char	i;
+
+	i = 'a';
+	while (i <= 'z')
 	{
-		if (f(tab[i]) == 1)
-			count++;
+		write(1, &i, 1);
 		i++;
 	}
-	return (count);
 }

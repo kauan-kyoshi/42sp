@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_iterative_power.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/14 14:25:30 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/14 14:27:25 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+int	ft_iterative_power(int nb, int power)
 {
-	int	count;
-	int	i;
+	int	res;
 
-	count = 0;
-	i = 0;
-	while (tab[i])
+	res = nb;
+	if (power < 0)
 	{
-		if (f(tab[i]) == 1)
-			count++;
-		i++;
+		return (0);
 	}
-	return (count);
+	if (power == 0)
+		return (1);
+	while (power > 1)
+	{
+		res *= nb;
+		power--;
+	}
+	return (res);
 }

@@ -1,27 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   union.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/17 19:01:07 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/17 19:28:12 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
-{
-	int	count;
-	int	i;
+#include <unistd.h>
 
-	count = 0;
+int check_doubles1(char *str, char c, int pos)
+{
+	int i;
+	
 	i = 0;
-	while (tab[i])
+	while (i < pos)
 	{
-		if (f(tab[i]) == 1)
-			count++;
+		if(str[i] == c)
+		{
+			return(0);
+		}
 		i++;
 	}
-	return (count);
+	return(1);
+}
+
+int check_doubles2(char *str, char c, int pos)
+{
+	int i;
+	
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+		{
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+void ft_union(char *str, char *str1)
+{
+	int i;
+	i = 0;
+	
+	while (condition)
+	{
+		/* code */
+	}
+	
 }

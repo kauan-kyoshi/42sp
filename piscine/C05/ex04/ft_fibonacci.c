@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_fibonacci.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/14 14:43:45 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/14 15:15:50 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+int	ft_fibonacci(int index)
 {
-	int	count;
-	int	i;
-
-	count = 0;
-	i = 0;
-	while (tab[i])
+	if (index < 0)
 	{
-		if (f(tab[i]) == 1)
-			count++;
-		i++;
+		return (-1);
 	}
-	return (count);
+	if (index == 0)
+	{
+		return (0);
+	}
+	if (index == 1)
+	{
+		return (1);
+	}
+	return (ft_fibonacci(index - 1) + ft_fibonacci(index - 2));
 }

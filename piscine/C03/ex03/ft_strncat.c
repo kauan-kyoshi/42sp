@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/09 16:41:26 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/10 12:20:56 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+int	ft_strlen(char *str)
 {
-	int	count;
 	int	i;
 
-	count = 0;
 	i = 0;
-	while (tab[i])
+	while (str[i] != '\0')
 	{
-		if (f(tab[i]) == 1)
-			count++;
 		i++;
 	}
-	return (count);
+	return (i);
+}
+
+char	*ft_strncat(char *dest, char *src, unsigned int nb)
+{
+	unsigned int	i;
+	int				j;
+
+	i = 0;
+	j = ft_strlen(dest);
+	while (src[i] != '\0' && i < nb)
+	{
+		dest[j] = src [i];
+		j++;
+		i++;
+	}
+	dest[j] = '\0';
+	return (dest);
 }

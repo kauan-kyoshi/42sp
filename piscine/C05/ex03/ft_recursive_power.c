@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_recursive_power.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/14 14:30:45 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/14 14:39:24 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+int	ft_recursive_power(int nb, int power)
 {
-	int	count;
-	int	i;
-
-	count = 0;
-	i = 0;
-	while (tab[i])
+	if (power > 1)
 	{
-		if (f(tab[i]) == 1)
-			count++;
-		i++;
+		return (nb * ft_recursive_power(nb, power - 1));
 	}
-	return (count);
+	else if (power == 0)
+	{
+		return (1);
+	}
+	else if (power < 0)
+	{
+		return (0);
+	}
+	else
+	{
+		return (nb);
+	}
 }

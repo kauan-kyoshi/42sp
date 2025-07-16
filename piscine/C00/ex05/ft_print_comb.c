@@ -1,27 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_print_comb.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/05/29 18:41:35 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/01 13:55:50 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
-{
-	int	count;
-	int	i;
+#include <unistd.h>
 
-	count = 0;
-	i = 0;
-	while (tab[i])
+void	ft_print_comb(void)
+{
+	char	c;
+	char	d;
+	char	u;
+
+	c = '0';
+
+	while (c <= '7')
 	{
-		if (f(tab[i]) == 1)
-			count++;
-		i++;
+		d = c + 1;
+		while (d <= '8')
+		{
+			u = d + 1;
+			while (u <= '9')
+			{
+				write(1, &c, 1);
+				write(1, &d, 1);
+				write(1, &u, 1);
+				if (c == '7' && d == '8' && u == '9')
+					break ;
+				write(1, ", ", 2);
+				u++;
+			}
+			d++;
+		}
+		c++;
 	}
-	return (count);
 }

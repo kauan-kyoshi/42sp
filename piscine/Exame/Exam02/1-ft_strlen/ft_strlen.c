@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/10 20:21:23 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/10 20:22:31 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
-{
-	int	count;
-	int	i;
+/*
 
-	count = 0;
+Assignment name  : ft_strlen
+Expected files   : ft_strlen.c
+Allowed functions: 
+--------------------------------------------------------------------------------
+
+Write a function that returns the length of a string.
+
+Your function must be declared as follows:
+
+int	ft_strlen(char *str);
+
+*/
+
+int	ft_strlen(char *str)
+{
+	int i;
+
 	i = 0;
-	while (tab[i])
+	while (str[i] != '\0')
 	{
-		if (f(tab[i]) == 1)
-			count++;
 		i++;
 	}
-	return (count);
+	return(i);
 }

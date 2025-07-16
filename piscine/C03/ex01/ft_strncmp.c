@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/09 13:58:55 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/09 15:53:17 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+int	ft_strncmp(char *s1, char *s2, unsigned int n)
 {
-	int	count;
-	int	i;
+	int				result;
+	unsigned int	i;
 
-	count = 0;
 	i = 0;
-	while (tab[i])
+	result = 0;
+	while ((i < n) && (result == 0) && (s1[i] != '\0') && (s2[i] != '\0'))
 	{
-		if (f(tab[i]) == 1)
-			count++;
+		result = s1[i] - s2[i];
 		i++;
 	}
-	return (count);
+	if ((i < n) && (result == 0) && ((s1[i] == '\0') || (s2[i] == '\0')))
+	{
+		result = s1[i] - s2[i];
+	}
+	return (result);
 }

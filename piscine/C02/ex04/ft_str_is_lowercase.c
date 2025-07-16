@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_if.c                                      :+:      :+:    :+:   */
+/*   ft_str_is_lowercase.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:20:56 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 15:05:22 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/06/01 23:54:38 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/06/01 23:58:16 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_count_if(char **tab, int (*f)(char*))
+int	ft_str_is_lowercase(char *str)
 {
-	int	count;
 	int	i;
 
-	count = 0;
 	i = 0;
-	while (tab[i])
+	while (str[i] != '\0')
 	{
-		if (f(tab[i]) == 1)
-			count++;
+		if (!(str[i] >= 'a' && str[i] <= 'z'))
+		{
+			return (0);
+		}
 		i++;
 	}
-	return (count);
+	return (1);
 }
