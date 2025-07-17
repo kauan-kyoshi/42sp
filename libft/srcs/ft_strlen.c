@@ -6,11 +6,11 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 21:17:35 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/12 21:18:47 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/07/16 21:29:53 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_strlen(char *str)
+int ft_strlen(const char *str)
 {
     int i;
     
