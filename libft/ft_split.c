@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:38:50 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/18 16:39:59 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/07/19 16:12:49 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*word_dup(const char *str, int start, int finish)
 
 char		**ft_split(char const *s, char c)
 {
-	size_t	i;
+	int	i;
 	size_t	j;
 	int		index;
 	char	**split;
