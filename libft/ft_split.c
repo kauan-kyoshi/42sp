@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:38:50 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/19 16:12:49 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/07/19 22:23:39 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ static char	*word_dup(const char *str, int start, int finish)
 
 char	**ft_split(char const *s, char c)
 {
-	int	i;
-	int	j;
-	int	index;
-	char	**split;
+	size_t				i;
+	int					j;
+	int					index;
+	char				**split;
 
-	if (!s || !(split = malloc((count_words(s, c) + 1) * sizeof(char *))))
+	split = malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!s || !(split))
 		return (0);
 	i = 0;
 	j = 0;

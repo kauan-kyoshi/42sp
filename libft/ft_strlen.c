@@ -6,18 +6,18 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 21:17:35 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/16 21:29:53 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/07/19 19:15:29 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *str)
+#include <libft.h>
+
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
-	{
+	while (s[i] != 0)
 		i++;
-	}
 	return (i);
 }

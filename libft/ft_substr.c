@@ -6,7 +6,7 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:17:44 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/19 16:14:12 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/07/19 22:13:20 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*new_str;
-	int		i;
-	size_t	j;
+	char				*new_str;
+	size_t				i;
+	size_t				j;
 
-	if (!s || !(new_str = (char *)malloc(len + 1)))
+	new_str = (char *)malloc(len + 1);
+	if (!s || !(new_str))
 		return (0);
 	i = start;
 	j = 0;
