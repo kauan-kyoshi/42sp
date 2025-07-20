@@ -6,22 +6,16 @@
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:30:17 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/19 22:34:23 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/07/19 23:08:49 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	int	i;
-
-	if (s == "")
-		return (0);
-	i = 0;
-	if (s[i] != '\0')
-	{
-		ft_putstr_fd(s, fd);
-		ft_putchar_fd('\n', fd);
-	}
+	if (!s)
+		return ;
+	ft_putstr_fd(s, fd);
+	ft_putstr_fd("\n", fd);
 }
