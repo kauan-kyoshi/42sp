@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 21:19:22 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/12 21:34:54 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/07/22 14:51:14 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(char *str)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	signal;
