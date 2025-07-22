@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:24:18 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/18 16:25:40 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/07/22 18:41:08 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_putstr_fd(char *s, int fd)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return ;
 	while (s[i] != '\0')
 	{
 		ft_putchar_fd(s[i], fd);

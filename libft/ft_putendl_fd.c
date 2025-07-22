@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:30:17 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/19 23:08:49 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/07/22 18:44:27 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ void	ft_putendl_fd(char *s, int fd)
 	if (!s)
 		return ;
 	ft_putstr_fd(s, fd);
-	ft_putstr_fd("\n", fd);
+	ft_putchar_fd('\n', fd);
 }
