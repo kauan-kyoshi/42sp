@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:56:54 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/16 17:56:55 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:29:12 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;
-	char	*str;
 
-	str = s;
 	i = 0;
 	while (i < n)
 	{
-		str[i] = 0;
+		((char *)s)[i] = 0;
 		i++;
 	}
 }
