@@ -126,4 +126,19 @@ usa o write para exibir a string "s" no output determinado por "fd".
 19 - split:
 char	**ft_split(char const *s, char c);
 
-recebe uma string s e um caractere c (delimitador) e retorna um array de strings (ponteiros para char), onde cada string é uma "palavra" separada pelo delimitador c.
+recebe uma string "s" e um caractere "c" (delimitador) e retorna um array de strings, onde cada string é uma "palavra" separada pelo delimitador "c".
+
+static int count_words(const char *str, char c): 
+para 'contar' as palavras e determinar quantas strings precisarão ser alocadas.
+
+static char *word_dup(const char *str, int start, int finish):
+para determinar o tamanho das strings, duplicar e ja alocar memoria suficiente para cada string.
+
+--------------------------------------------------------------------------------------------
+
+20 - strchr:
+char	*ft_strchr(const char *s, int c);
+
+localiza a primeira ocorrência de um caractere específico (c) em uma string (s). Se o caractere for encontrado, a função retorna um ponteiro que aponta para a primeira ocorrência.
+
+--------------------------------------------------------------------------------------------
