@@ -67,3 +67,63 @@ void	*ft_memchr(const void *s, int c, size_t n);
 Busca a primeira ocorrência de um caractere específico "c" dentro de um bloco de memória apontado por "*s" de tamanho "n".
 
 --------------------------------------------------------------------------------------------
+
+11 - memcmp:
+int		ft_memcmp(const void *s1, const void *s2, size_t n);
+
+compara dois blocos de memória "s1 e s2" byte por byte, até um determinado número de bytes "n". Ela retorna um valor inteiro que indica a relação de ordem entre os dois blocos (0 se forem iguais, negativo se o primeiro byte diferente em s1 < s2 e positivo se s1 > s2).
+
+--------------------------------------------------------------------------------------------
+
+12 - memcpy:
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+
+copia um bloco de memória de uma localização para outra.
+
+--------------------------------------------------------------------------------------------
+
+13 - memmove:
+void	*ft_memmove(void *dest, const void *src, size_t n);
+
+copiar um bloco de memória de uma localização para outra, lidando corretamente com situações onde os blocos de memória de origem e destino se sobrepõem.
+
+--------------------------------------------------------------------------------------------
+
+14 - memset:
+void	*ft_memset(void *s, int c, size_t n);
+
+preenche um bloco de memória com um valor específico. Ela pega um determinado número de bytes "n" em um bloco de memória apontado por "s" e define o valor de cada um desses bytes para o valor de "c".
+
+--------------------------------------------------------------------------------------------
+
+15 - putchar_fd:
+void	ft_putchar_fd(char c, int fd);
+
+usa o write para exibir o caracter "c" no output determinado por "fd".
+
+--------------------------------------------------------------------------------------------
+16 - putendl_fd:
+void	ft_putendl_fd(char *s, int fd);
+
+usa o write para exibir a string "s" no output determinado por "fd" com uma quebra de linha.
+
+--------------------------------------------------------------------------------------------
+
+17 - putnbr_fd:
+void	ft_putnbr_fd(int n, int fd);
+
+usa o write para exibir o inteiro "n" no output determinado por "fd".
+
+--------------------------------------------------------------------------------------------
+
+18 - putstr_fd:
+void	ft_putstr_fd(char *s, int fd);
+
+usa o write para exibir a string "s" no output determinado por "fd".
+
+--------------------------------------------------------------------------------------------
+
+19 - split:
+char	**ft_split(char const *s, char c);
+
+recebe uma string s e um caractere c (delimitador) e retorna um array de strings (ponteiros para char), onde cada string é uma "palavra" separada pelo delimitador c.
