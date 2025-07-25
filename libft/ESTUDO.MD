@@ -142,3 +142,39 @@ char	*ft_strchr(const char *s, int c);
 localiza a primeira ocorrência de um caractere específico (c) em uma string (s). Se o caractere for encontrado, a função retorna um ponteiro que aponta para a primeira ocorrência.
 
 --------------------------------------------------------------------------------------------
+
+21 - strdup:
+char	*ft_strdup(const char *s1);
+
+duplica uma string. Ela aloca uma nova memória para a cópia e então copia o conteúdo da string original para essa nova memória.
+
+--------------------------------------------------------------------------------------------
+
+22 - striteri:
+void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+
+itera sobre uma string, aplicando uma função fornecida a cada caractere juntamente com seu índice.
+
+--------------------------------------------------------------------------------------------
+
+23 - strjoin:
+char	*ft_strjoin(char const *s1, char const *s2);
+
+concatena duas strings
+
+--------------------------------------------------------------------------------------------
+
+24- strlcat:
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
+
+concatena strings de forma segura, evitando estouros de buffer. Ela tenta adicionar a string de origem (src) à string de destino (dst), mas com um limite estrito de tamanho. O retorno da função é o comprimento total da string que teria sido criada se não houvesse limite de tamanho.
+Se o valor de retorno for maior ou igual a size, significa que a string original era muito grande para caber no buffer de destino.
+
+--------------------------------------------------------------------------------------------
+
+25 - strlcpy:
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
+
+Ela copia até um determinado número de bytes do início da string de origem (src) para o destino (dest), garantindo que o destino seja terminado em nulo, se houver espaço.
+
+--------------------------------------------------------------------------------------------
