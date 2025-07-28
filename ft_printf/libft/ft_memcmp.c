@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 21:19:22 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/28 14:55:40 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/16 20:23:29 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/07/22 19:54:24 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
+#include "libft.h"
+
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	i;
-	int	signal;
-	int	res;
+	unsigned char		*ptr;
+	unsigned char		*ptr1;
+	size_t				i;
 
 	i = 0;
-	signal = 1;
-	res = 0;
-	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (n == 0)
+		return (0);
+	ptr = (unsigned char *)s1;
+	ptr1 = (unsigned char *)s2;
+	while ((ptr[i] == ptr1[i]) && n - 1 > 0)
 	{
-		if (str[i] == '-')
-			signal = -1;
 		i++;
+		n--;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = (res * 10) + (str[i] - '0');
-		i++;
-	}
-	return (res * signal);
+	return ((int)(ptr[i] - ptr1[i]));
 }

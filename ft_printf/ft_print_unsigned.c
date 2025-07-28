@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_print_unsigned.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 21:19:22 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/28 14:55:40 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/28 17:08:46 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/28 17:13:04 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	signal;
-	int	res;
+/* ft_print_unsigned.c */
+#include "ft_printf.h"
 
-	i = 0;
-	signal = 1;
-	res = 0;
-	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+// Função auxiliar para imprimir um número sem sinal e retornar seu comprimento
+static int	ft_putunbr_len(unsigned int n)
+{
+	int	len;
+
+	len = 0;
+	if (n >= 10)
 	{
-		if (str[i] == '-')
-			signal = -1;
-		i++;
+		len += ft_putunbr_len(n / 10);
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = (res * 10) + (str[i] - '0');
-		i++;
-	}
-	return (res * signal);
+	len += ft_print_char((n % 10) + '0');
+	return (len);
+}
+
+int	ft_print_unsigned(unsigned int n)
+{
+	if (n == 0)
+		return (write(1, "0", 1));
+	return (ft_putunbr_len(n));
 }

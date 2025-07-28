@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 21:19:22 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/28 14:55:40 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/16 17:56:54 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/23 18:51:32 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
+#include "libft.h"
+
+void	ft_bzero(void *s, size_t n)
 {
-	int	i;
-	int	signal;
-	int	res;
+	size_t	i;
 
 	i = 0;
-	signal = 1;
-	res = 0;
-	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (i < n)
 	{
-		if (str[i] == '-')
-			signal = -1;
+		((unsigned char *)s)[i] = 0;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = (res * 10) + (str[i] - '0');
-		i++;
-	}
-	return (res * signal);
 }
