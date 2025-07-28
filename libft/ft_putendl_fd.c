@@ -6,11 +6,11 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:30:17 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/22 18:44:27 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:01:52 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 void	ft_putendl_fd(char *s, int fd)
 {
