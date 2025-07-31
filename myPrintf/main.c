@@ -16,5 +16,6 @@ int main(void)
 	write(1,"\n",1);
 	ft_printf("teste do d : %d", numero_d);
 	write(1,"\n",1);
+	ft_printf("teste do % : %%%%%");
 
 }
