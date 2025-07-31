@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:08:07 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/31 14:32:36 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/07/31 17:19:50 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	ft_printf(const char *format, ...);
 int	ft_print_char(int c);
 int	ft_print_string(char *s);
 int	ft_print_decimal(int n);
+int	ft_print_int(int n);
 
 #endif

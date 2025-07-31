@@ -5,7 +5,7 @@ int main(void)
 {
 	char caractere = 'k';
 	char *string = "* Func10n4 c4r4lh0 *";
-	int numero_i = 666;
+	int numero_i = -16;
 	int numero_d = 999;
 
     ft_printf("teste do c : %c", caractere);
