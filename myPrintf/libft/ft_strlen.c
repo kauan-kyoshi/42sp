@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_integer.c                                 :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:08:34 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 17:49:00 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/12 21:17:35 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/07/19 19:15:29 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <libft.h>
 
-int	ft_print_integer(int n)
+size_t	ft_strlen(const char *s)
 {
-	return (ft_print_decimal(n));
+	size_t	i;
+
+	i = 0;
+	while (s[i] != 0)
+		i++;
+	return (i);
 }

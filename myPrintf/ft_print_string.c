@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hex.c                                     :+:      :+:    :+:   */
+/*   ft_print_string.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:08:31 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 17:47:43 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/30 16:21:23 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/30 17:43:03 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_puthex_len(unsigned int n, const char *base)
+int	ft_print_string(char *s)
 {
-	int	len;
+	int	i;
 
-	len = 0;
-	if (n >= 16)
+	i = 0;
+	if (s == NULL)
+		return (write(1, "(null)", 6));
+	while (s[i])
 	{
-		len += ft_puthex_len(n / 16, base);
+		i++;
 	}
-	len += ft_print_char(base[n % 16]);
-	return (len);
-}
-
-int	ft_print_hex(unsigned int n, char format)
-{
-	if (n == 0)
-		return (write(1, "0", 1));
-	if (format == 'x')
-		return (ft_puthex_len(n, "0123456789abcdef"));
-	else
-		return (ft_puthex_len(n, "0123456789ABCDEF"));
+	return (write(1, s, i));
 }

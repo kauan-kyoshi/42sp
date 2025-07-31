@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_integer.c                                 :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:08:34 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 17:49:00 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/16 21:39:33 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/07/19 22:09:30 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_print_integer(int n)
+char	*ft_strdup(const char *s1)
 {
-	return (ft_print_decimal(n));
+	char	*s2;
+
+	s2 = (char *)malloc(ft_strlen(s1) + 1);
+	if (!(s2))
+		return (0);
+	ft_memcpy(s2, s1, ft_strlen(s1) + 1);
+	return (s2);
 }

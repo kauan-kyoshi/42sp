@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_integer.c                                 :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:08:34 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 17:49:00 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/16 17:56:54 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/23 18:51:32 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_print_integer(int n)
+void	ft_bzero(void *s, size_t n)
 {
-	return (ft_print_decimal(n));
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		((unsigned char *)s)[i] = 0;
+		i++;
+	}
 }

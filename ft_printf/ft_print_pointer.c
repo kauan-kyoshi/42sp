@@ -6,14 +6,12 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:08:40 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 17:12:46 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:48:49 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ft_print_pointer.c */
 #include "ft_printf.h"
 
-// Função auxiliar para imprimir o endereço do ponteiro em hexadecimal
 static int	ft_putptr_len(unsigned long long n)
 {
 	int		len;
@@ -36,7 +34,6 @@ int	ft_print_pointer(void *ptr)
 
 	if (ptr == NULL)
 		return (write(1, "(nil)", 5));
-
 	p_addr = (unsigned long long)ptr;
 	len = 0;
 	len += write(1, "0x", 2);

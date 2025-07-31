@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_integer.c                                 :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:08:34 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 17:49:00 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/30 15:08:07 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/31 14:32:36 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int	ft_print_integer(int n)
-{
-	return (ft_print_decimal(n));
-}
+# include <stdarg.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include "libft/libft.h"
+
+int	ft_printf(const char *format, ...);
+int	ft_print_char(int c);
+int	ft_print_string(char *s);
+int	ft_print_decimal(int n);
+
+#endif

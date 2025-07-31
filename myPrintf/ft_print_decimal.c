@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hex.c                                     :+:      :+:    :+:   */
+/*   ft_print_decimal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:08:31 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 17:47:43 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/31 13:58:55 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/31 14:33:43 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_puthex_len(unsigned int n, const char *base)
-{
-	int	len;
 
-	len = 0;
-	if (n >= 16)
+static int	ft_printnbr(int n)
+{
+	int		len;
+	long	num;
+
+	num = n;
+	len = 0 ;
+	if (num < 0)
 	{
-		len += ft_puthex_len(n / 16, base);
+		len += write(1, "-", 1);
+		num = -num;
 	}
-	len += ft_print_char(base[n % 16]);
+	if (n >= 10)
+	{
+		len += ft_printnbr(n / 10);
+	}
+	len += ft_print_char((num % 10) + '0');
 	return (len);
 }
 
-int	ft_print_hex(unsigned int n, char format)
+int	ft_print_decimal(int n)
 {
 	if (n == 0)
 		return (write(1, "0", 1));
-	if (format == 'x')
-		return (ft_puthex_len(n, "0123456789abcdef"));
-	else
-		return (ft_puthex_len(n, "0123456789ABCDEF"));
+	return (ft_printnbr(n));
 }

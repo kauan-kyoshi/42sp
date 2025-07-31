@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hex.c                                     :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:08:31 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 17:47:43 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/07/18 16:26:14 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/22 18:40:13 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-static int	ft_puthex_len(unsigned int n, const char *base)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int	len;
-
-	len = 0;
-	if (n >= 16)
+	if (n == -2147483648)
 	{
-		len += ft_puthex_len(n / 16, base);
+		ft_putchar_fd('-', fd);
+		ft_putchar_fd('2', fd);
+		n = 147483648;
 	}
-	len += ft_print_char(base[n % 16]);
-	return (len);
-}
-
-int	ft_print_hex(unsigned int n, char format)
-{
-	if (n == 0)
-		return (write(1, "0", 1));
-	if (format == 'x')
-		return (ft_puthex_len(n, "0123456789abcdef"));
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		n = -n;
+	}
+	if (n >= 10)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd((n % 10) + '0', fd);
+	}
 	else
-		return (ft_puthex_len(n, "0123456789ABCDEF"));
+		ft_putchar_fd(n + '0', fd);
 }
