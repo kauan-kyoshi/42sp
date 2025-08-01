@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:32:57 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/31 15:16:43 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/08/01 13:37:50 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ static	int	ft_format_check(const char flag, va_list args)
 		return (ft_print_string(va_arg(args, char *)));
 	else if (flag == 'd' || flag == 'i')
 		return (ft_print_decimal(va_arg(args, int)));
+	else if (flag == 'u')
+		return (ft_print_unsigned(va_arg(args, unsigned int)));
+	else if (flag == 'x' || flag == 'X')
+		return (ft_print_hex(va_arg(args, unsigned int), flag));
 	else if (flag == '%')
 		return (ft_print_char('%'));
 	return (0);
