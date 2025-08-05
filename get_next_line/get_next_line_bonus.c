@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/04 21:17:21 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/08/05 15:05:23 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/08/05 15:13:11 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/08/05 15:16:58 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 // Aloca e cria uma nova 'stash' com o conteúdo após a primeira nova linha.
 // Esta versão é otimizada para passar na Norminette.
