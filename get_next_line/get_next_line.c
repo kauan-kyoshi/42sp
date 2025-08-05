@@ -3,36 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/01 18:00:19 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/08/01 18:00:21 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/08/04 21:17:21 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/08/04 21:17:37 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// Atualiza o 'stash' para conter apenas os dados após a primeira nova linha.
-// Libera o 'stash' antigo e retorna o novo.
-static char	*ft_update_stash(char *stash)
+// Aloca e cria uma nova 'stash' com o conteúdo após a primeira nova linha.
+// Esta versão é otimizada para passar na Norminette.
+static char	*ft_create_new_stash(char *stash, char *newline_ptr)
 {
 	char	*new_stash;
-	char	*newline_ptr;
 	size_t	len;
 	size_t	i;
 
-	newline_ptr = ft_strchr(stash, '\n');
-	if (!newline_ptr)
+	if (!newline_ptr || !*(newline_ptr + 1))
 	{
 		free(stash);
 		return (NULL);
 	}
 	len = ft_strlen(newline_ptr + 1);
-	if (len == 0)
-	{
-		free(stash);
-		return (NULL);
-	}
 	new_stash = (char *)malloc((len + 1) * sizeof(char));
 	if (!new_stash)
 	{
@@ -74,13 +67,24 @@ static char	*ft_extract_line(char *stash)
 	return (line);
 }
 
+// Processa o buffer lido, juntando-o ao 'stash'.
+static char	*ft_process_buffer(char *stash, char *buffer, ssize_t bytes_read)
+{
+	if (bytes_read > 0)
+	{
+		buffer[bytes_read] = '\0';
+		stash = ft_strjoin(stash, buffer);
+	}
+	return (stash);
+}
+
 // Lê do file descriptor e adiciona ao 'stash' até encontrar um '\n' ou EOF.
 static char	*ft_read_and_stash(int fd, char *stash)
 {
 	char	*buffer;
 	ssize_t	bytes_read;
 
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 	bytes_read = 1;
@@ -93,13 +97,9 @@ static char	*ft_read_and_stash(int fd, char *stash)
 			free(stash);
 			return (NULL);
 		}
-		if (bytes_read > 0)
-		{
-			buffer[bytes_read] = '\0';
-			stash = ft_strjoin(stash, buffer);
-			if (!stash)
-				break ;
-		}
+		stash = ft_process_buffer(stash, buffer, bytes_read);
+		if (!stash)
+			break ;
 	}
 	free(buffer);
 	return (stash);
@@ -108,7 +108,7 @@ static char	*ft_read_and_stash(int fd, char *stash)
 // Função principal que lê uma linha de um file descriptor.
 char	*get_next_line(int fd)
 {
-	static char	*stash[1024]; // Array para suportar múltiplos FDs
+	static char	*stash[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= 1024)
@@ -123,6 +123,6 @@ char	*get_next_line(int fd)
 		stash[fd] = NULL;
 		return (NULL);
 	}
-	stash[fd] = ft_update_stash(stash[fd]);
+	stash[fd] = ft_create_new_stash(stash[fd], ft_strchr(stash[fd], '\n'));
 	return (line);
 }
