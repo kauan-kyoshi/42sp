@@ -1,0 +1,33 @@
+      
+# Arquivo: api_keys.md
+
+# Como Obter e Configurar Chaves de API: OpenAI, Google Gemini e Groq
+
+Este documento fornece um guia passo a passo para obter e configurar chaves de API para os serviços da OpenAI (modelos GPT), Google (modelo Gemini) e Groq.
+
+**IMPORTANTE:** Suas chaves de API são secretas e confidenciais. Nunca as compartilhe publicamente, não as inclua em código do lado do cliente (navegadores, aplicativos) e não as envie para sistemas de controle de versão como o Git. A prática recomendada é usar variáveis de ambiente ou um serviço de gerenciamento de chaves para armazená-las com segurança. [2, 6, 23]
+
+---
+
+## 1. OpenAI (Modelos GPT, como GPT-4)
+
+A OpenAI opera com um modelo *pay-as-you-go*, onde os custos são baseados no número de tokens processados. [6, 16] Embora a criação de uma conta e a chave de API sejam gratuitas, o uso da API consome créditos. [21] Contas novas podem receber um crédito de avaliação inicial, válido por um tempo limitado. [21]
+
+### Passos para Obter a Chave:
+
+1.  **Criar uma Conta:** Acesse o site da [OpenAI](https://openai.com/) e crie uma conta. [6, 11]
+2.  **Acessar o Painel de API:** Após o login, navegue até a seção de API ou "API Keys" no seu painel. [6, 22] Geralmente, isso é encontrado clicando no seu perfil no canto superior direito. [11]
+3.  **Gerar a Chave Secreta:** Clique no botão "Create new secret key". [11, 22] Dê um nome descritivo à sua chave para facilitar a identificação futura. [22]
+4.  **Copiar e Armazenar a Chave:** Copie a chave gerada imediatamente e guarde-a em um local seguro, como um gerenciador de senhas. **Por razões de segurança, a chave completa não será exibida novamente.** [11, 22]
+5.  **Configurar Faturamento:** Para usar modelos avançados como o GPT-4 ou para continuar usando a API após o término dos créditos de teste, você precisará adicionar um método de pagamento nas configurações de faturamento ("Billing") da sua conta. [12, 21]
+
+### Configuração no Ambiente de Desenvolvimento:
+
+A forma mais segura de usar a chave é configurá-la como uma variável de ambiente.
+
+**Exemplo (Linux/macOS):**
+Abra seu arquivo de perfil (`.bashrc`, `.zshrc`, etc.) e adicione a seguinte linha:
+```bash
+export OPENAI_API_KEY='SUA_CHAVE_DE_API_AQUI'
+
+    
