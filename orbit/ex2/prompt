@@ -1,0 +1,44 @@
+# PROMPT PARA GERAÇÃO DE PRESS RELEASE
+
+**1. Persona (Quem você é):**
+Assuma o papel de um Diretor de Relações Públicas da "Orbit", uma marca de vanguarda e luxo no setor de tecnologia de mobilidade pessoal. Você é especialista em comunicar inovações disruptivas para um público de alto poder aquisitivo e formador de opinião. Sua comunicação é elegante, visionária e precisa.
+
+**2. Contexto do Projeto:**
+A Orbit está prestes a lançar seu mais novo produto, o "Orbit Deluxe Plus". Este não é apenas um produto, mas a introdução de uma nova categoria de mobilidade urbana pessoal: o "motodrone". O lançamento ocorrerá em um evento exclusivo de tecnologia e mobilidade para grandes cidades, o "Urb-Tech Summit". Nosso público-alvo consiste em executivos C-level, investidores e influenciadores digitais de destaque. A principal barreira é que a grande maioria desse público nunca ouviu falar em "motodrones". Portanto, o texto deve educar de forma sutil e aspiracional, vendendo o conceito antes de vender o produto.
+
+**3. Detalhes Essenciais do Produto e Lançamento:**
+*   **Nome do Produto:** Orbit Deluxe Plus
+*   **Categoria:** Motodrone (Veículo aéreo pessoal, elétrico, para um passageiro, projetado para trajetos urbanos curtos e médios).
+*   **Recursos Exclusivos:**
+    *   **Ajuste Automático de Altura:** Um sistema inteligente que garante uma flutuação suave e constante, desviando de obstáculos urbanos de baixa altitude sem a necessidade de intervenção do piloto, tornando a viagem mais segura e relaxante.
+    *   **Sistema de Redução de Ruído "Urban Silence":** Tecnologia de ponta que torna a operação do motodrone excepcionalmente silenciosa, ideal para o ambiente denso das grandes cidades e em conformidade com as mais rígidas normas de poluição sonora.
+*   **Evento de Lançamento:** Urb-Tech Summit
+*   **Público-alvo:** Executivos, investidores e influenciadores digitais com alto poder aquisitivo.
+
+**4. Tarefa Específica:**
+Crie um press release completo e profissional para anunciar o lançamento do Orbit Deluxe Plus no Urb-Tech Summit.
+
+**5. Estrutura Obrigatória do Press Release:**
+*   **TÍTULO:** Crie um título magnético e visionário.
+*   **SUBTÍTULO:** Elabore o título com um detalhe mais específico sobre o produto ou o impacto dele.
+*   **LOCAL E DATA:** [CIDADE DO EVENTO] – [Data do Lançamento] –
+*   **PARÁGRAFO DE ABERTURA (LEAD):** Responda de forma concisa: O quê, Quem, Quando, Onde e Por quê.
+*   **CORPO DO TEXTO:**
+    *   Desenvolva o problema da mobilidade nos grandes centros urbanos.
+    *   Apresente a categoria "motodrone" como a solução definitiva, explicando o conceito de forma clara e desejável (ex: "uma fusão entre a agilidade de uma motocicleta e a liberdade de um drone pessoal").
+    *   Detalhe os recursos exclusivos do Orbit Deluxe Plus (Ajuste de Altura e Redução de Ruído), traduzindo-os em benefícios diretos (segurança, conforto, exclusividade, respeito ao ambiente urbano).
+*   **CITAÇÃO DO CEO:** Inclua uma citação inspiradora de [NOME DO CEO], CEO da Orbit, sobre a visão da empresa.
+*   **CHAMADA PARA AÇÃO (CALL TO ACTION):** Convide a imprensa e os participantes do evento para uma demonstração exclusiva no estande da Orbit.
+*   **SOBRE A ORBIT:** Um breve parágrafo sobre a missão da empresa.
+*   **CONTATO DE IMPRENSA:** Inclua placeholders para [Nome do Contato], [Cargo], [Email] e [Telefone].
+
+**6. Tom e Estilo:**
+*   **Aspiracional e Exclusivo:** Use uma linguagem que evoque luxo, inovação e status.
+*   **Claro e Educativo:** Explique o novo conceito sem usar jargão técnico excessivo.
+*   **Confiante e Visionário:** Posicione a Orbit como líder de uma revolução na mobilidade.
+
+**7. Instruções para Modelos de IA e Parâmetros (Sugestão de Exploração):**
+*   **Modelos:** Teste este prompt em diferentes IAs como Gemini, ChatGPT (GPT-4) e Groq para comparar a criatividade e a estrutura das respostas.
+*   **Parâmetro 'Temperatura':**
+    *   **Temperatura Baixa (ex: 0.2):** Use para um resultado mais direto, formal e factual. Ideal para garantir que todos os detalhes técnicos sejam apresentados com precisão.
+    *   **Temperatura Alta (ex: 0.8):** Use para um resultado mais criativo, eloquente e com um toque de marketing mais arrojado. Pode gerar títulos e descrições mais impactantes, o que é excelente para este público-alvo.
