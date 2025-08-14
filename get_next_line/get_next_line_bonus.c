@@ -6,14 +6,12 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 15:13:11 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/08/05 15:16:58 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/08/14 13:59:08 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-// Aloca e cria uma nova 'stash' com o conteúdo após a primeira nova linha.
-// Esta versão é otimizada para passar na Norminette.
 static char	*ft_create_new_stash(char *stash, char *newline_ptr)
 {
 	char	*new_stash;
@@ -40,7 +38,6 @@ static char	*ft_create_new_stash(char *stash, char *newline_ptr)
 	return (new_stash);
 }
 
-// Extrai uma linha (até e incluindo '\n') do 'stash'.
 static char	*ft_extract_line(char *stash)
 {
 	char	*line;
@@ -67,7 +64,6 @@ static char	*ft_extract_line(char *stash)
 	return (line);
 }
 
-// Processa o buffer lido, juntando-o ao 'stash'.
 static char	*ft_process_buffer(char *stash, char *buffer, ssize_t bytes_read)
 {
 	if (bytes_read > 0)
@@ -78,7 +74,6 @@ static char	*ft_process_buffer(char *stash, char *buffer, ssize_t bytes_read)
 	return (stash);
 }
 
-// Lê do file descriptor e adiciona ao 'stash' até encontrar um '\n' ou EOF.
 static char	*ft_read_and_stash(int fd, char *stash)
 {
 	char	*buffer;
@@ -105,7 +100,6 @@ static char	*ft_read_and_stash(int fd, char *stash)
 	return (stash);
 }
 
-// Função principal que lê uma linha de um file descriptor.
 char	*get_next_line(int fd)
 {
 	static char	*stash[OPEN_MAX + 1];

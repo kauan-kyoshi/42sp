@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 17:59:25 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/08/05 14:36:12 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:41:47 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (s1);
 	new_str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!new_str)
-	{
-		free(s1);
 		return (NULL);
-	}
 	new_str = ft_str_copy_cat(new_str, s1, s2);
 	free(s1);
 	return (new_str);
