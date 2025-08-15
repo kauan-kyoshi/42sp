@@ -1,6 +1,6 @@
 #include "get_next_line.h"
-#include <fcntl.h>  // Para open()
-#include <stdio.h>  // Para printf()
+#include <fcntl.h>
+#include <stdio.h> 
 
 int	main(void)
 {
