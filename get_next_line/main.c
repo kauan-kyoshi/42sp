@@ -13,11 +13,25 @@ int	main(void)
 		printf("Erro ao abrir o ficheiro 'teste.txt'\n");
 		return (1);
 	}
-
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf(" %s", line);
+		free(line);
 	}
 	close(fd);
-	return (0);
+
+	fd = open("teste2.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Erro ao abrir o ficheiro 'teste.txt'\n");
+		return (1);
+	}
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf(" %s", line);
+		free(line);
+	}
+
+	close(fd);
+ 	return (0);
 }
