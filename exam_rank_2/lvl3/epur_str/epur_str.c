@@ -26,6 +26,7 @@ $> ./epur_str "" | cat -e
 $
 $>	
 */
+
 #include <unistd.h>
 
 int main(int argc, char **argv)
@@ -72,7 +73,6 @@ int main(int argc, char **argv)
             i++;
         }
     }
-
     // 3. Imprime a nova linha no final.
     // Esta linha é executada em todos os casos, conforme solicitado.
     write(1, "\n", 1);
