@@ -28,3 +28,67 @@ __second Test A Little Bit   Moar Complex$
      Okay, This Is The Last 1239809147801 But Not    The Least    T$
 $>
 */
+
+#include <unistd.h>
+
+void ft_putchar(char c)
+{
+	write(1,&c,1);
+}
+int is_space(char c)
+{
+	if(c == 32 || (c >= 9 && c <= 13))
+	{
+		return(1);
+	}
+	else
+	{
+		return(0);
+	}
+}
+
+int main (int argc, char **argv)
+{
+	int i;
+	int args;
+	int space;
+	if (argc >= 2)
+	{
+		args = 1;
+		while (args < argc)
+		{
+			i = 0;
+			while (argv[args][i] != '\0')
+			{
+				if (argv[args][i] >= 'A' && argv[args][i] <= 'Z')
+				{
+					argv[args][i] += 32;
+				}
+				i++;
+			}
+			i = 0;
+			while (argv[args][i] != '\0')
+			{
+				if ((argv[args][i] >= 'a' && argv[args][i] <= 'z') && (i == 0 || is_space(argv[args][i-1])))
+				{
+					argv[args][i] -= 32;
+				}
+				i++;
+			}
+			i = 0;
+			while (argv[args][i] != '\0')
+			{
+				ft_putchar(argv[args][i]);
+				i++;
+			}
+			ft_putchar('\n');
+			
+			args++;
+		}
+		
+	}
+	else
+	{
+		ft_putchar('\n');
+	}
+}

@@ -20,3 +20,64 @@ $> ./print_hex | cat -e
 $
 
 */
+#include <unistd.h>
+
+void ft_putchar(char c)
+{
+	write(1,&c,1);
+}
+
+int ft_atoi(char *str)
+{
+	int i;
+	int res;
+	int sign;
+	sign = 1;
+	i = 0;
+	res = 0;
+
+	while(str[i] <= 32 )
+	{
+		i++;
+	}
+	if(str[i] == '-')
+	{
+		sign *= -1;
+		i++;
+	}
+	else if (str[i] == '+')
+	{
+		i++;
+	}
+	while(str[i] >= '0' && str[i] <= '9')
+	{
+		res *= 10;
+		res += str[i] - '0';
+		i++;
+	}
+	return(res*sign);
+}
+
+void ft_puthex(int n)
+{
+	char *hex = "0123456789abcdef";
+	int num;
+	num = n;
+	if(num >= 16)
+	{
+		ft_puthex(num/16);
+	}
+
+	ft_putchar(hex[num%16]);
+}
+
+int main (int argc, char **argv)
+{
+	int n;
+	if(argc == 2)
+	{	n = ft_atoi(argv[1]);
+		ft_puthex(n);
+	}
+	ft_putchar('\n');
+
+}
