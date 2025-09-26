@@ -39,3 +39,62 @@ $
 $>
 
 */
+
+#include <unistd.h>
+
+void ft_putchar(char c)
+{
+	write(1,&c,1);
+}
+
+void putnbr(int n)
+{
+	if(n > 9)
+	{
+		putnbr(n/10);
+	}
+	ft_putchar((n%10) + '0');
+}
+
+int ft_atoi(char *str)
+{
+	int i;
+	int res;
+
+	i=0;
+	res=0;
+
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res *=10;
+		res += str[i] - '0';
+		i++;
+	}
+	return(res);
+}
+
+int main (int argc, char **argv)
+{
+	int mult;
+	int n;
+
+	if(argc == 2)
+	{	n = ft_atoi(argv[1]);
+		mult = 1;
+		while (mult < 10)
+		{
+			putnbr(mult);
+			ft_putchar(' ');
+			ft_putchar('x');
+			ft_putchar(' ');
+			putnbr(n);
+			ft_putchar(' ');
+			ft_putchar('=');
+			ft_putchar(' ');
+			putnbr(n*mult);
+			ft_putchar('\n');
+			mult++;
+		}
+	}
+	ft_putchar('\n');
+}
