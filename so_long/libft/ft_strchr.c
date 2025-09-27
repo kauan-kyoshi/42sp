@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 21:26:59 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/07/23 18:33:14 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/09/26 21:58:30 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	while ((char)c != *s)
+	if (!s)
+		return (NULL);
+	while (*s)
 	{
-		if (!*s)
-			return (0);
+		if (*s == (char)c)
+			return ((char *)s);
 		s++;
 	}
-	return ((char *)s);
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }

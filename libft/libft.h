@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:27:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/07/28 14:31:48 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/09/26 21:31:23 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+#include "get_next_line.h"
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -40,7 +41,7 @@ char	*ft_strrchr(const char *s, int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char *s2);
 void	ft_putnbr_fd(int nb, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
@@ -50,5 +51,15 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+
+//printf:
+
+int	ft_printf(const char *format, ...);
+int	ft_print_char(int c);
+int	ft_print_string(char *s);
+int	ft_print_decimal(int n);
+int	ft_print_unsigned(unsigned int n);
+int	ft_print_pointer(void *ptr);
+int	ft_print_hex(unsigned int n, char format);
 
 #endif

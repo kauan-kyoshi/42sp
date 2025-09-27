@@ -7,7 +7,7 @@
 # include "../libft/libft.h" // Ajuste o caminho se necessário
 
 // --- Constantes ---
-# define TILE_SIZE 64 // Tamanho de cada tile em pixels
+# define TILE_SIZE 32 // Tamanho de cada tile em pixels
 
 // Keycodes para Linux (podem variar em macOS)
 # define KEY_W 119

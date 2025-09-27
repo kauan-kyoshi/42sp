@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+         #
+#    By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/16 16:27:13 by kakubo-l          #+#    #+#              #
-#    Updated: 2025/07/24 15:41:47 by kakubo-l         ###   ########.fr        #
+#    Updated: 2025/09/26 22:24:27 by kyoshi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,16 @@ SRCS	=	ft_atoi.c\
 			ft_substr.c\
 			ft_tolower.c\
 			ft_toupper.c\
+			ft_printf.c \
+       		ft_print_char.c \
+			ft_print_string.c\
+			ft_print_decimal.c\
+			ft_print_unsigned.c\
+			ft_print_pointer.c\
+			ft_print_hex.c\
+			ft_str_copy_cat.c\
+			get_next_line.c
+
 			
 OBJS = ${SRCS:.c=.o}
 LIBC = ar rcs
@@ -58,8 +68,15 @@ all:		$(NAME)
 ${NAME}: ${OBJS}
 	${LIBC} ${NAME} ${OBJS}
 
-${OBJS}: 
-	${CC} ${CFLAGS} -I . -c ${SRCS}
+# --- REGRA CORRIGIDA AQUI ---
+# Esta regra ensina a transformar UM arquivo .c em UM arquivo .o
+%.o: %.c
+	${CC} ${CFLAGS} -c $< -o $@
+
+# A regra antiga era:
+# ${OBJS}: 
+# 	${CC} ${CFLAGS} -I . -c ${SRCS}
+# --- FIM DA CORREÇÃO ---
 
 clean:
 	${RM} ${OBJS}
