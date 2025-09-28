@@ -21,7 +21,7 @@
 // Estrutura para guardar ponteiros de imagem
 typedef struct s_img {
 	void	*ptr;
-	int		width;
+	int		width;	
 	int		height;
 }	t_img;
 

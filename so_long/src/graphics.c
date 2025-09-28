@@ -35,26 +35,29 @@ void	init_graphics(t_game *game)
 
 static void	put_tile(t_game *game, char tile, int x, int y)
 {
-	void	*img_ptr;
+	void	*img_to_draw;
 
-	// Colocamos o chão sempre primeiro para garantir que o fundo seja coberto
+	// PASSO 1: Desenha o chão opaco como fundo. SEMPRE. INCONDICIONALMENTE.
+	// Isso garante que não haverá mais nenhum pixel preto da janela.
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
 		game->floor.ptr, x * TILE_SIZE, y * TILE_SIZE);
-	
-	img_ptr = NULL; // Inicializa como nulo
+
+	// PASSO 2: Descobre se há algo para desenhar POR CIMA do chão.
+	img_to_draw = NULL; // Começa como nulo por padrão.
 	if (tile == '1')
-		img_ptr = game->wall.ptr;
+		img_to_draw = game->wall.ptr;
 	else if (tile == 'P')
-		img_ptr = game->player.ptr;
+		img_to_draw = game->player.ptr;
 	else if (tile == 'C')
-		img_ptr = game->collectible.ptr;
+		img_to_draw = game->collectible.ptr;
 	else if (tile == 'E')
-		img_ptr = game->exit.ptr;
+		img_to_draw = game->exit.ptr;
 	
-	// Só desenha a imagem se ela não for o chão (que já foi desenhado)
-	if (img_ptr)
+	// PASSO 3: Se houver um objeto (parede, jogador, etc.), desenha-o agora.
+	// Se for um espaço vazio ('0'), img_to_draw continuará nulo e nada mais será desenhado.
+	if (img_to_draw != NULL)
 		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
-			img_ptr, x * TILE_SIZE, y * TILE_SIZE);
+			img_to_draw, x * TILE_SIZE, y * TILE_SIZE);
 }
 
 

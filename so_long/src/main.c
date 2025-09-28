@@ -14,6 +14,7 @@ int	main(int argc, char **argv)
 	validate_map(&game);
 	validate_path(&game);
 	init_graphics(&game);
+	render_map(&game);
 	init_hooks(&game);
 	mlx_loop(game.mlx_ptr);
 	return (0);
