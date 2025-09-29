@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 15:30:56 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/29 15:31:13 by kakubo-l         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
 
 void	free_map(char **map)
@@ -39,9 +51,6 @@ void	clean_exit(t_game *game)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	if (game->mlx_ptr)
 	{
-		// Dependendo da versão da mlx, pode ser mlx_destroy_display
-		// ou apenas liberar o mlx_ptr.
-		// Em Linux, mlx_destroy_display é necessário.
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);
 	}

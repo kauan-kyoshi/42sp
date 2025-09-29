@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_validation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 15:33:27 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/29 15:36:36 by kakubo-l         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
 
 static void	check_shape_and_walls(t_game *game)
 {
 	int	i;
+	int	j;
 
 	game->map_width = ft_strlen(game->map[0]);
 	i = 0;
@@ -14,7 +27,7 @@ static void	check_shape_and_walls(t_game *game)
 			error_exit("Map is not enclosed by walls.", game);
 		if (i == 0 || i == game->map_height - 1)
 		{
-			int j = 0;
+			j = 0;
 			while (j < game->map_width)
 			{
 				if (game->map[i][j] != '1')
@@ -59,7 +72,7 @@ static void	check_components(t_game *game)
 		y++;
 	}
 	if (p_count != 1 || e_count != 1 || game->collectibles < 1)
-		error_exit("Map must have 1 Player, 1 Exit, and at least 1 Collectible.", game);
+		error_exit("INVALID MAP", game);
 }
 
 void	validate_map(t_game *game)

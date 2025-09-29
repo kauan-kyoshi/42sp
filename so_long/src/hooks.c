@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 15:32:42 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/29 15:32:54 by kakubo-l         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
 
 int	handle_keypress(int keycode, t_game *game)
@@ -18,7 +30,7 @@ int	handle_keypress(int keycode, t_game *game)
 	else if (keycode == KEY_D)
 		x++;
 	else
-		return (0); // Nenhuma tecla de movimento foi pressionada
+		return (0);
 	move_player(game, x, y);
 	return (0);
 }
@@ -31,7 +43,7 @@ int	handle_close_window(t_game *game)
 
 void	init_hooks(t_game *game)
 {
-	render_map(game); // Desenha o mapa inicial
+	render_map(game);
 	mlx_key_hook(game->win_ptr, handle_keypress, game);
 	mlx_hook(game->win_ptr, 17, 0, handle_close_window, game);
 }

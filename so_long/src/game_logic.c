@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game_logic.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 15:31:32 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/29 15:31:53 by kakubo-l         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
 
 void	move_player(t_game *game, int new_x, int new_y)
@@ -20,12 +32,9 @@ void	move_player(t_game *game, int new_x, int new_y)
 	ft_printf("Moves: %d\n", game->moves);
 	if (*next_pos == 'C')
 		game->collectibles--;
-	// Atualiza o mapa de caracteres
 	game->map[game->player_y][game->player_x] = '0';
 	*next_pos = 'P';
-	// Atualiza a posição do jogador na struct
 	game->player_x = new_x;
 	game->player_y = new_y;
-	// Redesenha a tela
 	render_map(game);
 }

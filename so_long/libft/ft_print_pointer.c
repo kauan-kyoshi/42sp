@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_pointer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:41:05 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/09/26 22:15:35 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/09/29 15:26:22 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	ft_putptr_len(unsigned long long n)
 {
-	int	len;
+	int		len;
 	char	*base;
-	
+
 	len = 0;
 	base = "0123456789abcdef";
 	if (n >= 16)

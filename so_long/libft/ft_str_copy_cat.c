@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_copy_cat.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 22:02:18 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/09/26 22:02:43 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/09/29 15:11:42 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
-
 
 char	*ft_str_copy_cat(char *new_str, char *s1, char *s2)
 {

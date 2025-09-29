@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_validation.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 15:36:49 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/29 15:37:25 by kakubo-l         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
 
 static char	**duplicate_map(t_game *game)
@@ -48,7 +60,7 @@ static void	check_path_result(char **map_copy, t_game *game)
 			if (map_copy[y][x] == 'C' || map_copy[y][x] == 'E')
 			{
 				free_map(map_copy);
-				error_exit("Invalid path: Not all collectibles or exit are reachable.", game);
+				error_exit("Invalid path.", game);
 			}
 			x++;
 		}

@@ -1,75 +1,81 @@
-
-# --- Programa ---
+# O nome do seu programa executável
 NAME = so_long
 
-# --- Compilador e Flags ---
+# Compilador e flags de compilação.
+# -Iincludes diz para procurar headers na pasta 'includes'.
+# -I/usr/local/include diz para procurar o mlx.h do sistema.
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Iincludes -I/usr/local/include
+
+# --- Arquivos do seu Projeto ---
+# Adicione TODOS os seus arquivos .c aqui.
+SRCS_DIR = src
+SRCS = 	main.c \
+		map_reader.c \
+		map_validation.c \
+		path_validation.c \
+		graphics.c \
+		hooks.c \
+		game_logic.c \
+		cleanup.c
+
+# Adiciona o prefixo do diretório (src/) a cada arquivo.
+SRCS_FULL = $(addprefix $(SRCS_DIR)/, $(SRCS))
+
+# --- Arquivos Objeto ---
+# Diretório para guardar os arquivos .o
+OBJ_DIR = obj
+# Gera os nomes dos arquivos .o dentro do diretório obj/
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 # --- Bibliotecas ---
 # Libft
-LIBFT_PATH = ./libft
-LIBFT = $(LIBFT_PATH)/libft.a
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-# MiniLibX (AJUSTE PARA O SEU SISTEMA)
-MLX_PATH = ./minilibx 
-MLX_LIB = $(MLX_PATH)/libmlx.a
-MLX_FLAGS = -L$(MLX_PATH) -lmlx -lXext -lX11 -lm
+# MiniLibX (do sistema da 42)
+MLX_LIBS = -L/usr/local/lib -lmlx -lXext -lX11 -lm
 
-# --- Arquivos ---
-SRCS_DIR = src/
-OBJS_DIR = obj/
+# Todas as bibliotecas juntas para a linkagem final
+LIBS = $(LIBFT) $(MLX_LIBS)
 
-SRCS_FILES = main.c \
-             map_reader.c \
-             map_validation.c \
-             path_validation.c \
-             graphics.c \
-             hooks.c \
-             game_logic.c \
-             cleanup.c
+# --- Regras do Makefile ---
 
-SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
-OBJS = $(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(SRCS))
-
-# --- Regras ---
+# Regra principal
 all: $(NAME)
 
-# Regra para linkar: agora depende de $(MLX_LIB) também
-$(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
-	@echo "Linking objects to create $(NAME)..."
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
-	@echo "$(NAME) created successfully!"
+# Regra para linkar e criar o executável final
+$(NAME): $(OBJS) $(LIBFT)
+	@echo "Linking..."
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	@echo "so_long is ready!"
 
-$(OBJS_DIR)%.o: $(SRCS_DIR)%.c
-	@mkdir -p $(OBJS_DIR)
-	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) -Iincludes -c $< -o $@
-
-# Regra para compilar a libft
+# Regra para compilar a Libft.
+# O 'make -C' executa o Makefile que está dentro da pasta libft.
 $(LIBFT):
-	@echo "Compiling Libft..."
-	@make -s -C $(LIBFT_PATH)
+	@make -C $(LIBFT_DIR)
 
-# Regra para compilar a MiniLibX
-$(MLX_LIB):
-	@echo "Compiling MiniLibX..."
-	@make -s -C $(MLX_PATH)
+# Cria o diretório de objetos antes de compilar.
+# O '@' no início da linha suprime o eco do comando.
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
+# Regra genérica para compilar cada .c em seu respectivo .o
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Regra para limpar os arquivos objeto
 clean:
-	@echo "Cleaning Libft objects..."
-	@make -s -C $(LIBFT_PATH) clean
-	@echo "Cleaning MiniLibX objects..."
-	@make -s -C $(MLX_PATH) clean
-	@echo "Cleaning project objects..."
-	@rm -rf $(OBJS_DIR)
+	@rm -rf $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean
 
+# Regra para limpar tudo
 fclean: clean
-	@echo "Cleaning Libft library..."
-	@make -s -C $(LIBFT_PATH) fclean
-	@echo "Cleaning project executable..."
 	@rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
 
+# Regra para recompilar tudo
 re: fclean all
 
+# Evita conflitos com nomes de arquivos
 .PHONY: all clean fclean re

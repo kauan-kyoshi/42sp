@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_decimal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 13:58:55 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/09/26 22:15:20 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/09/29 15:00:25 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 static int	ft_printnbr(int n)
 {

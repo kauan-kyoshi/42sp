@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_reader.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 15:33:07 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/29 15:33:20 by kakubo-l         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
 
 static void	check_extension(char *map_file, t_game *game)
@@ -50,7 +62,6 @@ void	read_map(char *map_file, t_game *game)
 	while (i < game->map_height)
 	{
 		game->map[i] = get_next_line(fd);
-		// get_next_line pode manter o \n, vamos removê-lo
 		if (game->map[i][ft_strlen(game->map[i]) - 1] == '\n')
 			game->map[i][ft_strlen(game->map[i]) - 1] = '\0';
 		i++;

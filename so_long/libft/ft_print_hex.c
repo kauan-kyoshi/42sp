@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:22:39 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/09/26 22:15:28 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/09/29 15:13:00 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	ft_puthex_len(unsigned int n, const char *base)
 	len += ft_print_char(base[n % 16]);
 	return (len);
 }
-
 
 int	ft_print_hex(unsigned int n, char format)
 {
