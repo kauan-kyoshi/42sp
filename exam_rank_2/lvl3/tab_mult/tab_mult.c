@@ -47,15 +47,6 @@ void ft_putchar(char c)
 	write(1,&c,1);
 }
 
-void putnbr(int n)
-{
-	if(n > 9)
-	{
-		putnbr(n/10);
-	}
-	ft_putchar((n%10) + '0');
-}
-
 int ft_atoi(char *str)
 {
 	int i;
@@ -71,6 +62,15 @@ int ft_atoi(char *str)
 		i++;
 	}
 	return(res);
+}
+void ft_putnbr(int n)
+{
+	if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+	}
+	ft_putchar((n % 10) +'0');
+
 }
 
 int main (int argc, char **argv)
