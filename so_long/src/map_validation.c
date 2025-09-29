@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 15:33:27 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/09/29 15:36:36 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:21:11 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,45 @@ static void	check_shape_and_walls(t_game *game)
 	}
 }
 
+static char	process_tile_char(char tile_char, t_game *game, int x, int y)
+{
+	if (tile_char == 'P')
+	{
+		game->player_x = x;
+		game->player_y = y;
+	}
+	else if (tile_char == 'C')
+	{
+		game->collectibles++;
+	}
+	else if (tile_char != 'E' && tile_char != '0' && tile_char != '1')
+	{
+		error_exit("Map contains invalid characters.", game);
+	}
+	return (tile_char);
+}
+
+static void	scan_row_for_components(t_game *game, int y, int *p_count,
+int *e_count)
+{
+	int		x;
+	char	current_tile;
+
+	x = 0;
+	while (x < game->map_width)
+	{
+		current_tile = process_tile_char(game->map[y][x], game, x, y);
+		if (current_tile == 'P')
+			(*p_count)++;
+		else if (current_tile == 'E')
+			(*e_count)++;
+		x++;
+	}
+}
+
 static void	check_components(t_game *game)
 {
 	int	y;
-	int	x;
 	int	p_count;
 	int	e_count;
 
@@ -52,27 +87,11 @@ static void	check_components(t_game *game)
 	y = 0;
 	while (y < game->map_height)
 	{
-		x = 0;
-		while (x < game->map_width)
-		{
-			if (game->map[y][x] == 'P')
-			{
-				p_count++;
-				game->player_x = x;
-				game->player_y = y;
-			}
-			else if (game->map[y][x] == 'E')
-				e_count++;
-			else if (game->map[y][x] == 'C')
-				game->collectibles++;
-			else if (game->map[y][x] != '0' && game->map[y][x] != '1')
-				error_exit("Map contains invalid characters.", game);
-			x++;
-		}
+		scan_row_for_components(game, y, &p_count, &e_count);
 		y++;
 	}
 	if (p_count != 1 || e_count != 1 || game->collectibles < 1)
-		error_exit("INVALID MAP", game);
+		error_exit("Invalid map", game);
 }
 
 void	validate_map(t_game *game)
