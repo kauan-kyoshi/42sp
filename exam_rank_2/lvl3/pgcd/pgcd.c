@@ -26,3 +26,45 @@ $> ./pgcd | cat -e
 $
 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int maior(int n1, int n2)
+{
+	if (n1 > n2)
+	{
+		return(n1);
+	}
+	else
+	{
+		return(n2);
+	}
+	
+}
+
+int main (int argc, char **argv)
+{
+	if (argc == 3)
+	{
+		int i, n1, n2, res;
+		i = 1;
+		n1 = atoi(argv[1]);
+		n2 = atoi(argv[2]);
+
+		
+		while (i<=maior(n1,n2))
+		{
+			if(n1 % i ==0 && n2 % i == 0)
+			{
+				res = i;
+			}
+			i++;
+		}
+		
+		printf("%d",res);
+
+
+	}
+	printf("\n");
+}
