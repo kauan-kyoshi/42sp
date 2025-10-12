@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   malloc_pile.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/10/11 19:06:23 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/10/11 19:11:48 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int main (int argc, char **argv)
+int *malloc_pile(int argc)
 {
-	int i;
-	i=0;
-	if (argc > 1)
-	{
-		push_swap(argc, argv);
-	}
+	int *arr;
+	int len;
+	len = argc -1;
 	
-
-
+	arr = malloc(len*sizeof(int));
+	if(!arr)
+	{
+		return(0);
+	}
+	return(arr);
 }

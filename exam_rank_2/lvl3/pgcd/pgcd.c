@@ -52,7 +52,6 @@ int main (int argc, char **argv)
 		n1 = atoi(argv[1]);
 		n2 = atoi(argv[2]);
 
-		
 		while (i<=maior(n1,n2))
 		{
 			if(n1 % i ==0 && n2 % i == 0)

@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/07/12 21:36:00 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/07/19 19:19:52 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
-
-int main (int argc, char **argv)
+int	ft_isalpha(int c)
 {
-	int i;
-	i=0;
-	if (argc > 1)
-	{
-		push_swap(argc, argv);
-	}
-	
-
-
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1);
+	return (0);
 }

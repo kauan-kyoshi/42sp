@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_print_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/07/30 15:33:55 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/26 22:15:11 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+int	ft_print_char(int c)
 {
-	int i;
-	i=0;
-	if (argc > 1)
-	{
-		push_swap(argc, argv);
-	}
-	
-
-
+	return (write(1, &c, 1));
 }

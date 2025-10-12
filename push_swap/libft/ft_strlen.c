@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/07/12 21:17:35 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/09/26 21:57:05 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+size_t	ft_strlen(const char *s)
 {
-	int i;
-	i=0;
-	if (argc > 1)
-	{
-		push_swap(argc, argv);
-	}
-	
+	size_t	i;
 
-
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
 }

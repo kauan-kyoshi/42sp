@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:31:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/09 17:46:25 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/10/11 22:55:24 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,28 @@
 # define PUSH_SWAP_H
 
 #include	<stdlib.h>
+#include "../libft/libft.h"
 
 
-typedef struct stack_a
+
+typedef struct s_dnode
 {
-	struct stack_a	*next;
-	int				a;
-}stack_a;
+	void			*data;
+	struct s_dnode	*next;
+	struct s_dnode	*prev;
+}	t_dnode;
 
-typedef struct stack_b
+typedef struct s_dlist
 {
-	struct stack_b	*next;
-	int				b;
-}stack_b;
+	struct s_dnode	*head;
+	struct s_dnode	*tail;
+	unsigned long	size;
+}	t_dlist;
+
+
+void push_swap(int argc, char **argv);
+int *convert_arr(int argc, char **argv);
+int *malloc_pile(int argc);
+
 
 #endif

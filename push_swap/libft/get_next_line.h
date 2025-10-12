@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/08/01 17:58:32 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/26 21:30:16 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int main (int argc, char **argv)
-{
-	int i;
-	i=0;
-	if (argc > 1)
-	{
-		push_swap(argc, argv);
-	}
-	
+# include <stdlib.h>
+# include <unistd.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
-}
+# ifndef OPEN_MAX
+#  define OPEN_MAX	10240
+# endif
+
+char	*get_next_line(int fd);
+size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
+
+#endif

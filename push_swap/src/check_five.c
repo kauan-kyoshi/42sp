@@ -1,26 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_five.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/10/11 23:03:27 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/10/12 04:42:10 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
-
-int main (int argc, char **argv)
+int greater(int n1, int n2)
 {
-	int i;
-	i=0;
-	if (argc > 1)
+	if(n1>n2)
 	{
-		push_swap(argc, argv);
+		return(0);
+	}
+	else
+	{
+		return (1);
+	}
+}
+
+
+int check_five(int argc, int *arr)
+{
+	int n;
+	
+	if (argc - 1 <= 5)
+	{
+		if (argc -1 == 2)
+		{
+			if (greater(arr[0],arr[1]))
+			{
+				
+			}
+							
+		}
+		
 	}
 	
-
-
 }

@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_print_unsigned.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/08/01 13:03:41 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/09/26 22:18:00 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+static int	ft_putunbr_len(unsigned int n)
 {
-	int i;
-	i=0;
-	if (argc > 1)
+	int	len;
+
+	len = 0;
+	if (n >= 10)
 	{
-		push_swap(argc, argv);
+		len += ft_putunbr_len(n / 10);
 	}
-	
+	len += ft_print_char((n % 10) + '0');
+	return (len);
+}
 
-
+int	ft_print_unsigned(unsigned int n)
+{
+	if (n == 0)
+		return (write(1, "0", 1));
+	return (ft_putunbr_len(n));
 }

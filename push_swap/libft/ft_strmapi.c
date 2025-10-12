@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/07/19 13:57:58 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/07/19 13:58:00 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+char	*ft_strmapi(char const *s, char (*f)(unsigned
+int, char))
 {
-	int i;
-	i=0;
-	if (argc > 1)
+	unsigned int	i;
+	unsigned int	length;
+	char			*res;
+
+	if (!s)
+		return (NULL);
+	length = ft_strlen(s);
+	res = malloc(length * sizeof(char) + 1);
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i < length)
 	{
-		push_swap(argc, argv);
+		res[i] = (*f)(i, s[i]);
+		i++;
 	}
-	
-
-
+	res[i] = '\0';
+	return (res);
 }

@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/07/16 18:00:04 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/07/16 18:00:14 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int i;
-	i=0;
-	if (argc > 1)
+	size_t	i;
+
+	i = 0;
+	while (i < n)
 	{
-		push_swap(argc, argv);
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return (((unsigned char *)s) + i);
+		i++;
 	}
-	
-
-
+	return (NULL);
 }
