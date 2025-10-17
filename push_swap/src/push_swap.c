@@ -3,15 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:38:35 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 23:01:35 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/10/17 18:36:39 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 #include <stdio.h>
+
+t_dlist *dlist_new(void)
+{
+    t_dlist *new_list = (t_dlist *)malloc(sizeof(t_dlist));
+
+    if (new_list == NULL)
+        return (NULL);
+
+    new_list->head = NULL;
+    new_list->tail = NULL;
+    new_list->size = 0;
+    return (new_list);
+}
 
 void push_swap(int argc, char **argv)
 {
