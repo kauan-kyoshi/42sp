@@ -21,8 +21,6 @@ if __name__ == '__main__':
             status_text = "KO - Tente Novamente =("
 
         colored_status = f"{status_color}{status_text}{COLOR_END}"
-
-        status = "OK" if length <= 26 else "FALHA (Excede o limite)"
         
         print(f"Original:  {input_name} (caracteres: {len(input_name)})")
         print(f"Resultado: {result} (caracteres: {length})")
