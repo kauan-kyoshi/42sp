@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc_pile.c                                      :+:      :+:    :+:   */
+/*   ft_create_dnode.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/11 19:06:23 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/10/11 19:11:48 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/09/21 19:04:58 by mhidani           #+#    #+#             */
+/*   Updated: 2025/10/30 15:15:55 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "dlist.h"
 
-int *malloc_pile(int argc)
+t_dnode	*ft_create_dnode(void *data)
 {
-	int *arr;
-	int len;
-	len = argc -1;
-	
-	arr = malloc(len*sizeof(int));
-	if(!arr)
-	{
-		return(0);
-	}
-	return(arr);
+	t_dnode	*node;
+
+	if (!data)
+		return (NULL);
+	node = malloc(sizeof(t_dnode));
+	if (!node)
+		return (NULL);
+	node->data = data;
+	node->next = NULL;
+	node->prev = NULL;
+	return (node);
 }

@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:27:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/09/29 15:07:37 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:20:27 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include	"get_next_line.h"
+# include    "dlist.h"
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -60,5 +61,7 @@ int		ft_print_decimal(int n);
 int		ft_print_unsigned(unsigned int n);
 int		ft_print_pointer(void *ptr);
 int		ft_print_hex(unsigned int n, char format);
+
+
 
 #endif
