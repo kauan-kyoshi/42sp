@@ -79,3 +79,5 @@ re: fclean all
 
 # Evita conflitos com nomes de arquivos
 .PHONY: all clean fclean re
+
+

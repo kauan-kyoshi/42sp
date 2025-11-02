@@ -1,26 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 16:11:48 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/11 22:24:58 by kyoshi           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include <unistd.h>
 
-#include "../includes/push_swap.h"
-
-int main (int argc, char **argv)
+// A função main é o ponto de entrada do seu programa.
+int main(int argc, char **argv)
 {
-	int i;
-	i=0;
-	if (argc > 1)
-	{
-		push_swap(argc, argv);
-	}
-	
-
-
+    // Silencia o aviso 'unused parameter' do compilador
+    (void)argv;
+    
+    // Apenas para provar que a compilação funciona:
+    // Imprime um caractere na saída padrão.
+    if (argc > 1)
+        write(1, "Compilado com sucesso!\n", 23);
+    else
+        write(1, "Uso: ./push_swap <argumentos>\n", 30);
+    
+    return (0);
 }

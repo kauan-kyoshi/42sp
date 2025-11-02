@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc_pile.c                                      :+:      :+:    :+:   */
+/*   ft_create_dlist.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/11 19:06:23 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/10/11 19:11:48 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/09/21 19:07:30 by mhidani           #+#    #+#             */
+/*   Updated: 2025/10/30 15:15:48 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "dlist.h"
 
-int *malloc_pile(int argc)
+t_dlist	*ft_create_dlist(t_dnode *node)
 {
-	int *arr;
-	int len;
-	len = argc -1;
-	
-	arr = malloc(len*sizeof(int));
-	if(!arr)
-	{
-		return(0);
-	}
-	return(arr);
+	t_dlist	*list;
+
+	list = malloc(sizeof(t_dlist));
+	if (!list)
+		return (NULL);
+	list->head = node;
+	list->tail = node;
+	list->size = 0;
+	if (node)
+		list->size = 1;
+	return (list);
 }
