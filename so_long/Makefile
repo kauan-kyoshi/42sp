@@ -48,7 +48,7 @@ all: $(NAME)
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "Linking..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
-	@echo "so_long is ready!"
+	@echo "code by : Kyoshi Lima ^-^"
 
 # Regra para compilar a Libft.
 # O 'make -C' executa o Makefile que está dentro da pasta libft.
