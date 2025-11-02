@@ -16,12 +16,21 @@ void	ft_remove_beg_dnode(t_dlist *list, void (*free_data)(void *))
 {
 	t_dnode	*head;
 
-	if (!list || !free_data)
+	if (!list || !free_data || !list->head)
 		return ;
 	head = list->head;
-	list->head->next->prev = NULL;
-	list->head = list->head->next;
+	if (list->head == list->tail)
+	{
+		list->head = NULL;
+		list->tail = NULL;
+		list->size = 0;
+	}
+	else
+	{
+		list->head = list->head->next;
+		list->head->prev = NULL;
+		list->size--;
+	}
 	free_data(head->data);
 	free(head);
-	list->size--;
 }

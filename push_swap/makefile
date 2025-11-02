@@ -5,7 +5,11 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes -I/usr/local/include
 
 SRCS_DIR = src
 SRCS = 	main.c \
-		
+		parse.c \
+		utils.c \
+		stack_utils.c \
+		operations.c \
+		sort.c
 
 SRCS_FULL = $(addprefix $(SRCS_DIR)/, $(SRCS))
 

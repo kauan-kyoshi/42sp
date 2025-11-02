@@ -16,12 +16,21 @@ void	ft_remove_lst_dnode(t_dlist *list, void (*free_data)(void *))
 {
 	t_dnode	*tail;
 
-	if (!list || !free_data)
+	if (!list || !free_data || !list->tail)
 		return ;
 	tail = list->tail;
-	list->tail->prev->next = NULL;
-	list->tail = list->tail->prev;
+	if (list->head == list->tail)
+	{
+		list->head = NULL;
+		list->tail = NULL;
+		list->size = 0;
+	}
+	else
+	{
+		list->tail = list->tail->prev;
+		list->tail->next = NULL;
+		list->size--;
+	}
 	free_data(tail->data);
 	free(tail);
-	list->size--;
 }
