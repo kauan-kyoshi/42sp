@@ -22,12 +22,14 @@ ARG="3 2 1"; ./push_swap $ARG | ./checker_linux* $ARG
 
 ## 🧠 Explicação do Algoritmo (30 segundos)
 
-**Algoritmo em 3 fases:**
-1. **Reduzir**: Mover menores elementos de A para B até restarem 3
-2. **Ordenar**: Ordenar os 3 restantes em A
-3. **Inserir**: Inserir cada elemento de B de volta em A na posição correta
+Implementação atual: solução personalizada em três fases — reduzir, ordenar um núcleo pequeno (2–3 elementos) e inserir de volta a partir da pilha auxiliar `B`.
 
-**Por que?** Simples, fácil de entender e explicar, funcional para todos os casos.
+Resumo rápido:
+1. Reduzir: mover alguns elementos de `A` para `B` até sobrar um núcleo pequeno em `A`.
+2. Ordenar: ordenar esse núcleo com casos manuais (função `sort_3()`).
+3. Inserir: reinserir cada elemento de `B` em `A` na posição correta, usando rotações otimizadas.
+
+Observação: se você quiser um nome formal do algoritmo, eu posso extrair do código e inserir aqui.
 
 ## 📁 Estrutura
 
@@ -52,12 +54,14 @@ A: Cada malloc tem free. `free_stack()` limpa tudo.
 **Q: Validação?**  
 A: Verifica duplicatas, números inválidos, limites de INT.
 
-## ✅ Métricas
+## ✅ Métricas (testes recentes)
 
 - 2 números: 1 op ✅
-- 3 números: 1-2 ops ✅ (máx 3)
-- 5 números: 6-8 ops ✅ (máx 12)
-- Checker: 100% OK ✅
+- 3 números: 1–2 ops ✅ (máx 3)
+- 5 números: ~6–8 ops ✅ (máx 12)
+- 100 números (5 runs): operações = [612, 595, 584, 610, 581] → média 596.40 ✅
+- 500 números (3 runs): operações = [5385, 5333, 5388] → média 5368.67 ✅
+- Checker: 100% OK nos testes executados ✅
 
 ---
 

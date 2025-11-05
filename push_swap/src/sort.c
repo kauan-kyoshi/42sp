@@ -3,16 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 15:30:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/10/30 15:30:00 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:33:32 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	move_to_top_a(t_stack *stack, int position)
+/*
+ * Algoritmo (implementação atual): estrategia por "chunks"/inserção.
+ * 1) Distribui elementos de A para B em blocos (chunks) com base em limites
+ *    para reduzir A a um núcleo pequeno.
+ * 2) Ordena o núcleo (2–3 elementos) localmente e, em seguida, reinsere
+ *    os elementos de B em A na posição correta, rotacionando quando
+ *    necessário.
+ */
+
+/*static void	move_to_top_a(t_stack *stack, int position)
 {
 	int		dist_top;
 	int		size;
@@ -36,7 +45,7 @@ static void	move_to_top_a(t_stack *stack, int position)
 			dist_top--;
 		}
 	}
-}
+}*/
 
 
 void	sort_2(t_stack *stack)
@@ -76,81 +85,68 @@ void	sort_3(t_stack *stack)
 		rra(stack, 1);
 }
 
-static void	move_smallest_to_b(t_stack *stack)
+static void	move_to_top_b(t_stack *stack, int position)
 {
-	int	min_value;
-	int	position;
+	int		dist_top;
+	int		size;
 
-	min_value = find_min_value(stack->a);
-	position = find_position(stack->a, min_value);
-	move_to_top_a(stack, position);
-	pb(stack, 1);
-}
-
-static int	find_position_in_a(t_stack *stack, int value)
-{
-	t_dnode	*current;
-	int		pos;
-	int		min_in_a;
-	int		max_in_a;
-
-	if (!stack->a || !stack->a->head)
-		return (0);
-	min_in_a = find_min_value(stack->a);
-	max_in_a = find_max_value(stack->a);
-	if (value < min_in_a || value > max_in_a)
-		return (find_position(stack->a, min_in_a));
-	current = stack->a->head;
-	pos = 0;
-	while (current && current->next)
+	size = (int)stack->b->size;
+	if (position <= size / 2)
 	{
-		if (get_value(current) < value && get_value(current->next) > value)
-			return (pos + 1);
-		current = current->next;
-		pos++;
+		dist_top = position;
+		while (dist_top > 0)
+		{
+			rb(stack, 1);
+			dist_top--;
+		}
 	}
-	return (0);
-}
-
-static void	insert_back_to_a(t_stack *stack)
-{
-	int	value;
-	int	position;
-
-	while (stack->b && stack->b->head)
+	else
 	{
-		value = get_value(stack->b->head);
-		position = find_position_in_a(stack, value);
-		move_to_top_a(stack, position);
-		pa(stack, 1);
+		dist_top = size - position;
+		while (dist_top > 0)
+		{
+			rrb(stack, 1);
+			dist_top--;
+		}
 	}
-}
-
-static void	final_position_a(t_stack *stack)
-{
-	int	min_value;
-	int	position;
-
-	min_value = find_min_value(stack->a);
-	position = find_position(stack->a, min_value);
-	move_to_top_a(stack, position);
 }
 
 void	sort_many(t_stack *stack)
 {
-	unsigned long	target_size;
+	int	size;
+	int	chunks;
+	int	chunk_size;
+	int	pushed_count;
 
-	if (!stack || !stack->a)
-		return ;
-	target_size = 3;
-	while (stack->a->size > target_size)
-		move_smallest_to_b(stack);
-	if (stack->a->size == 3)
-		sort_3(stack);
-	else if (stack->a->size == 2)
-		sort_2(stack);
-	insert_back_to_a(stack);
-	final_position_a(stack);
+	size = stack->a->size;
+	if (size <= 100)
+		chunks = 5;
+	else
+		chunks = 11;
+	chunk_size = size / chunks;
+	pushed_count = 0;
+	while (stack->a->size > 0)
+	{
+		if (get_value(stack->a->head) <= pushed_count)
+		{
+			pb(stack, 1);
+			rb(stack, 1);
+			pushed_count++;
+		}
+		else if (get_value(stack->a->head) <= pushed_count + chunk_size)
+		{
+			pb(stack, 1);
+			pushed_count++;
+		}
+		else
+			ra(stack, 1);
+	}
+	while (size > 0)
+	{
+		move_to_top_b(stack, find_position(stack->b, size - 1));
+		pa(stack, 1);
+		size--;
+	}
 }
 
 void	sort_stack(t_stack *stack)

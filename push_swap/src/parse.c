@@ -91,6 +91,66 @@ static int	check_duplicates_in_stack(t_dlist *stack)
 	return (0);
 }
 
+static void	bubble_sort(int *arr, int n)
+{
+	int	i;
+	int	j;
+	int	temp;
+
+	i = 0;
+	while (i < n - 1)
+	{
+		j = 0;
+		while (j < n - i - 1)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+static void	index_stack(t_stack *stack)
+{
+	int		*sorted_arr;
+	int		i;
+	t_dnode	*current;
+	int		j;
+
+	sorted_arr = malloc(sizeof(int) * stack->a->size);
+	if (!sorted_arr)
+		return ;
+	current = stack->a->head;
+	i = 0;
+	while (current)
+	{
+		sorted_arr[i++] = get_value(current);
+		current = current->next;
+	}
+	bubble_sort(sorted_arr, stack->a->size);
+	current = stack->a->head;
+	while (current)
+	{
+		j = 0;
+		while (j < (int)stack->a->size)
+		{
+			if (get_value(current) == sorted_arr[j])
+			{
+				*((int *)current->data) = j;
+				break ;
+			}
+			j++;
+		}
+		current = current->next;
+	}
+	free(sorted_arr);
+}
+
 int	parse_arguments(int argc, char **argv, t_stack *stack)
 {
 	int		i;
@@ -124,6 +184,7 @@ int	parse_arguments(int argc, char **argv, t_stack *stack)
 	}
 	if (check_duplicates_in_stack(stack->a))
 		return (0);
+	index_stack(stack);
 	return (1);
 }
 
