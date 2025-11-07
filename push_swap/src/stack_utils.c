@@ -43,4 +43,3 @@ void	free_stack(t_stack *stack)
 		ft_clean_dlist(&stack->b, free_int);
 	free(stack);
 }
-

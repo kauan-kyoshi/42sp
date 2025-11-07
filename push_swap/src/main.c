@@ -17,16 +17,10 @@ int	main(int argc, char **argv)
 	t_stack	*stack;
 
 	if (argc < 2)
-	{
-		write(2, "Error\n", 6);
-		return (1);
-	}
+		return (0);
 	stack = init_stack();
 	if (!stack)
-	{
-		write(2, "Error\n", 6);
-		return (1);
-	}
+		return (write(2, "Error\n", 6), 1);
 	if (!parse_arguments(argc, argv, stack))
 	{
 		write(2, "Error\n", 6);

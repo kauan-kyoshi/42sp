@@ -17,13 +17,16 @@ ARG="5 4 3 2 1"; ./push_swap $ARG | wc -l
 ```
 
 ## 📁 Estrutura (o que citar na avaliação)
-- `includes/push_swap.h` — tipos e protótipos
+- `includes/push_swap.h` — tipos, protótipos e helpers compartilhados
 - `src/main.c` — fluxo principal (parse → sort → free)
-- `src/parse.c` — validação, suporte a argumentos com espaços e indexação 0..N-1
-- `src/operations.c` — 11 operações (`sa/sb/ss`, `pa/pb`, `ra/rb/rr`, `rra/rrb/rrr`)
-- `src/sort.c` — `sort_2`, `sort_3`, `sort_many` (estratégia por chunks 5/11)
-- `src/utils.c` — auxiliares: `ft_atol`, `is_valid_number`, `is_sorted`, etc.
-- `src/stack_utils.c` — init/cleanup das pilhas (`t_dlist` na `libft`)
+- Parsing (arquivos separados):
+  - `parse_main.c` — laço principal
+  - `parse_tokens.c`, `parse_checks.c`, `parse_index.c` — tokenização, duplicatas e indexação 0..N-1
+- Operações (arquivos separados): `ops_swap.c`, `ops_push.c` + `ops_push_utils.c`, `ops_rotate.c`, `ops_rev_rotate.c`
+- Ordenação: `sort_small.c` (casos 2/3), `sort_many.c` (chunks 5/11) e `sort_router.c`
+- Utilitários: `utils_num.c`, `utils_checks.c`, `utils_mem.c`, `utils_nodes.c`, `utils_search.c`, `stack_utils.c`
+- `checker.c` + `checker_ops.c` — checker local com contagem de operações
+- `libft/` — lista duplamente ligada e utilitários de base
 
 ## 🧠 Por que usar chunks?
 - Dividir a entrada em blocos pequenos aproxima a estratégia de uma inserção ordenada, mas controlando quantos elementos vão para `B` por vez.
@@ -48,23 +51,21 @@ ARG="5 4 3 2 1"; ./push_swap $ARG | wc -l
 - Números inválidos e fora de INT: erro
 - Duplicatas: erro
 - Argumentos com espaços: suportado
-- Checker: `OK (ops=X)`/`KO (ops=Y)`
+- Checker local: `OK (ops=X)` / `KO (ops=Y)`
 
-## 📊 Métricas atuais (com checker)
-- 100 números (5 execuções): min=569, max=637, média=598.40
-- 500 números (5 execuções): min=5223, max=5382, média=5306.80
-
-Ambos dentro do esperado (≤700 e ≤5500).
+## 📊 Métricas atuais (refatoração: nov/2025)
+- 100 números (5 execuções): min=560, max=625, média=603.00
+- 500 números (5 execuções): min=5273, max=5509, média=5402.40
+- Valgrind: sem leaks em `push_swap` (casos sucesso/erro) e `checker`
 
 ## 🧪 Demos rápidas durante a avaliação
 ```bash
-# 3 números (checker mostra OK e ops)
+# 3 números
 ARG="3 2 1"; ./push_swap $ARG | ./checker $ARG
-# 100 aleatórios (ver ops pelo checker)
+# 100 aleatórios
 ARG="$(shuf -i 0-99 | tr "\n" " ")"; ./push_swap $ARG | ./checker $ARG
-# 500 aleatórios (ver ops pelo checker)
+# 500 aleatórios
 ARG="$(shuf -i 0-499 | tr "\n" " ")"; ./push_swap $ARG | ./checker $ARG
 ```
 
-Fale com segurança: “Uso indexação 0..N-1 e chunks 5/11 para limitar o problema. Empurro A→B em blocos controlados e volto B→A trazendo sempre o maior, escolhendo `ra/rra` conforme a distância. O checker mostra OK/KO e o total de operações aplicadas.”
-
+Fale com segurança: “Uso indexação 0..N-1 e chunks 5/11 para limitar o problema. Empurro A→B em blocos controlados e volto B→A trazendo sempre o maior, escolhendo `ra/rra` conforme a distância. O checker local mostra OK/KO e o total de operações; Valgrind confirma zero leaks.”
