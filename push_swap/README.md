@@ -44,15 +44,18 @@ Obs: o avaliador da 42 pode ter testes com limites como 100 e 500 elementos; mui
 ## 5 — Estrutura do repositório e arquivos importantes
 
 - `Makefile` — regras para compilar `push_swap` e `checker`.
-- `includes/push_swap.h` — protótipos, structs e helpers públicos.
+- `includes/push_swap.h` — protótipos, structs e helpers públicos (totalmente documentado com comentários).
 - `src/*.c` — implementação:
   - `main.c` / `parse_*` — parsing e validação de argumentos
   - `ops_*.c` — implementações das operações (sa, pb, ra, rra, ...)
-  - `sort_small.c` — algoritmos ótimos para 2 e 3 (e geralmente 4/5 se implementado)
-  - `sort_many.c` — algoritmo para muitos elementos (radix/chunks)
+  - `sort_small.c` — algoritmos ótimos para 2 e 3
+  - `small_cases.c` — **[REFATORADO - NOV/2025]** trata casos especiais (4 e 5 elementos) com estratégia de mover menores para B
+  - `sort_many.c` — algoritmo para muitos elementos (chunking com blocos 5/11)
   - `sort_router.c` — escolhe qual rotina chamar de acordo com o tamanho
-  - `utils_*.c` — helpers (get_value, find_min_value, is_sorted, etc.)
-- `libft/` — biblioteca auxiliar (parte do conjunto de libs da 42).
+  - `pull_b.c` — **[REFATORADO - NOV/2025]** segunda fase: reinsere elementos de B para A (do maior para o menor)
+  - `utils_*.c` — helpers (get_value, find_min_value, is_sorted, distance_to_top, etc.)
+  - `checker.c` / `checker_ops.c` — programa `checker` local com contagem de operações
+- `libft/` — biblioteca auxiliar (dlist, ft_printf, ft_split, etc.).
 
 ## 6 — Requisitos de parsing e validação (detalhado)
 
@@ -129,7 +132,56 @@ Essas estratégias costumam ser aceitas como corretas e eficientes para a avalia
 
 Imprima as operações exatamente como strings com newline (e.g., `write(1, "ra\n", 3)`).
 
+## 11 — Funções refatoradas e documentadas (NOV/2025)
 
+As seguintes funções foram refatoradas com comentários linha por linha explicando cada etapa:
+
+### `small_cases.c` — Trata casos de 4 e 5 elementos
+
+- **`bring_min_to_top_and_pb(t_stack *stack)`**
+  - Encontra o menor elemento em A usando `find_min_value()`.
+  - Calcula a posição com `find_position()`.
+  - Escolhe entre `ra` (rotações para cima) ou `rra` (rotações para baixo) conforme qual é mais curto.
+  - Executa `pb` para enviar o mínimo para B.
+  - **Caso 4**: remove 1 mínimo, ordena 3 em A com `sort_3()`, volta com `pa`.
+  - **Caso 5**: remove 2 mínimos em sequência, ordena 3 em A, volta com dois `pa`.
+
+- **`handle_small_cases(t_stack *stack, int size)`**
+  - Detecta se o tamanho é 4 ou 5.
+  - Executa a estratégia acima e retorna 1 (sucesso) ou 0 (tamanho não é 4/5).
+
+### `pull_b.c` — Segunda fase: reinserção de B para A
+
+- **`move_to_top_b(t_stack *stack, int position)`**
+  - Traz um elemento em posição `position` de B para o topo.
+  - Calcula se é mais rápido usar `rb` (rotação para cima) ou `rrb` (rotação para baixo).
+  - Critério: se `position <= size/2`, usa `rb` `position` vezes; caso contrário, usa `rrb` `(size - position)` vezes.
+
+- **`phase_pull_b_to_a(t_stack *stack, int size)`**
+  - Itera de `size-1` até `0` (do maior para o menor em B).
+  - Para cada valor, encontra sua posição em B com `find_position()`.
+  - Move para o topo com `move_to_top_b()`.
+  - Executa `pa` para trazer para A.
+  - **Resultado**: A fica completamente ordenada (maiores foram inseridos primeiro, mantendo a ordem).
+
+### `parse_index.c` — Indexação de valores (0..n-1)
+
+- **`bubble_sort(int *arr, int n)`**
+  - Ordena um array temporário usando bubble sort.
+  - Usado para construir a sequência ordenada dos valores.
+
+- **`build_sorted_array(t_dlist *a)`**
+  - Copia todos os valores de A para um array dinâmico.
+  - Chama `bubble_sort()` para ordenar.
+  - Retorna o array ordenado (usado como referência).
+
+- **`assign_indices(t_dlist *a, int *sorted_arr)`**
+  - Percorre A e substitui cada valor pelo seu índice relativo (0..n-1).
+  - Índice 0 = menor valor, índice n-1 = maior valor.
+  - Essencial para estratégias de chunking e radix.
+
+- **`ps_index_stack(t_stack *stack)`**
+  - Função pública que orquestra a indexação completa.
 
 ## 12 — Verificações finais antes de submeter
 
@@ -189,3 +241,21 @@ ARG="3 2 1"; ./push_swap $ARG | ./checker $ARG
 ARG="$(shuf -i 0-99 | tr "\n" " ")"; ./push_swap $ARG | ./checker $ARG
 # 500 aleatórios
 ARG="$(shuf -i 0-499 | tr "\n" " ")"; ./push_swap $ARG | ./checker $ARG
+
+## 16 — Documentação do código-fonte (NOV/2025)
+
+Todos os arquivos foram revisados e comentados com:
+
+- **Header (`push_swap.h`)**: estruturas, enums e funções estão documentadas com explicações do que cada uma faz.
+- **Funções de parsing**: comentários explicam validação, tokenização e indexação.
+- **Operações (`ops_*.c`)**: cada operação documenta o comportamento (swap, push, rotate).
+- **Funções de busca/utilidade**: `find_min_value`, `find_position`, `distance_to_top`, etc. explicadas.
+- **Algoritmos de ordenação**: `sort_2`, `sort_3`, `sort_many` documentados com a estratégia usada.
+- **Funções auxiliares refatoradas**: `small_cases.c`, `pull_b.c` com comentários linha por linha.
+
+Para entender o fluxo completo, consulte `src/main.c`:
+1. Parse argumentos e valida.
+2. Indexa valores (0..n-1).
+3. Escolhe algoritmo baseado no tamanho.
+4. Executa ordenação.
+5. Libera memória.
