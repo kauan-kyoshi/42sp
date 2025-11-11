@@ -129,43 +129,7 @@ Essas estratégias costumam ser aceitas como corretas e eficientes para a avalia
 
 Imprima as operações exatamente como strings com newline (e.g., `write(1, "ra\n", 3)`).
 
-## 11 — Ferramentas de teste locais
 
-- Compilar:
-
-```bash
-make
-```
-
-- Gerar execução e validar com checker:
-
-```bash
-./push_swap 2 1 3 4 | ./checker 2 1 3 4
-```
-
-- Testar todas permutações para n=4 e n=5 (script simples):
-
-```bash
-python3 - <<'PY'
-import itertools, subprocess
-
-def ok(seq):
-    args = ' '.join(map(str, seq))
-    p1 = subprocess.run(['./push_swap'] + list(map(str, seq)), capture_output=True, text=True)
-    ops = p1.stdout
-    p2 = subprocess.run(['./checker'] + list(map(str, seq)), input=ops, text=True, capture_output=True)
-    return 'OK' in p2.stdout
-
-for n in [4,5]:
-    for perm in itertools.permutations(range(1,n+1)):
-        if not ok(perm):
-            print('Fail for', perm)
-            raise SystemExit(1)
-print('All perms OK for n=4 and n=5')
-PY
-```
-
-Isso garante que suas rotinas para 4 e 5 estão corretas para todas as permutações.
 
 ## 12 — Verificações finais antes de submeter
 
@@ -220,17 +184,8 @@ pa
 
 Executar `./push_swap 3 2 5 1 4 | ./checker 3 2 5 1 4` deve imprimir `OK`.
 
-## 16 — Boas práticas e sugestões finais
-
-- Documente funções complexas e mantenha unidades pequenas e testáveis.
-- Faça commits atômicos e com mensagens claras (ex.: "add sort 3" / "implement radix sort").
-- Prefira soluções corretas e fáceis de provar/depurar antes de tentar micro-otimizações.
-
----
-
-Se quiser, eu posso:
-- Gerar scripts de teste (gerar permutações e automatizar checker),
-- Implementar uma versão otimizada do caso n=5 para reduzir ops, ou
-- Rodar um conjunto de testes com permutações locais e relatar estatísticas (ops média/máxima) para 100 e 500 elementos.
-
-Diga qual desses extras você quer que eu gere agora.
+ARG="3 2 1"; ./push_swap $ARG | ./checker $ARG
+# 100 aleatórios
+ARG="$(shuf -i 0-99 | tr "\n" " ")"; ./push_swap $ARG | ./checker $ARG
+# 500 aleatórios
+ARG="$(shuf -i 0-499 | tr "\n" " ")"; ./push_swap $ARG | ./checker $ARG
