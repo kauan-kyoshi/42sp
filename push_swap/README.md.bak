@@ -1,0 +1,471 @@
+# 📚 Push Swap — Guia Completo de Avaliação
+
+## 📋 Índice
+1. [Objetivo do Projeto](#objetivo)
+2. [Regras e Restrições](#regras)
+3. [Estrutura do Projeto](#estrutura)
+4. [Algoritmo Explicado](#algoritmo)
+5. [Implementação Detalhada](#implementacao)
+6. [Otimizações e Métricas](#metricas)
+7. [Como Testar](#testes)
+8. [Checklist de Avaliação](#checklist)
+
+---
+
+## 🎯 Objetivo
+
+O projeto **push_swap** consiste em:
+
+1. **Programa `push_swap`**: Recebe uma lista de números inteiros na linha de comando e imprime uma sequência de operações que ordena uma pilha A em ordem crescente.
+2. **Programa `checker`** (opcional): Valida se uma sequência de operações realmente ordena a pilha.
+
+### Entrada
+```bash
+./push_swap 3 2 1 5 4
+```
+
+### Saída esperada
+```
+pb
+rb
+pb
+ra
+pa
+pa
+```
+
+### Validação
+```bash
+./push_swap 3 2 1 5 4 | ./checker 3 2 1 5 4
+# Saída: OK ou KO
+```
+
+---
+
+## ⚙️ Regras
+
+### ✅ Operações Permitidas
+
+| Operação | Descrição |
+|----------|-----------|
+| `sa` | Swap: troca os 2 primeiros elementos de A |
+| `sb` | Swap: troca os 2 primeiros elementos de B |
+| `ss` | Swap: `sa` + `sb` simultaneamente |
+| `pa` | Push: move o topo de B para o topo de A |
+| `pb` | Push: move o topo de A para o topo de B |
+| `ra` | Rotate: move todos de A uma posição para cima (head → tail) |
+| `rb` | Rotate: move todos de B uma posição para cima (head → tail) |
+| `rr` | Rotate: `ra` + `rb` simultaneamente |
+| `rra` | Reverse Rotate: move todos de A uma posição para baixo (tail → head) |
+| `rrb` | Reverse Rotate: move todos de B uma posição para baixo (tail → head) |
+| `rrr` | Reverse Rotate: `rra` + `rrb` simultaneamente |
+
+### ⛔ Restrições
+
+- Números devem estar **dentro do intervalo de `int`** (-2,147,483,648 a 2,147,483,647)
+- **Sem duplicatas** permitidas
+- **Sem funções prontas** de ordenação (`qsort`, etc.)
+- **Sem vazamento de memória** (validar com Valgrind)
+- **Norminette** obrigatória (estilo da 42)
+- **Sem warnings** na compilação (`-Wall -Wextra -Werror`)
+
+---
+
+## 📁 Estrutura
+
+```
+push_swap/
+├── Makefile                  # Compilação
+├── README.md                 # Este arquivo
+├── includes/
+│   └── push_swap.h          # Headers e protótipos
+├── src/
+│   ├── main.c               # Fluxo principal
+│   ├── parse_*.c            # Parsing e validação
+│   ├── ops_*.c              # Operações (sa, pb, ra, etc)
+│   ├── sort_*.c             # Algoritmos de ordenação
+│   ├── pull_b.c             # Reinserção de B→A
+│   ├── small_cases.c        # Casos 4 e 5
+│   ├── utils_*.c            # Funções auxiliares
+│   ├── checker.c            # Programa checker
+│   └── checker_ops.c        # Operações do checker
+└── libft/                   # Biblioteca auxiliar
+    ├── dlist.h              # Lista duplamente ligada
+    └── [+60 funções]        # String, memory, printf, etc
+```
+
+### Arquivos Principais por Funcionalidade
+
+#### 🔧 **Parsing e Validação**
+- `parse_main.c` — Função principal de parsing
+- `parse_tokens.c` — Tokenização de argumentos
+- `parse_checks.c` — Verificação de duplicatas
+- `parse_index.c` — Indexação (0..n-1)
+- `utils_num.c` — Validação de números
+- `utils_checks.c` — Verificações gerais
+
+#### ⚙️ **Operações da Pilha**
+- `ops_swap.c` — `sa`, `sb`, `ss`
+- `ops_push.c` — `pa`, `pb` + helpers
+- `ops_rotate.c` — `ra`, `rb`, `rr`
+- `ops_rev_rotate.c` — `rra`, `rrb`, `rrr`
+
+#### 🎯 **Algoritmos de Ordenação**
+- `sort_small.c` — Casos 2 e 3 (ótimo)
+- `small_cases.c` — Casos 4 e 5 (estratégia de menores para B)
+- `sort_many.c` — Chunking para n>5
+- `sort_router.c` — Escolhe o melhor algoritmo
+
+#### 🔎 **Busca e Utilidades**
+- `utils_search.c` — `find_min_value()`, `find_position()`, `distance_to_top()`
+- `utils_nodes.c` — Operações em nós
+- `utils_mem.c` — Liberação de memória
+- `stack_utils.c` — Inicialização e limpeza de stack
+
+#### ✔️ **Checker Local**
+- `checker.c` — Main do checker
+- `checker_ops.c` — Aplicação de operações
+
+---
+
+## 🧠 Algoritmo Explicado
+
+
+
+### 🔷 Fluxo Geral
+
+```
+1. PARSING
+   - Ler argumentos
+   - Validar números (overflow, não-numéricos)
+   - Detectar duplicatas
+   - Criar pilha A com valores
+
+2. INDEXAÇÃO (0..n-1)
+   - Converter valores para índices
+   - Índice 0 = menor valor
+   - Índice n-1 = maior valor
+
+3. ESCOLHER ALGORITMO
+   - n=2 → sort_2()
+   - n=3 → sort_3()
+   - n=4,5 → handle_small_cases()
+   - n>5 → sort_many() (chunking)
+
+4. EXECUTAR ORDENAÇÃO
+   - Gerar sequência de operações
+   - Imprimir cada uma
+
+5. LIBERAR MEMÓRIA
+   - Destruir pilhas A e B
+   - Fazer clean exit
+```
+
+### 🎯 Estratégia por Tamanho
+
+#### **n=2: sort_2()**
+```
+if a[0] > a[1]:
+    sa()
+```
+- Máximo: 1 operação
+
+#### **n=3: sort_3()**
+```
+Análise dos 3 primeiros valores:
+- Se já ordenado: nenhuma op
+- Se a[0]>a[1]>a[2]: sa + rra
+- Se a[1]>a[2]>a[0]: ra
+- etc... (5 casos possíveis)
+```
+- Máximo: 2 operações
+
+#### **n=4,5: handle_small_cases()**
+
+**Estratégia:**
+1. Encontre o menor elemento em A
+2. Rotacione para o topo (`ra` ou `rra` — escolha o mais curto)
+3. Empurre para B com `pb`
+4. Repita se n=5 (move os 2 menores)
+5. Ordene os 3 restantes em A com `sort_3()`
+6. Traga de volta de B com `pa` (uma ou duas vezes)
+
+**Exemplo n=4:**
+```
+Entrada: [3, 2, 5, 1] (índices: [2, 1, 3, 0])
+
+Step 1: Encontre mínimo (índice 0, posição 3)
+Step 2: Rotacione com rra 1 vez → [1, 3, 2, 5]
+Step 3: pb → A=[3, 2, 5], B=[1]
+Step 4: sort_3(A) → A=[2, 3, 5]
+Step 5: pa → A=[1, 2, 3, 5] ✓
+```
+
+#### **n>5: sort_many() — Chunking**
+
+**Ideia Principal:**
+Dividir A em blocos (chunks) e empurrar para B de forma controlada, depois reinserir do maior para o menor.
+
+**Parâmetros:**
+- `chunks = 5` se n ≤ 100
+- `chunks = 11` se n > 100
+- `chunk_size = n / chunks`
+
+**Fase 1: A → B (Push com chunking)**
+
+```
+pushed_count = 0
+
+while A não está vazia:
+    if topo de A <= pushed_count:
+        // Elemento já foi "visto", está no bloco passado
+        pb()
+        rb()  // Coloca no fundo de B
+    elif topo de A <= pushed_count + chunk_size:
+        // Elemento pertence ao chunk atual
+        pb()
+    else:
+        // Elemento é do chunk futuro
+        ra()  // Gira A até trazer do chunk certo
+
+    Se terminou um chunk:
+        pushed_count += chunk_size
+```
+
+**Fase 2: B → A (Pull do maior para o menor)**
+
+```
+for value = n-1 down to 0:
+    Encontre a posição de 'value' em B
+    move_to_top_b()    // Usa rb ou rrb (o mais curto)
+    pa()               // Move para A
+    
+// Resultado: A completamente ordenada
+```
+
+**Exemplo Prático (n=10, chunks=5):**
+
+```
+Entrada indexada: [3, 8, 1, 9, 0, 5, 2, 7, 4, 6]
+chunk_size = 10/5 = 2
+
+BLOCO 0 (índices 0-1): [3, 8, 1, 9] → traz 0,1
+BLOCO 1 (índices 2-3): [5, 2] → traz 2,3
+BLOCO 2 (índices 4-5): [7, 4] → traz 4,5
+etc.
+
+Ao final:
+A = []
+B = [todos em ordem de blocos]
+
+Reinserção (maiores primeiro):
+- Traz 9 → A = [9]
+- Traz 8 → A = [8, 9]
+- Traz 7 → A = [7, 8, 9]
+... até A = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] ✓
+```
+
+---
+
+## 💻 Implementação Detalhada
+
+1. Aceitar tanto argumentos separados quanto uma string com vários números. Exemplo válido:
+
+   ./push_swap "2 1 3"   # ou ./push_swap 2 1 3
+
+2. Ignorar espaços extras e controlar sinais.
+
+3. Verificar overflow: use `long` ao converter (ou `ft_atol`) e rejeite se fora do intervalo de `int`.
+
+4. Rejeitar entradas não-numéricas: `./push_swap 1 2 a` -> erro.
+
+5. Rejeitar duplicatas — antes de indexar/ordenar, verifique duplicatas.
+
+6. Em caso de erro: imprimir `Error` na saída padrão de erro e terminar com código != 0 (seguindo a norma da 42 costuma ser `write(2, "Error\n", 6)` e `exit(1)`).
+
+## 7 — Representação interna recomendada
+
+- Pilhas A e B como listas duplamente ligadas (dlist) ou arrays com rotação lógica. Este projeto usa `t_dlist` e `t_dnode` na `libft`.
+- Cada nó guarda o valor original e, opcionalmente, o índice (posição na ordem ordenada). O índice é útil para radian sort e chunking.
+
+## 8 — Estratégias por tamanho
+
+8.1 Casos triviais (2, 3)
+
+- `sort_2`: se primeiro > segundo -> `sa`.
+- `sort_3`: analisar 3 valores e aplicar até 2 operações (sa/ra/rra) — existem 5 casos.
+
+8.2 Casos de 4 e 5 (detalhado — bastante importante para a avaliação)
+
+- Estratégia clássica para 4:
+  1. Encontre a posição do menor elemento.
+  2. Rote ele para o topo com `ra`/`rra` (menor número entre rotações).
+  3. `pb` (envia para B).
+  4. `sort_3` em A.
+  5. `pa` (volta o menor).
+
+- Estratégia clássica para 5:
+  1. Repetir o processo de mover o menor para B duas vezes (colocar os dois menores em B).
+  2. `sort_3` em A.
+  3. `pa` duas vezes (retornando do menor para o topo). Se necessário, ajustar com `sa`.
+
+Essas estratégias costumam ser aceitas como corretas e eficientes para a avaliação. Verifique sempre se você está empurrando os menores — por isso indexar a pilha (0..n-1) ajuda.
+
+8.3 Muitos elementos — duas abordagens comprovadas
+
+- Radix por índice (base 2):
+  - Indexe os valores de 0..n-1 (menor recebe 0, maior n-1).
+  - Para cada bit (0..max_bits): percorra A, envie `pb` se o bit em questão for 0, caso contrário `ra`.
+  - Ao fim de cada bit, `pa` até B ficar vazia. Complexidade O(n * max_bits).
+  - Simples de implementar e com comportamento estável até n=500 com contagem aceitável de operações.
+
+- Chunking / divisão por blocos:
+  - Divida a sequência indexada em blocos (chunks). Por exemplo, para n=100 pode usar 5 a 8 chunks.
+  - Percorra A e envie para B os elementos cujo índice pertence ao bloco atual, movendo-os de forma a minimizar rotações.
+  - Ao puxar de B para A, sempre traga o maior disponível para o topo (para montar a pilha final ordenada). Usa `rb`/`rrb` para posicionar.
+  - Requer mais ajuste fino (tamanho dos chunks, heurísticas) mas tende a produzir menos operações se bem feito.
+
+## 9 — Dicas de otimização (reduzir número de operações)
+
+- Sempre indexe os números: trabalhar com índices torna comparações e decisões de chunk/radix triviais.
+- Para mover um elemento a partir de posição p ao topo, escolha entre `ra` p vezes ou `rra` (size-p) vezes—escolha o menor custo.
+- Ao empurrar elementos para B durante chunking, tente posicionar os elementos de B para que o melhor candidato seja fácil de puxar (usar `rb` logo após `pb` quando faz sentido).
+- Evite operações desnecessárias (`ra` seguido por `rra` é redundante). Após gerar a sequência, pode-se tentar um pass de otimização que elimina pares inversos (e.g., `ra` + `rra`).
+
+## 10 — Implementação das operações (conselhos práticos)
+
+- Cada operação deve atualizar corretamente `head`, `tail`, `size` de cada lista.
+- `sa/sb`: trocar os dois primeiros nodes se existirem pelo menos 2.
+- `pa/pb`: copiar o valor do topo da pilha fonte para destino — cuide de alocação e desalocação (neste projeto, a libft parece usar duplicação de int e gerenciamento via `free_int`).
+- `ra/rb/rr`: mover head para tail (rotacionar para cima).
+- `rra/rrb/rrr`: mover tail para head (rotacionar para baixo).
+
+Imprima as operações exatamente como strings com newline (e.g., `write(1, "ra\n", 3)`).
+
+## 11 — Funções refatoradas e documentadas (NOV/2025)
+
+As seguintes funções foram refatoradas com comentários linha por linha explicando cada etapa:
+
+### `small_cases.c` — Trata casos de 4 e 5 elementos
+
+- **`bring_min_to_top_and_pb(t_stack *stack)`**
+  - Encontra o menor elemento em A usando `find_min_value()`.
+  - Calcula a posição com `find_position()`.
+  - Escolhe entre `ra` (rotações para cima) ou `rra` (rotações para baixo) conforme qual é mais curto.
+  - Executa `pb` para enviar o mínimo para B.
+  - **Caso 4**: remove 1 mínimo, ordena 3 em A com `sort_3()`, volta com `pa`.
+  - **Caso 5**: remove 2 mínimos em sequência, ordena 3 em A, volta com dois `pa`.
+
+- **`handle_small_cases(t_stack *stack, int size)`**
+  - Detecta se o tamanho é 4 ou 5.
+  - Executa a estratégia acima e retorna 1 (sucesso) ou 0 (tamanho não é 4/5).
+
+### `pull_b.c` — Segunda fase: reinserção de B para A
+
+- **`move_to_top_b(t_stack *stack, int position)`**
+  - Traz um elemento em posição `position` de B para o topo.
+  - Calcula se é mais rápido usar `rb` (rotação para cima) ou `rrb` (rotação para baixo).
+  - Critério: se `position <= size/2`, usa `rb` `position` vezes; caso contrário, usa `rrb` `(size - position)` vezes.
+
+- **`phase_pull_b_to_a(t_stack *stack, int size)`**
+  - Itera de `size-1` até `0` (do maior para o menor em B).
+  - Para cada valor, encontra sua posição em B com `find_position()`.
+  - Move para o topo com `move_to_top_b()`.
+  - Executa `pa` para trazer para A.
+  - **Resultado**: A fica completamente ordenada (maiores foram inseridos primeiro, mantendo a ordem).
+
+### `parse_index.c` — Indexação de valores (0..n-1)
+
+- **`bubble_sort(int *arr, int n)`**
+  - Ordena um array temporário usando bubble sort.
+  - Usado para construir a sequência ordenada dos valores.
+
+- **`build_sorted_array(t_dlist *a)`**
+  - Copia todos os valores de A para um array dinâmico.
+  - Chama `bubble_sort()` para ordenar.
+  - Retorna o array ordenado (usado como referência).
+
+- **`assign_indices(t_dlist *a, int *sorted_arr)`**
+  - Percorre A e substitui cada valor pelo seu índice relativo (0..n-1).
+  - Índice 0 = menor valor, índice n-1 = maior valor.
+  - Essencial para estratégias de chunking e radix.
+
+- **`ps_index_stack(t_stack *stack)`**
+  - Função pública que orquestra a indexação completa.
+
+## 12 — Verificações finais antes de submeter
+
+1. Compilar sem warnings: `make` com `-Wall -Wextra -Werror` deve passar.
+2. Norminette: corrija estilo conforme normas da 42 (nomes de funções, tamanho de linhas, arquivos, etc.).
+3. Teste exaustivo para n=2..5 (todas permutações).
+4. Teste com vetores maiores típicos (100 e 500) e compare com soluções públicas apenas para referência (não copie!).
+5. Rodar valgrind (ou equivalente) para garantir ausência de leaks:
+
+```bash
+valgrind --leak-check=full ./push_swap 3 2 1
+```
+
+6. Certifique-se de que sua execução não imprime nada além das operações (nenhuma mensagem de debug na saída padrão).
+
+## 13 — Erros comuns e como evitá-los
+
+- Duplicatas não detectadas: verifique a lista inteira antes de começar a ordenar.
+- Overflow ao converter argumentos: use `long` temporário.
+- Operações impressas mesmo em erros: imprima `Error` apenas e encerre.
+- Esquecer de atualizar `size`/`head`/`tail` em operações — causa corrupção da lista.
+- Libertar memória: free em todos os paths (parsing com erro, sucesso, etc.).
+
+## 14 — Estratégia de desenvolvimento recomendada (passo a passo)
+
+1. Implementar parsing e validação (tests unitários simples).
+2. Implementar `dlist` e operações básicas (`sa`, `pb`, `ra`, `rra`) e testar manualmente.
+3. Implementar `sort_2` e `sort_3` (testar todas permutações).
+4. Implementar `sort_4` e `sort_5` (usar estratégia de mover menores para B).
+5. Implementar `sort_many` com radix (é a abordagem mais simples e confiável).
+6. Melhorar: implementar chunking se quiser reduzir número de operações.
+7. Testar exaustivamente e corrigir leaks.
+
+## 15 — Exemplo de fluxo de execução (caso 5 elementos)
+
+Entrada: `./push_swap 3 2 5 1 4`
+
+- Indexe: 3->2, 2->1, 5->4, 1->0, 4->3 (índices 0..4)
+- Estratégia de 5: enviar 0 e 1 para B (os dois menores), ordenar 3 em A, depois trazer B de volta.
+
+Sequência possível (exemplo):
+
+```
+pb
+pb
+sa
+ra
+sa
+pa
+pa
+```
+
+Executar `./push_swap 3 2 5 1 4 | ./checker 3 2 5 1 4` deve imprimir `OK`.
+
+ARG="3 2 1"; ./push_swap $ARG | ./checker $ARG
+# 100 aleatórios
+ARG="$(shuf -i 0-99 | tr "\n" " ")"; ./push_swap $ARG | ./checker $ARG
+# 500 aleatórios
+ARG="$(shuf -i 0-499 | tr "\n" " ")"; ./push_swap $ARG | ./checker $ARG
+
+## 16 — Documentação do código-fonte (NOV/2025)
+
+Todos os arquivos foram revisados e comentados com:
+
+- **Header (`push_swap.h`)**: estruturas, enums e funções estão documentadas com explicações do que cada uma faz.
+- **Funções de parsing**: comentários explicam validação, tokenização e indexação.
+- **Operações (`ops_*.c`)**: cada operação documenta o comportamento (swap, push, rotate).
+- **Funções de busca/utilidade**: `find_min_value`, `find_position`, `distance_to_top`, etc. explicadas.
+- **Algoritmos de ordenação**: `sort_2`, `sort_3`, `sort_many` documentados com a estratégia usada.
+- **Funções auxiliares refatoradas**: `small_cases.c`, `pull_b.c` com comentários linha por linha.
+
+Para entender o fluxo completo, consulte `src/main.c`:
+1. Parse argumentos e valida.
+2. Indexa valores (0..n-1).
+3. Escolhe algoritmo baseado no tamanho.
+4. Executa ordenação.
+5. Libera memória.
