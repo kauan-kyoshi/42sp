@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:31:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/11/11 12:56:29 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/11/11 16:29:20 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,15 @@ void	sort_many(t_stack *stack);
 /* ===== CHECKER HELPERS ===== */
 /* aplica uma operação (string como "ra\n") na stack e retorna 1 se válida */
 int		apply_op(t_stack *stack, const char *op);
+
+/* ===== HELPER FUNCTIONS PARA ORDENAÇÃO (PHASES) ===== */
+/* traz um elemento na posição 'position' de B para o topo escolhendo rb ou rrb */
+void	move_to_top_b(t_stack *stack, int position);
+/* segunda fase: reinsere todos os elementos de B de volta em A (do maior para o menor) */
+void	phase_pull_b_to_a(t_stack *stack, int size);
+/* traz o menor elemento de A para o topo e o move para B (operação auxiliar para 4/5) */
+void	bring_min_to_top_and_pb(t_stack *stack);
+/* trata casos especiais de 4 e 5 elementos, retorna 1 se tratou, 0 caso contrário */
+int		handle_small_cases(t_stack *stack, int size);
 
 #endif
