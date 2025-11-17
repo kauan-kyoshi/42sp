@@ -6,11 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:53:19 by kakubo-l          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/11/17 13:51:58 by kakubo-l         ###   ########.fr       */
-=======
-/*   Updated: 2025/11/17 17:31:57 by kakubo-l         ###   ########.fr       */
->>>>>>> d03478c (done)
+/*   Updated: 2025/11/17 17:51:20 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +15,6 @@
  * BIT_0 = SIGUSR1, BIT_1 = SIGUSR2, ACK_SIGNAL = SIGUSR1
  */
 
-<<<<<<< HEAD
-#include "includes/minitalk.h"
-#include <signal.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <stdlib.h>
-
-=======
 #include "includes/minitalk.h" /* include do header do projeto com macros/definições */
 #include <signal.h> /* para sigaction, kill, sig_atomic_t */
 #include <unistd.h> /* para write, pause, usleep */
@@ -49,7 +37,6 @@
  * - O loop de envio no fluxo principal lê esse contador para detectar a
  *   chegada de cada ACK e só prossegue quando o contador muda.
  */
->>>>>>> d03478c (done)
 static volatile sig_atomic_t	g_ack_count = 0;
 
 
