@@ -6,13 +6,11 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:53:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/11/14 17:27:36 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/11/17 13:51:58 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "includes/minitalk.h"
-
 static t_state	g_state = {0, 0, 0};
 
 static void	process_full_byte(pid_t sender)
