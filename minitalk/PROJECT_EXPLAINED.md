@@ -161,6 +161,27 @@ Como isso foi implementado aqui:
   - Mensagens que contenham o byte `0x00` embutido (NUL) não podem ser transmitidas porque `client` usa uma C-string terminada em NUL para decidir o fim da mensagem.
   - O protocolo não faz validação do fluxo UTF-8; se bytes inválidos chegarem, o servidor os imprimirá igualmente.
 
+### Como TODOS os caracteres (incluindo Unicode UTF-8) são tratados — localização e detalhes técnicos no código
+
+- Onde o cliente envia bytes:
+  - Arquivo: `client.c`
+  - Local: `main` iterando `argv[2][i]` e chamando `send_char(server_pid, (unsigned char)argv[2][i])`.
+  - Por que `(unsigned char)`: garante que o byte seja tratado sem sinal antes de fazer shift/mascara de bits — evita problemas quando `char` é signed.
+  - A função `send_char(pid_t server_pid, unsigned char c)` faz o envio bit-a-bit com `((c >> i) & 1)` e envia sinais `BIT_0`/`BIT_1` para cada bit (MSB-first). Cada byte é fragmentado em 8 sinais, sem nenhuma interpretação de codificação.
+
+- Onde o servidor reconstrói e imprime bytes:
+  - Arquivo: `server.c`
+  - Local: `handler` (reconstrói `g_state.current_char` bit-a-bit) e `process_full_byte` (quando `bit_count == 8`).
+  - `process_full_byte` faz `c = (unsigned char)g_state.current_char;` seguido de `write(1, &c, 1);` para emitir o byte ao stdout.
+
+- Efeito prático:
+  - O sistema transmite e escreve exatamente os bytes enviados pelo cliente. Como UTF-8 representa cada símbolo como uma sequência de bytes, todos os símbolos UTF-8 são preservados byte-a-byte e corretamente exibidos no terminal, desde que o terminal esteja em UTF-8.
+
+- Observações importantes:
+  - O código transmite por bytes; ele não interpreta ou valida sequências UTF-8. Isso é suficiente e desejado para compatibilidade com C-strings e terminais UTF-8.
+  - A presença do NUL (`\0`) define o fim da mensagem: portanto não é possível enviar bytes NUL embutidos sem mudar o protocolo.
+  - Se quiser transmitir pontos de código Unicode em vez de bytes, seria preciso converter a string para code points e enviar inteiros (mudança grande no protocolo).
+
 ## Ajustes de robustez e escolhas feitas
 
 - Timeout no cliente: implementado um limite para a espera final (2000 × 1 ms ≈ 2s) para evitar bloqueios indefinidos.
