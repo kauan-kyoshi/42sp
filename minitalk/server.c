@@ -5,55 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/10 15:40:23 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/11/10 15:40:24 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/11/13 16:53:30 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/11/14 17:27:36 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-// Função para lidar com os sinais recebidos
-void	handle_signal(int signum)
+#include "includes/minitalk.h"
+
+static t_state	g_state = {0, 0, 0};
+
+static void	process_full_byte(pid_t sender)
 {
-	static unsigned char	current_char = 0;
-	static int				bit_count = 0;
+	unsigned char	c;
 
-	// Define o bit correspondente com base no sinal recebido
-	if (signum == SIGUSR1)
-		current_char |= (1 << (7 - bit_count)); // Define o bit como 1
-
-	bit_count++;
-
-	// Quando 8 bits forem recebidos, o caractere está completo
-	if (bit_count == 8)
+	if (g_state.current_char == 0)
 	{
-		// Se o caractere for nulo, a string terminou
-		if (current_char == '\0')
-			write(1, "\n", 1);
-		else
-			write(1, &current_char, 1); // Imprime o caractere
-
-		// Reseta para o próximo caractere
-		bit_count = 0;
-		current_char = 0;
+		write(1, "\n", 1);
+		kill(sender, COMPLETE_ACK);
+		g_state.client_pid = 0;
 	}
+	else
+	{
+		c = (unsigned char)g_state.current_char;
+		write(1, &c, 1);
+	}
+	g_state.current_char = 0;
+	g_state.bit_count = 0;
+}
+
+static void	handler(int sig, siginfo_t *info, void *ucontext)
+{
+	pid_t	sender;
+
+	(void)ucontext;
+	sender = info->si_pid;
+	if (g_state.client_pid == 0)
+		g_state.client_pid = sender;
+	if (sender != g_state.client_pid)
+	{
+		g_state.current_char = 0;
+		g_state.bit_count = 0;
+		g_state.client_pid = sender;
+	}
+	if (sig == BIT_1)
+		g_state.current_char = (g_state.current_char << 1) | 1;
+	else
+		g_state.current_char = (g_state.current_char << 1);
+	g_state.bit_count++;
+	if (g_state.bit_count == 8)
+		process_full_byte(sender);
+	kill(sender, ACK_SIGNAL);
 }
 
 int	main(void)
 {
-	// Imprime o PID do servidor
-	printf("Server PID: %d\n", getpid());
+	struct sigaction	sa;
 
-	// Configura os handlers para os sinais SIGUSR1 e SIGUSR2
-	signal(SIGUSR1, handle_signal);
-	signal(SIGUSR2, handle_signal);
-
-	// Loop infinito para manter o servidor em execução
+	sa.sa_sigaction = handler;
+	sa.sa_flags = SA_SIGINFO;
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR2);
+	if (sigaction(SIGUSR1, &sa, NULL) == -1)
+		write(1, "sigaction error\n", 17);
+	if (sigaction(SIGUSR2, &sa, NULL) == -1)
+		write(1, "sigaction error\n", 17);
+	ft_printf("Server PID: %d\n", getpid());
 	while (1)
-		pause(); // Aguarda por um sinal
-
+		;
 	return (0);
 }
