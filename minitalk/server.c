@@ -6,14 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 16:53:30 by kakubo-l          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/11/17 13:51:58 by kakubo-l         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "includes/minitalk.h"
-=======
-/*   Updated: 2025/11/17 17:31:57 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:48:49 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +30,6 @@
  * - Usar campos globais de tipo sig_atomic_t (ou campos protegidos) é a
  *   abordagem padrão para compartilhar estado simples entre handler e main.
  */
->>>>>>> d03478c (done)
 static t_state	g_state = {0, 0, 0};
 
 
