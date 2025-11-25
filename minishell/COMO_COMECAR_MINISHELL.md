@@ -87,8 +87,11 @@ Builtins (comportamento mínimo)
 - [ ] `exit` sem opções sai do shell com o código apropriado.
 
 Sinais
-- [ ] Implementar tratamento de SIGINT (Ctrl-C) e SIGQUIT (Ctrl-\) com a única variável global.
-- [ ] Em execução de pipeline/processos filhos, sinais devem ser repassados corretamente e comportamento similar ao bash.
+ - [x] Implementar tratamento de SIGINT (Ctrl-C) e SIGQUIT (Ctrl-\) com a única variável global. (implementado em `src/main.c`)
+ - [x] Handlers instalados com `sigaction()` em `src/main.c`. (implementado)
+ - [ ] Em execução de pipeline/processos filhos, sinais devem ser repassados corretamente e comportamento similar ao bash.
+
+Observação: o repasse correto de sinais para processos filhos em pipelines ainda não foi implementado; isso exige configurar grupos de processos e usar `setpgid`/`tcsetpgrp` conforme necessário.
 
 Memória e qualidade
 - [x] `free(line)` após uso (implementado em `src/main.c`)

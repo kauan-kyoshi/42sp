@@ -1,16 +1,16 @@
+#include "minishell.h"
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static volatile sig_atomic_t g_last_signal = 0;
+volatile sig_atomic_t g_last_signal = 0;
 
-static void sigint_handler(int sig)
+void sigint_handler(int sig)
 {
-    (void)sig;
     g_last_signal = sig;
     write(1, "\n", 1);
     rl_on_new_line();
@@ -18,7 +18,7 @@ static void sigint_handler(int sig)
     rl_redisplay();
 }
 
-static void sigquit_handler(int sig)
+void sigquit_handler(int sig)
 {
     (void)sig;
 }
@@ -27,8 +27,20 @@ int main(void)
 {
     char *line;
 
-    signal(SIGINT, sigint_handler);
-    signal(SIGQUIT, sigquit_handler);
+        
+    struct sigaction sa;
+
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = sigint_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    if (sigaction(SIGINT, &sa, NULL) == -1)
+        perror("sigaction(SIGINT)");
+
+    sa.sa_handler = sigquit_handler;
+    if (sigaction(SIGQUIT, &sa, NULL) == -1)
+        perror("sigaction(SIGQUIT)");
+
 
     while (1)
     {
@@ -36,7 +48,10 @@ int main(void)
         if (!line) 
             break;
         if (line[0] != '\0')
+        {
+            printf("%s\n",line);
             add_history(line);
+        }
 
         if (strcmp(line, "ls") == 0)
             puts("mostra a lista do diretorio atual");
