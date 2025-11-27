@@ -1,12 +1,12 @@
-# **************************************************************************** #
-# MAKEFILE MINIMAL PARA O PROJETO MINISHELL
-# Targets: all, clean, fclean, re, NAME
-
 NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
+SUPP_FILE = readline.supp
 SRCS = $(wildcard src/*.c)
-OBJS = $(SRCS:.c=.o)
+OBJ_DIR = objs
+OBJS = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+
+
 
 LIBFT_DIR = libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
@@ -16,15 +16,22 @@ all: $(NAME)
 $(NAME): $(OBJS) $(LIBFT_A)
 	$(CC) $(CFLAGS) -I include -L $(LIBFT_DIR) -o $(NAME) $(OBJS) -lft -lreadline
 
-%.o: %.c
+$(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I include -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 $(LIBFT_A):
 	@echo "Assumindo que libft está pronta em $(LIBFT_DIR)"
 	@$(MAKE) -C $(LIBFT_DIR)
 
+
+valgrind: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=$(SUPP_FILE) ./$(NAME)
+
 clean:
-	@rm -f $(OBJS)
+	@rm -rf $(OBJ_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean || true
 
 fclean: clean

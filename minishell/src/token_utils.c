@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/25 16:05:52 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/11/25 18:09:42 by kakubo-l         ###   ########.fr       */
+/*   Created: 2025/11/25 16:04:12 by kakubo-l          #+#    #+#             */
+/*   Updated: 2025/11/27 16:16:08 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,65 +15,72 @@
 #include <string.h>
 #include <stdio.h>
 
-t_token *token_new(t_token_type type, const char *raw)
+t_token	*token_new(t_token_type type, const char *str)
 {
-	 t_token *t;
+	t_token	*t;
 
-	 t = malloc(sizeof *t);
-	 if (!t)
-		 return (NULL);
-	 t->type = type;
-	 t->raw = raw ? strdup(raw) : NULL;
-	 t->next = NULL;
-	 return (t);
+	t = malloc(sizeof(t_token));
+	if (!t)
+		return (NULL);
+	t->type = type;
+	t->raw = NULL;
+	t->no_expand = 0;
+	if (str)
+	{
+		t->raw = malloc(strlen(str) + 1);
+		if (!t->raw)
+		{
+			free(t);
+			return (NULL);
+		}
+		strcpy(t->raw, str);
+	}
+	t->next = NULL;
+	return (t);
 }
 
-void    token_append(t_token **head, t_token *node)
+void	token_append(t_token **head, t_token *node)
 {
-	 t_token *p;
+	t_token	*it;
 
-	 if (!node)
-		 return;
-	 if (!*head)
-	 {
-		 *head = node;
-		 return;
-	 }
-	 p = *head;
-	 while (p->next)
-		 p = p->next;
-	 p->next = node;
+	if (!head || !node)
+		return ;
+	if (!*head)
+	{
+		*head = node;
+		return ;
+	}
+	it = *head;
+	while (it->next)
+		it = it->next;
+	it->next = node;
 }
 
-void    token_free_all(t_token *tok)
+void	token_free_all(t_token *head)
 {
-	 while (tok)
-	 {
-		 t_token *n;
+	t_token	*tmp;
 
-		 n = tok->next;
-		 free(tok->raw);
-		 free(tok);
-		 tok = n;
-	 }
+	while (head)
+	{
+		tmp = head->next;
+		if (head->raw)
+			free(head->raw);
+		free(head);
+		head = tmp;
+	}
 }
 
-void    token_debug_print(const t_token *tok)
+void	token_debug_print(const t_token *head)
 {
-	 static const char *names[] = {
-		 "WORD", "PIPE", "REDIR_IN", "REDIR_OUT",
-		 "REDIR_APPEND", "HEREDOC", "END", "ERROR"
-	 };
-	 const char *name;
+	const char	*val;
 
-	 while (tok)
-	 {
-		 if (tok->type >= 0 && tok->type <= TOK_ERROR)
-			 name = names[tok->type];
-		 else
-			 name = "UNKNOWN";
-		 printf("TOKEN %-13s : \"%s\"\n", name,
- tok->raw ? tok->raw : "(null)");
-		 tok = tok->next;
-	 }
+	while (head)
+	{
+		if (head->raw)
+			val = head->raw;
+		else
+			val = "(null)";
+		printf("type=%d raw=%s\n", head->type, val);
+		head = head->next;
+	}
 }

@@ -61,11 +61,15 @@ Funcionalidade básica
 - [x] Implementar apenas uma variável global para sinal (apenas número do sinal). (implementado: `g_last_signal` como `sig_atomic_t`)
 
 Parsing e expansão
-- [ ] Tokenização correta (palavras, pipes `|`, redirecionadores `<`, `>`, `>>`, `<<`).
-- [ ] Tratamento de aspas simples: impede expansão e interpretação de metacaracteres no conteúdo.
-- [ ] Tratamento de aspas duplas: impede interpretação exceto expansão de `$`.
-- [ ] Expansão de variáveis `$VAR` e `$?` usando o ambiente e último status.
-- [ ] Heredoc (`<<`) lê até o delimitador; o conteúdo do heredoc não deve ir para o histórico.
+- [x] Tokenização básica implementada (palavras, pipes `|`, redirecionadores `<`, `>`, `>>`, `<<`) — `lexer_tokenize` em `src/lexer.c` junto com helpers em `src/lexer_helpers.c`.
+- [x] Tratamento de aspas (remoção das aspas no token final) implementado: `collect_word` constrói tokens sem as aspas.
+- [ ] Tratamento completo de aspas duplas (expansão dentro de `"..."`) — remoção das aspas feita, mas expansão ainda precisa ser implementada.
+- [ ] Expansão de variáveis `$VAR` e `$?` usando o ambiente e último status (ainda não implementado). Sugestão: implementar `expand_tokens(t_token *head, char **env, int last_status)`.
+- [ ] Heredoc (`<<`) leitura e armazenamento (arquivo temporário ou buffer) ainda não implementados.
+
+Parser (tokens -> comandos)
+- [x] Parser simples implementado (`src/parser.c`, `include/parser.h`): agrupa `TOK_WORD` em `argv`, associa redirecionamentos ao comando correto, e separa comandos por `TOK_PIPE`.
+  - Observação: parser atual é minimalista — validações simples (redir sem alvo, pipe sem comando) e `HEREDOC` tratado apenas como redirecionador que aponta para token seguinte; leitura do heredoc ainda é necessária.
 
 Execução
 - [ ] Executar comandos por caminho absoluto/relativo ou pesquisando em `PATH`.
