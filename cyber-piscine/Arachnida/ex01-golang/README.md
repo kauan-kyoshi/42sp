@@ -1,3 +1,19 @@
+# Arachnida Go Spider
+
+Implementação simples em Go que baixa imagens referenciadas em uma página HTML.
+
+Compilar:
+```bash
+cd ex01-golang
+go build -o spider
+```
+
+Executar:
+```bash
+./spider https://example.com
+```
+
+As imagens encontradas serão salvas em `ex01-golang/data/`.
 # Arachnida — Spider em Go (ex01-golang)
 
 Esta pasta contém uma implementação em Go do spider do exercício, com funcionalidade semelhante à versão em Python: busca e download de imagens, respeito básico a `robots.txt`, controle de profundidade, concorrência e politeness.

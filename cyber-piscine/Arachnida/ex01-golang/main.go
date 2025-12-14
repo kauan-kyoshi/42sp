@@ -1,6 +1,85 @@
 package main
 
 import (
+    "fmt"
+    "io"
+    "net/http"
+    "os"
+    "path/filepath"
+    "strings"
+    "sync"
+    "golang.org/x/net/html"
+)
+
+func isImage(u string) bool {
+    u = strings.ToLower(u)
+    return strings.HasSuffix(u, ".jpg") || strings.HasSuffix(u, ".jpeg") || strings.HasSuffix(u, ".png") || strings.HasSuffix(u, ".gif") || strings.HasSuffix(u, ".bmp")
+}
+
+func download(url, outdir string, wg *sync.WaitGroup) {
+    defer wg.Done()
+    resp, err := http.Get(url)
+    if err != nil { return }
+    defer resp.Body.Close()
+    if resp.StatusCode != 200 { return }
+    base := filepath.Base(url)
+    if base == "" { base = "image" }
+    out := filepath.Join(outdir, base)
+    f, err := os.Create(out)
+    if err != nil { return }
+    defer f.Close()
+    io.Copy(f, resp.Body)
+    fmt.Println("Saved:", out)
+}
+
+func parseImages(body io.Reader, base string) []string {
+    doc, err := html.Parse(body)
+    if err != nil { return nil }
+    var imgs []string
+    var walk func(*html.Node)
+    walk = func(n *html.Node) {
+        if n.Type == html.ElementNode && n.Data == "img" {
+            for _, a := range n.Attr {
+                if a.Key == "src" {
+                    src := a.Val
+                    if strings.HasPrefix(src, "http") {
+                        imgs = append(imgs, src)
+                    } else if strings.HasPrefix(src, "/") {
+                        imgs = append(imgs, base+src)
+                    }
+                }
+            }
+        }
+        for c := n.FirstChild; c != nil; c = c.NextSibling { walk(c) }
+    }
+    walk(doc)
+    return imgs
+}
+
+func main() {
+    if len(os.Args) < 2 {
+        fmt.Println("Usage: spider <url>")
+        return
+    }
+    url := os.Args[1]
+    outdir := "data"
+    os.MkdirAll(outdir, 0755)
+    resp, err := http.Get(url)
+    if err != nil { fmt.Println("fetch error", err); return }
+    defer resp.Body.Close()
+    imgs := parseImages(resp.Body, url)
+    var wg sync.WaitGroup
+    for _, img := range imgs {
+        if isImage(img) {
+            wg.Add(1)
+            go download(img, outdir, &wg)
+        }
+    }
+    wg.Wait()
+}
+package main
+
+import (
 	"flag"
 	"fmt"
 	"io"

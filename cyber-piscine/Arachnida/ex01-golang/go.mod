@@ -1,3 +1,6 @@
+module github.com/kauan-kyoshi/arachnida-ex01-golang
+
+go 1.20
 module arachnida/ex01-golang
 
 go 1.20
