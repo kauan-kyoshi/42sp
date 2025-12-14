@@ -1,0 +1,3 @@
+   3024 GCC: (Ubuntu 11.3.0-1ubuntu1~22.04) 11.3.0
+   304f Ubuntu clang version 14.0.0-1ubuntu1
+   3359 __do_global_dtors_aux_fini_array_entry

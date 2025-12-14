@@ -1,0 +1,36 @@
+The target architecture is set to "i386".
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+Ponto de parada 1 at 0x1237
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, 0x56556237 in main ()
+eax            0xffffc2b0          -15696
+ecx            0xffffc2cc          -15668
+edx            0xffffc2be          -15682
+ebx            0x56559000          1448448000
+esp            0xffffc2b0          0xffffc2b0
+ebp            0xffffc338          0xffffc338
+esi            0xffffc3fc          -15364
+edi            0xf7ffcb60          -134231200
+eip            0x56556237          0x56556237 <main+119>
+eflags         0x286               [ PF SF IF ]
+cs             0x23                35
+ss             0x2b                43
+ds             0x2b                43
+es             0x2b                43
+fs             0x0                 0
+gs             0x63                99
+
+--- hexdump: stack (esp-0x100 .. esp+0x200) ---
+0xffffff00:	Não é possível acessar a memória no endereço 0xffffff00
+
+--- hexdump: ebp-0x200 .. ebp+0x200 ---
+0xfffffe00:	Não é possível acessar a memória no endereço 0xfffffe00
+
+--- hexdump: memory at ebx (ebx .. ebx+0x400) ---
+0xfffffe01:	Não é possível acessar a memória no endereço 0xfffffe01

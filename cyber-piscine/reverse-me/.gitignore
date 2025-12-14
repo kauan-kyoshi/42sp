@@ -1,0 +1,4 @@
+# Do not commit extracted binaries
+binary/
+*.bin
+*.exe

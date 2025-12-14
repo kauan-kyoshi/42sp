@@ -1,0 +1,6 @@
+[pid 234819] printf("Please enter key: ")        = 18
+[pid 234819] __isoc99_scanf(0x6283ac705056, 0x7ffe3c17c2d0, 0, 0) = 1
+[pid 234819] puts("Nope.")                       = 6
+[pid 234819] exit(1Please enter key: Nope.
+ <no return ...>
+[pid 234819] +++ exited (status 1) +++

@@ -1,0 +1,10 @@
+
+/home/kyoshi/42/42-sp/cyber-piscine/reverse-me/binary/level3: formato do arquivo elf64-x86-64
+
+Conteúdo da seção .rodata:
+ 2000 01000200 2a2a2a2a 2a2a2a2a 006e6963  ....********.nic
+ 2010 65007472 79006275 74007468 69730069  e.try.but.this.i
+ 2020 74006e6f 742e0074 6861742e 00656173  t.not..that..eas
+ 2030 792e004e 6f70652e 00476f6f 64206a6f  y..Nope..Good jo
+ 2040 622e0050 6c656173 6520656e 74657220  b..Please enter 
+ 2050 6b65793a 20002532 337300             key: .%23s.     

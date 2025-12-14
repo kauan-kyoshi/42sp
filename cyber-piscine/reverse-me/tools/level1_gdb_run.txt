@@ -1,0 +1,42 @@
+GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
+Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+Ponto de parada 1 at 0x123c
+tools/gdb_lvl1.cmd:5: Error in sourced command file:
+Warning:
+Cannot insert breakpoint 1.
+Não é possível acessar a memória no endereço 0x123c
+
+[?2004h(gdb) Quit
+[?2004l[?2004h(gdb) quit
+[?2004l[?2004hA debugging session is active.
+
+	Inferior 1 [process 219901] will be killed.
+
+Quit anyway? (y or n) Quit
+[?2004l
+[?2004h(gdb) Quit
+[?2004l
+[?2004h(gdb) Quit
+[?2004l
+[?2004h(gdb) Quit
+[?2004l
+[?2004h(gdb) [?2004l

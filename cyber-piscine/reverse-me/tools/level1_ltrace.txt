@@ -1,0 +1,3 @@
+level1->strcmp("AAAA", "__stack_check")          = -1
+Please enter key: Nope.
++++ exited (status 0) +++

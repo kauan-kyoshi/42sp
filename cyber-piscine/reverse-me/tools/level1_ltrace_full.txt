@@ -1,0 +1,7 @@
+[pid 226958] __libc_start_main(0x5f22e1c0, 1, 0xfff0bd44, 0 <unfinished ...>
+[pid 226958] printf("Please enter key: ")        = 18
+[pid 226958] __isoc99_scanf(0x5f22f029, 0xfff0bc1c, 0x5f231000, 0x5f5f0001) = 1
+[pid 226958] strcmp("AAAA", "__stack_check")     = -1
+[pid 226958] printf("Nope.\n")                   = 6
+Please enter key: Nope.
+[pid 226958] +++ exited (status 0) +++

@@ -1,0 +1,99 @@
+```plaintext
+    194 /lib/ld-linux.so.2
+    31d _IO_stdin_used
+    32c __isoc99_scanf
+    33b strlen
+    34c __cxa_finalize
+    35b __libc_start_main
+    372 printf
+    37f strcmp
+    386 fflush
+    38d memset
+    394 libc.so.6
+    39e GLIBC_2.7
+    3a8 GLIBC_2.1.3
+    3b4 GLIBC_2.34
+    3bf GLIBC_2.0
+    3c9 _ITM_deregisterTMCloneTable
+    3e5 __gmon_start__
+    3f4 _ITM_registerTMCloneTable
+   200e Iii sapores crescit rei habetur disputo. An ab istud mo prius tanta error debet. Firma foret tes mea age capax sumne. Ex ex ipsas actum culpa neque ab saepe. Existenti et principia co immittere probandam imaginari re mo. Quapropter industriam ibi cui dissimilem cucurbitas progressus perciperem. Essendi ratione si habetur gi ignotas cognitu nusquam et.Sumpta vel uti obvium hoc tribuo libere. Egisse ingens hic sed inquam tamque rum gaudet aetate dat. Sum ignem jam ullas tur nexum vul. Divelli certius si errandi accipio colores de numerum. Is quavis tangam istius lumini essent vereor ab si. Aliam rea res tango vix simul certa certi.Imponere tractatu advenire ad superest occurret se quicquam si ha. Nihil solus pappo mo ei. Tum iis rom innata gloria hos quales. Ac sequentium im sufficeret institutum ad permittere at. Aliquis aliarum quaenam at de totaque notitia ob exhibet. Simus tes sae sacra error. Neque nomen ac ad opera is reges gi nobis. Se in objectivae ab is offerendum videbuntur satyriscos. Uno sequor tritam mediam essent eae usu rea. 			Actum situs ideam solum uti signa mem. De ignotas errores gi remotam invenio suppono. At argumentis facultatem attendenti explicatur transferre ob du reperiatur. Gi du mali quod fuit an unum ei. Mea sperare ego sentiat idearum spatium quaedam. Prius cur locus utrum hodie porro mente ope. Accepit liberam externo qui fal. 			Volunt illico eas animus ita odores sacras ima. De ipsa vi ad deus alio ut deum. Acquiri aliquot in liquida vi maximam is timenda. Ad aliquandiu ei facillimam repugnaret scripturas. Mearum imo namque falsae notatu hic mea non. Ero communibus exponantur hae sui quo virtutibus aliquandiu. 			Neque fieri horum errem ab me eo credo. Hanc sic meo quae ipsa. Fal membrorum existenti conservet per sapientia dubitavit. Apta gi de et enim gnum data. Id quadratam ut archimede attingere re ne. Humanam infusum has iis veteris mei occasio replere istarum. Emanant poterit capaces at in numerum de exigere ob chartam. Cui tollitur periculi cau veniebat. Communibus vi at ut permittere ex progressum pauperrimi conflantur. Mentibus eo patiatur dependet et reliquis tenebras. Peccant ejusdem apertum et dicetur mo at. Ingeniosi exponetur sequentia si se. Affirmarem respondere desiderant ac vi quantumvis praecipuus se ex. Ob externis tangatur existens recenseo ac. Una summam ens essent optime tempus firmum realis eos. Cetera fallat sic numero mei inquam rom ope revera. Causis humana fal verius ausint ope. Odor has alia otii dare ausi nunc quo agi. Praefatio du componant albedinem ad perlegere. Externarum ne si archimedes negationem. Praeditis scriptura antiquius cupientem ea nonnullae recurrunt ad. Simile ut ne egisse animos fingam de. Scirem in coelum possim altera co
+   2acc Author gi ex si im fallat istius. Refutent supposui qua sim nihilque. Me ob omni ideo gnum casu. Gi supersunt colligere inhaereat me sapientia is delaberer. Rom facillimam rem expectabam rum inchoandum mei. Apertum id suppono ac generis. Ab scio ad eo deus haud meae. Hominem ex vi ut remanet at quidnam. 			Tunc ullo ut anno poni voce de haud. Mallent prudens suo deumque qui sim invicem. Suum mo item inde de modi unde. Suo deo omni quia opus. Co an habent inesse semper.Et innatas dominum cogitem sperare sopitum in. Substantia dei credidisse vim iis excogitent exhibentur sub.
+   2d11 Good job.
+   2d1b Please enter key: 
+   2d33 delabere
+   2d3c Iii sapores crescit rei habetur disputo. An ab istud mo prius tanta error debet. Firma foret tes mea age capax sumne. Ex ex ipsas actum culpa neque ab saepe. Existenti et principia co immittere probandam imaginari re mo. Quapropter industriam ibi cui dissimilem cucurbitas progressus perciperem. Essendi ratione si habetur gi ignotas cognitu nusquam et.Sumpta vel uti obvium hoc tribuo libere. Egisse ingens hic sed inquam tamque rum gaudet aetate dat. Sum ignem jam ullas tur nexum vul. Divelli certius si errandi accipio colores de numerum. Is quavis tangam istius lumini essent vereor ab si. Aliam rea res tango vix simul certa certi.Imponere tractatu advenire ad superest occurret se quicquam si ha. Nihil solus pappo mo ei. Tum iis rom innata gloria hos quales. Ac sequentium im sufficeret institutum ad permittere at. Aliquis aliarum quaenam at de totaque notitia ob exhibet. Simus tes sae sacra error. Neque nomen ac ad opera is reges gi nobis. Se in objectivae ab is offerendum videbuntur satyriscos. Uno sequor tritam mediam essent eae usu rea. 			Actum situs ideam solum uti signa mem. De ignotas errores gi remotam invenio suppono. At argumentis facultatem attendenti explicatur transferre ob du reperiatur. Gi du mali quod fuit an unum ei. Mea sperare ego sentiat idearum spatium quaedam. Prius cur locus utrum hodie porro mente ope. Accepit liberam externo qui fal. 			Volunt illico eas animus ita odores sacras ima. De ipsa vi ad deus alio ut deum. Acquiri aliquot in liquida vi maximam is timenda. Ad aliquandiu ei facillimam repugnaret scripturas. Mearum imo namque falsae notatu hic mea non. Ero communibus exponantur hae sui quo virtutibus aliquandiu. 			Neque fieri horum errem ab me eo credo. Hanc sic meo quae ipsa. Fal membrorum existenti conservet per sapientia dubitavit. Apta gi de et enim gnum data. Id quadratam ut archimede attingere re ne. Humanam infusum has iis veteris mei occasio replere istarum. Emanant poterit capaces at in numerum de exigere ob chartam. Cui tollitur periculi cau veniebat. Communibus vi at ut permittere ex progressum pauperrimi conflantur. Mentibus eo patiatur dependet et reliquis tenebras. Peccant ejusdem apertum et dicetur mo at. Ingeniosi exponetur sequentia si se. Affirmarem respondere desiderant ac vi quantumvis praecipuus se ex. Ob externis tangatur existens recenseo ac. Una summam ens essent optime tempus firmum realis eos. Cetera fallat sic numero mei inquam rom ope revera. Causis humana fal verius ausint ope. Odor has alia otii dare ausi nunc quo agi. Praefatio du componant albedinem ad perlegere. Externarum ne si archimedes negationem. Praeditis scriptura antiquius cupientem ea nonnullae recurrunt ad. Simile ut ne egisse animos fingam de. Scirem in coelum possim altera co  
+   37fc Author gi ex si im fallat istius. Refutent supposui qua sim nihilque. Me ob omni ideo gnum casu. Gi supersunt colligere inhaereat me sapientia is delaberer. Rom facillimam rem expectabam rum inchoandum mei. Apertum id suppono ac generis. Ab scio ad eo deus haud meae. Hominem ex vi ut remanet at quidnam. 			Tunc ullo ut anno poni voce de haud. Mallent prudens suo deumque qui sim invicem. Suum mo item inde de modi unde. Suo deo omni quia opus. Co an habent inesse semper.Et innatas dominum cogitem sperare sopitum in. Substantia dei credidisse vim iis excogitent exhibentur sub.  
+   3a43 Nope. 
+   3a4a Iii sapores crescit rei habetur disputo. An ab istud mo prius tanta error debet. Firma foret tes mea age capax sumne. Ex ex ipsas actum culpa neque ab saepe. Existenti et principia co immittere probandam imaginari re mo. Quapropter industriam ibi cui dissimilem cucurbitas progressus perciperem. Essendi ratione si habetur gi ignotas cognitu nusquam et.Sumpta vel uti obvium hoc tribuo libere. Egisse ingens hic sed inquam tamque rum gaudet aetate dat. Sum ignem jam ullas tur nexum vul. Divelli certius si errandi accipio colores de numerum. Is quavis tangam istius lumini essent vereor ab si. Aliam rea res tango vix simul certa certi.Imponere tractatu advenire ad superest occurret se quicquam si ha. Nihil solus pappo mo ei. Tum iis rom innata gloria hos quales. Ac sequentium im sufficeret institutum ad permittere at. Aliquis aliarum quaenam at de totaque notitia ob exhibet. Simus tes sae sacra error. Neque nomen ac ad opera is reges gi nobis. Se in objectivae ab is offerendum videbuntur satyriscos. Uno sequor tritam mediam essent eae usu rea. 			Actum situs ideam solum uti signa mem. De ignotas errores gi remotam invenio suppono. At argumentis facultatem attendenti explicatur transferre ob du reperiatur. Gi du mali quod fuit an unum ei. Mea sperare ego sentiat idearum spatium quaedam. Prius cur locus utrum hodie porro mente ope. Accepit liberam externo qui fal. 			Volunt illico eas animus ita odores sacras ima. De ipsa vi ad deus alio ut deum. Acquiri aliquot in liquida vi maximam is timenda. Ad aliquandiu ei facillimam repugnaret scripturas. Mearum imo namque falsae notatu hic mea non. Ero communibus exponantur hae sui quo virtutibus aliquandiu. 			Neque fieri horum errem ab me eo credo. Hanc sic meo quae ipsa. Fal membrorum existenti conservet per sapientia dubitavit. Apta gi de et enim gnum data. Id quadratam ut archimede attingere re ne. Humanam infusum has iis veteris mei occasio replere istarum. Emanant poterit capaces at in numerum de exigere ob chartam. Cui tollitur periculi cau veniebat. Communibus vi at ut permittere ex progressum pauperrimi conflantur. Mentibus eo patiatur dependet et reliquis tenebras. Peccant ejusdem apertum et dicetur mo at. Ingeniosi exponetur sequentia si se. Affirmarem respondere desiderant ac vi quantumvis praecipuus se ex. Ob externis tangatur existens recenseo ac. Una summam ens essent optime tempus firmum realis eos. Cetera fallat sic numero mei inquam rom ope revera. Causis humana fal verius ausint ope. Odor has alia otii dare ausi nunc quo agi. Praefatio du componant albedinem ad perlegere. Externarum ne si archimedes negationem. Praeditis scriptura antiquius cupientem ea nonnullae recurrunt ad. Simile ut ne egisse animos fingam de. Scirem in coelum possim altera co   
+   450b Author gi ex si im fallat istius. Refutent supposui qua sim nihilque. Me ob omni ideo gnum casu. Gi supersunt colligere inhaereat me sapientia is delaberer. Rom facillimam rem expectabam rum inchoandum mei. Apertum id suppono ac generis. Ab scio ad eo deus haud meae. Hominem ex vi ut remanet at quidnam. 			Tunc ullo ut anno poni voce de haud. Mallent prudens suo deumque qui sim invicem. Suum mo item inde de modi unde. Suo deo omni quia opus. Co an habent inesse semper.Et innatas dominum cogitem sperare sopitum in. Substantia dei credidisse vim iis excogitent exhibentur sub.    
+   4753 Good job. 
+   475e Please entrer key: 
+   4772 %23s. 
+   4779 delabere. 
+   4789 Iii sapores crescit rei habetur disputo. An ab istud mo prius tanta error debet. Firma foret tes mea age capax sumne. Ex ex ipsas actum culpa neque ab saepe. Existenti et principia co immittere probandam imaginari re mo. Quapropter industriam ibi cui dissimilem cucurbitas progressus perciperem. Essendi ratione si habetur gi ignotas cognitu nusquam et.Sumpta vel uti obvium hoc tribuo libere. Egisse ingens hic sed inquam tamque rum gaudet aetate dat. Sum ignem jam ullas tur nexum vul. Divelli certius si errandi accipio colores de numerum. Is quavis tangam istius lumini essent vereor ab si. Aliam rea res tango vix simul certa certi.Imponere tractatu advenire ad superest occurret se quicquam si ha. Nihil solus pappo mo ei. Tum iis rom innata gloria hos quales. Ac sequentium im sufficeret institutum ad permittere at. Aliquis aliarum quaenam at de totaque notitia ob exhibet. Simus tes sae sacra error. Neque nomen ac ad opera is reges gi nobis. Se in objectivae ab is offerendum videbuntur satyriscos. Uno sequor tritam mediam essent eae usu rea. 			Actum situs ideam solum uti signa mem. De ignotas errores gi remotam invenio suppono. At argumentis facultatem attendenti explicatur transferre ob du reperiatur. Gi du mali quod fuit an unum ei. Mea sperare ego sentiat idearum spatium quaedam. Prius cur locus utrum hodie porro mente ope. Accepit liberam externo qui fal. 			Volunt illico eas animus ita odores sacras ima. De ipsa vi ad deus alio ut deum. Acquiri aliquot in liquida vi maximam is timenda. Ad aliquandiu ei facillimam repugnaret scripturas. Mearum imo namque falsae notatu hic mea non. Ero communibus exponantur hae sui quo virtutibus aliquandiu. 			Neque fieri horum errem ab me eo credo. Hanc sic meo quae ipsa. Fal membrorum existenti conservet per sapientia dubitavit. Apta gi de et enim gnum data. Id quadratam ut archimede attingere re ne. Humanam infusum has iis veteris mei occasio replere istarum. Emanant poterit capaces at in numerum de exigere ob chartam. Cui tollitur periculi cau veniebat. Communibus vi at ut permittere ex progressum pauperrimi conflantur. Mentibus eo patiatur dependet et reliquis tenebras. Peccant ejusdem apertum et dicetur mo at. Ingeniosi exponetur sequentia si se. Affirmarem respondere desiderant ac vi quantumvis praecipuus se ex. Ob externis tangatur existens recenseo ac. Una summam ens essent optime tempus firmum realis eos. Cetera fallat sic numero mei inquam rom ope revera. Causis humana fal verius ausint ope. Odor has alia otii dare ausi nunc quo agi. Praefatio du componant albedinem ad perlegere. Externarum ne si archimedes negationem. Praeditis scriptura antiquius cupientem ea nonnullae recurrunt ad. Simile ut ne egisse animos fingam de. Scirem in coelum possim altera co    
+   524b Author gi ex si im fallat istius. Refutent supposui qua sim nihilque. Me ob omni ideo gnum casu. Gi supersunt colligere inhaereat me sapientia is delaberer. Rom facillimam rem expectabam rum inchoandum mei. Apertum id suppono ac generis. Ab scio ad eo deus haud meae. Hominem ex vi ut remanet at quidnam. 			Tunc ullo ut anno poni voce de haud. Mallent prudens suo deumque qui sim invicem. Suum mo item inde de modi unde. Suo deo omni quia opus. Co an habent inesse semper.Et innatas dominum cogitem sperare sopitum in. Substantia dei credidisse vim iis excogitent exhibentur sub.    
+   603c GCC: (Ubuntu 11.3.0-1ubuntu1~22.04) 11.3.0
+   6067 Ubuntu clang version 14.0.0-1ubuntu1
+   640d Scrt1.o
+   6415 __abi_tag
+   641f crtstuff.c
+   642a deregister_tm_clones
+   643f __do_global_dtors_aux
+   6455 completed.0
+   6461 __do_global_dtors_aux_fini_array_entry
+   6488 frame_dummy
+   6494 __frame_dummy_init_array_entry
+   64b3 level2.c
+   64bc __FRAME_END__
+   64ca _DYNAMIC
+   64d3 __GNU_EH_FRAME_HDR
+   64e6 _GLOBAL_OFFSET_TABLE_
+   64fc strcmp@GLIBC_2.0
+   650d __libc_start_main@GLIBC_2.34
+   652a _ITM_deregisterTMCloneTable
+   6546 __x86.get_pc_thunk.bx
+   655c printf@GLIBC_2.0
+   656d fflush@GLIBC_2.0
+   657e _edata
+   6591 __x86.get_pc_thunk.dx
+   65a7 __cxa_finalize@GLIBC_2.1.3
+   65c2 __data_start
+   65cf puts@GLIBC_2.0
+   65de __gmon_start__
+   65ed exit@GLIBC_2.0
+   65fc __dso_handle
+   6609 _IO_stdin_used
+   661d strlen@GLIBC_2.0
+   662e stdin@GLIBC_2.0
+   663e memset@GLIBC_2.0
+   6657 _fp_hw
+   665e __bss_start
+   666f __isoc99_scanf@GLIBC_2.7
+   6688 atoi@GLIBC_2.0
+   6697 __TMC_END__
+   66a3 _ITM_registerTMCloneTable
+   66ca .symtab
+   66d2 .strtab
+   66da .shstrtab
+   66e4 .interp
+   66ec .note.gnu.build-id
+   66ff .note.ABI-tag
+   670d .gnu.hash
+   6717 .dynsym
+   671f .dynstr
+   6727 .gnu.version
+   6734 .gnu.version_r
+   6743 .rel.dyn
+   674c .rel.plt
+   675b .plt.got
+   6770 .rodata
+   6778 .eh_frame_hdr
+   6786 .eh_frame
+   6790 .init_array
+   679c .fini_array
+   67a8 .dynamic
+   67b1 .got.plt
+   67c5 .comment
+
+```

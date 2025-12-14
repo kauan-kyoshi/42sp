@@ -1,0 +1,19 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+Ponto de parada 1 at 0x123c
+Warning:
+Cannot insert breakpoint 1.
+Não é possível acessar a memória no endereço 0x123c
+
+Argumento necessário (starting display address).
+A syntax error in expression, near `)'.
+Não é possível acessar a memória no endereço 0x4
+A debugging session is active.
+
+	Inferior 1 [process 219429] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

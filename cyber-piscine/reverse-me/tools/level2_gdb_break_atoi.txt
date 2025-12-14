@@ -1,0 +1,14 @@
+The target architecture is set to "i386".
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+Ponto de parada 1 at 0x1425
+Warning:
+Cannot insert breakpoint 1.
+Não é possível acessar a memória no endereço 0x1425
+
+O histórico está vazio.
+0xffffffc7:	<error: Não é possível acessar a memória no endereço 0xffffffc7>
+0xffffffcb:	<error: Não é possível acessar a memória no endereço 0xffffffcb>

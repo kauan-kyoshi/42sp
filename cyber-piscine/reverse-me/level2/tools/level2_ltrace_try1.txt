@@ -1,0 +1,21 @@
+```plaintext
+[pid 230857] __libc_start_main(0x5e5682d0, 1, 0xffef6d74, 0 <unfinished ...>
+[pid 230857] printf("Please enter key: ")        = 18
+[pid 230857] __isoc99_scanf(0x5e569d2e, 0xffef6c83, 0, 0xffef9fe8) = 1
+[pid 230857] fflush(0xf46f45c0)                  = 0
+[pid 230857] memset(0xffef6c9b, '\0', 9)         = 0xffef6c9b
+[pid 230857] strlen("d")                         = 1
+[pid 230857] strlen("00000000")                  = 8
+[pid 230857] atoi(0xffef6c7f, 0, 9, 0xffef9fe8)  = 0
+[pid 230857] strlen("d")                         = 1
+[pid 230857] strlen("00000000")                  = 8
+[pid 230857] atoi(0xffef6c7f, 0, 9, 0xffef9fe8)  = 0
+[pid 230857] strlen("d")                         = 1
+[pid 230857] strlen("00000000")                  = 8
+[pid 230857] strcmp("d", "delabere")             = -1
+[pid 230857] puts("Nope.")                       = 6
+[pid 230857] exit(1Please enter key: Nope.
+ <no return ...>
+[pid 230857] +++ exited (status 1) +++
+
+```

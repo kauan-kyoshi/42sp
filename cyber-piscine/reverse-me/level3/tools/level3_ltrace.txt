@@ -1,0 +1,2 @@
+Please enter key: Nope.
+[pid 234670] +++ exited (status 1) +++

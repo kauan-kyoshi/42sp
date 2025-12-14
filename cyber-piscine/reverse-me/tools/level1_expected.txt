@@ -1,0 +1,13 @@
+The target architecture is set to "i386".
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+Ponto de parada 1 at 0x1237
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, 0x56556237 in main ()
+0xffffff86:	<error: Não é possível acessar a memória no endereço 0xffffff86>
+0xffffff94:	<error: Não é possível acessar a memória no endereço 0xffffff94>

@@ -1,0 +1,42 @@
+The target architecture is set to "i386".
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+Ponto de parada 1 at 0x11c4
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, 0x565561c4 in main ()
+Ponto de parada 2 at 0x123c
+Warning:
+Cannot insert breakpoint 2.
+Não é possível acessar a memória no endereço 0x123c
+
+Command aborted.
+eax            0x565561c0          1448436160
+ecx            0xd15db372          -782388366
+edx            0xffffc360          -15520
+ebx            0xf7f9ce34          -134623692
+esp            0xffffc334          0xffffc334
+ebp            0xffffc338          0xffffc338
+esi            0xffffc3fc          -15364
+edi            0xf7ffcb60          -134231200
+eip            0x565561c4          0x565561c4 <main+4>
+eflags         0x246               [ PF ZF IF ]
+cs             0x23                35
+ss             0x2b                43
+ds             0x2b                43
+es             0x2b                43
+fs             0x0                 0
+gs             0x63                99
+Argumento necessário (starting display address).
+A syntax error in expression, near `)'.
+Não é possível acessar a memória no endereço 0x4
+A debugging session is active.
+
+	Inferior 1 [process 222136] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
