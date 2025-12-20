@@ -1,0 +1,92 @@
+Capítulo IV
+Visão geral
+Aqui estão as principais coisas que você precisa saber para ter sucesso neste projeto:
+• Um ou mais filósofos sentam numa mesa redonda.
+Há uma travessa grande de espaguete no meio da mesa.
+• Os filósofos se revesam ao comer, pensar e dormir.
+Enquanto eles estão comendo, eles não estão pensando nem dormindo;
+enquanto pensam, eles não estão comendo nem dormindo;
+e, claro, enquanto estão dormindo, eles não estão comendo nem pensando.
+• Há também garfos na mesa. Há a mesma quantidade de garfos que a de
+filósofos.
+• Como comer espaguete com somente um garfo não é muito prático, um filósofo deve
+pegar tanto o garfo à sua direita quanto o garfo à sua esquerda antes de comer.
+• Quando um filósofo termina de comer, ele coloca seus garfos de volta na na mesa e
+começa a dormir. Uma vez acordado, ele começa a pensar novamente. A simulação
+para quando um filósofo morre de fome.
+• Todo filósofo precisa comer e nunca deve passar fome.
+• Os filósofos não se comunicam uns com os outros.
+• Os filósofos não sabem se outro filósofo está prestes a morrer.
+• Nem é preciso dizer que os filósofos devem evitar morrer!
+8
+Capítulo V
+Regras gerais
+Você precisa escrever um programa para a parte obrigatória e outro para a parte bônus
+(se você decidir fazer a parte bônus). Você precisa cumprir com as seguintes regras:
+• Variáveis globais são proibidas!
+• Seu(s) programa(s) deve(m) receber os seguintes argumentos:
+number_of_philosophers time_to_die time_to_eat time_to_sleep
+[number_of_times_each_philosopher_must_eat]
+◦ number_of_philosophers: O número de filósofos e também o número de gar-
+fos.
+◦ time_to_die (em milisegundos): Se um filósofo não tiver começado a comer
+dentro de time_to_die milisegundos desde o início da sua última refeição ou
+o início da simulação, ele morre.
+◦ time_to_eat (em milisegundos): O tempo que um filósofo leva para comer.
+Durante esse tempo, ele precisará segurar dois garfos.
+◦ time_to_sleep (em milisegundos): O tempo que um filósofo passará dor-
+mindo.
+◦ number_of_times_each_philosopher_must_eat (argumento opcional): Se to-
+dos os filósofo comeram pelo menos number_of_times_each_philosopher_must_eat
+vezes, a simulação para. Se não for especificado, a simulação para quando um
+filósofo morre.
+• Cada filósofo tem um número que vai de 1 a number_of_philosophers.
+• O filósofo número 1 senta ao lado do filósofo number_of_philosophers.
+Qualquer outro filósofo, de número N, senta entre os filósofos N - 1 e o filósofo N +
+1.
+9
+Philosophers Nunca pensei que um filósofo seria tão mortal
+Sobre os logs do seu programa:
+• Qualquer mudança de estado de um filósofo deve ser registrada da seguinte forma:
+◦ timestamp_in_ms X has taken a fork
+◦ timestamp_in_ms X is eating
+◦ timestamp_in_ms X is sleeping
+◦ timestamp_in_ms X is thinking
+◦ timestamp_in_ms X died
+Substitua timestamp_in_ms por o timestamp atual em milisegundos
+e X pelo número do filósofo.
+• Uma mensagem de mudança de estado que foi mostrada não pode se sobrepor a
+outra mensagem.
+• Uma mensagem anunciando a morte de um filósofo deve ser mostrada em até 10
+ms da sua verdadeira morte.
+• De novo, os filósofos devem evitar morrer!
+Seu programa não deve ter data races.
+10
+Capítulo VI
+Mandatory part
+Nome do pro-
+grama
+philo
+Arquivos para en-
+tregar
+Makefile, *.h, *.c, no diretório philo/
+Makefile NAME, all, clean, fclean, re
+Argumentos number_of_philosophers time_to_die time_to_eat
+time_to_sleep
+[number_of_times_each_philosopher_must_eat]
+Funções externas
+autorizadas
+memset, printf, malloc, free, write,
+usleep, gettimeofday, pthread_create,
+pthread_detach, pthread_join, pthread_mutex_init,
+pthread_mutex_destroy, pthread_mutex_lock,
+pthread_mutex_unlock
+Libft autorizada Não
+Descrição Filósofos com threads e mutexes
+As regras específicas para a parte obrigatória são:
+• Cada filósofo deve ser representado como uma thread separada.
+• Há um garfo entre cada par de filósofos. Portanto, se há vários filósofos, cada filósofo
+tem um garfo em seu lado esquerdo e um garfo em seu lado direito. Se há somente
+um filósofo, ele terá acesso a somente um garfo.
+• Para previnir que os filósofos tenham garfos duplicados, você deve proteger cada
+estado de garfo com um mutex.

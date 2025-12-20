@@ -6,7 +6,7 @@ CFLAGS	= -Wall -Wextra -Werror -pthread
 RM		= rm -f
 
 # Liste explicitamente os fontes do philo (ajuste conforme criar os .c)
-SRCS	= main.c args.c init.c time_utils.c routine.c monitor.c log.c cleanup.c
+SRCS	= main.c args.c init.c time_utils.c routine.c monitor.c log.c cleanup.c 
 OBJS	= $(SRCS:.c=.o)
 
 all: $(NAME)

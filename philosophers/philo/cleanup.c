@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/20 16:41:10 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/12/20 16:41:53 by kyoshi           ###   ########.fr       */
+/*   Created: 2025/12/20 18:49:37 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/12/20 19:03:17 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+void	destroy_table(t_table *table, t_philo *philos)
 {
-	t_args	args;
+	int i;
 
-	if (!parse_args(argc, argv, &args))
+	if(!table)
+		return ;
+	if(table->forks)
 	{
-		printf("Error: invalid arguments\n");
-		return (1);
+		i = 0;
+		while(i < table->n_philo)
+		{
+			pthread_mutex_destroy(&table->forks[i]);
+			i++;
+		}
+		free(table->forks);
+		table->forks = NULL;
 	}
-	return (0);
+	pthread_mutex_destroy(&table->print_mutex);
+	pthread_mutex_destroy(&table->state_mutex);
+	if (philos)
+		free(philos);
 }
