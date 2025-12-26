@@ -5,20 +5,24 @@ CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -pthread
 RM		= rm -f
 
-# Liste explicitamente os fontes do philo (ajuste conforme criar os .c)
-SRCS	= main.c args.c init.c time_utils.c routine.c monitor.c log.c cleanup.c 
-OBJS	= $(SRCS:.c=.o)
+SRCS	= main.c args.c init.c time_utils.c cleanup.c log.c routine.c
+OBJDIR	= objs
+OBJS	= $(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.c
+$(OBJDIR)/%.o: %.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) -r $(OBJDIR)
 
 fclean: clean
 	$(RM) $(NAME)

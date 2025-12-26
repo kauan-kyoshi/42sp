@@ -37,15 +37,16 @@ Guia prático para implementar `philo` (parte obrigatória). Inclui o que estuda
 10) Testes: cenários do subject, stress com tempos curtos, Valgrind/Helgrind.
 
 ## Checklist de tarefas
-- [x] Criar `philo/` e `Makefile` (NAME, all, clean, fclean, re).
+- [x] Criar `philo/` e `Makefile` (NAME, all, clean, fclean, re) com diretório objs/.
 - [x] Implementar parser e validações.
-- [x] Implementar utilitários de tempo (`timestamp_ms`, `msleep`).
+- [x] Implementar utilitários de tempo (`get_time_ms`, `ft_usleep`).
 - [x] Definir `structs` (`t_table`, `t_philo`) e inicializar mutexes (implementado em `init.c`).
-- [ ] Logging atômico com mutex de print (`log.c`).
-- [ ] Rotina das threads com estratégia anti-deadlock (`routine.c`).
+- [x] Logging atômico com mutex de print (`log.c`) - `print_status` implementado com checagem de `stop`.
+- [x] Rotina das threads com estratégia anti-deadlock (`routine.c`) - pares/ímpares para evitar deadlock.
 - [ ] Monitor de morte e condição `must_eat` (`monitor.c`).
-- [ ] Tratar caso `N == 1`.
+- [ ] Tratar caso `N == 1` (caso limite).
 - [x] Destruir mutexes e liberar recursos (`cleanup.c`).
+- [ ] main.c completo - inicializar, criar threads, monitor, cleanup.
 - [ ] Rodar testes + Valgrind/Helgrind.
 
 ## Dicas rápidas de testes

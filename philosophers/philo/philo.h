@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 16:31:40 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/12/20 16:59:39 by kyoshi           ###   ########.fr       */
+/*   Updated: 2025/12/26 18:17:40 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,12 @@ void		destroy_table(t_table *table, t_philo *philos);
 
 //thread / routines
 int			create_thread(t_table *table, t_philo *philos);
+void		join_threads(t_table *table, t_philo *philos);
 void		*philo_routine(void *arg);
 void		*monitor_routine(void *arg);
 
 //logging
+int	sim_stopped(t_table *table);
 void		print_status(t_philo *philo, const char *msg);
 
 #endif
