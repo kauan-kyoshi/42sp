@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 11:16:05 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/11/17 17:55:34 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:43:07 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
  * - fornecer includes portáveis e macros usadas tanto pelo cliente quanto
  *   pelo servidor (sinais, ACKs, etc.);
  * - declarar o tipo `t_state` usado para manter o estado do servidor que
- *   é acessado pelo signal handler; e funções utilitárias mínimas.
+ *   é acessado pelo signal handler; e funções utilitárias mínimas111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111.
  *
  * Observação sobre _POSIX_C_SOURCE: definimos 200809L para garantir a
  * disponibilidade de certas APIs POSIX (por exemplo getpid, sigaction,
