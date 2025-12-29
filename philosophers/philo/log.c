@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   log.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/28 23:02:57 by kyoshi            #+#    #+#             */
+/*   Updated: 2025/12/28 23:02:59 by kyoshi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	sim_stopped(t_table *table)
@@ -12,15 +24,17 @@ int	sim_stopped(t_table *table)
 
 void	print_status(t_philo *philo, const char *msg)
 {
-	long	now;
+	long long	now;
 
-	if (sim_stopped(philo->table))
-		return ;
-	pthread_mutex_lock(&philo->table->print_mutex);
-	if (!sim_stopped(philo->table))
+	pthread_mutex_lock(&philo->table->state_mutex);
+	if (philo->table->stop)
 	{
-		now = get_time_ms() - philo->table->start_time;
-		printf("%ld %d %s\n", now, philo->id+1,msg);
+		pthread_mutex_unlock(&philo->table->state_mutex);
+		return ;
 	}
+	pthread_mutex_lock(&philo->table->print_mutex);
+	now = get_time_ms() - philo->table->start_time;
+	printf("%lld %d %s\n", now, philo->id, msg);
 	pthread_mutex_unlock(&philo->table->print_mutex);
+	pthread_mutex_unlock(&philo->table->state_mutex);
 }

@@ -43,7 +43,7 @@ Guia prático para implementar `philo` (parte obrigatória). Inclui o que estuda
 - [x] Definir `structs` (`t_table`, `t_philo`) e inicializar mutexes (implementado em `init.c`).
 - [x] Logging atômico com mutex de print (`log.c`) - `print_status` implementado com checagem de `stop`.
 - [x] Rotina das threads com estratégia anti-deadlock (`routine.c`) - pares/ímpares para evitar deadlock.
-- [ ] Monitor de morte e condição `must_eat` (`monitor.c`).
+- [x] Monitor de morte e condição `must_eat` (`monitor.c`).
 - [ ] Tratar caso `N == 1` (caso limite).
 - [x] Destruir mutexes e liberar recursos (`cleanup.c`).
 - [ ] main.c completo - inicializar, criar threads, monitor, cleanup.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 16:31:40 by kyoshi            #+#    #+#             */
-/*   Updated: 2025/12/26 18:17:40 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2025/12/28 22:18:10 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,25 @@ typedef struct s_arg
 	int	must_eat;
 }	t_args;
 
-//args.c
+// args.c
 int			parse_args(int argc, char **argv, t_args *args);
 
-//time_utils.c
+// time_utils.c
 long long	get_time_ms(void);
 void		ft_usleep(long long ms);
 
-//init / cleanup
+// init / cleanup
 int			init_table(t_args *args, t_table *table, t_philo **philos);
 void		destroy_table(t_table *table, t_philo *philos);
 
-//thread / routines
+// thread / routines
 int			create_thread(t_table *table, t_philo *philos);
 void		join_threads(t_table *table, t_philo *philos);
 void		*philo_routine(void *arg);
 void		*monitor_routine(void *arg);
 
-//logging
-int	sim_stopped(t_table *table);
+// logging
+int			sim_stopped(t_table *table);
 void		print_status(t_philo *philo, const char *msg);
 
 #endif

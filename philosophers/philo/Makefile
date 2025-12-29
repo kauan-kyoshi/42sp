@@ -5,7 +5,7 @@ CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -pthread
 RM		= rm -f
 
-SRCS	= main.c args.c init.c time_utils.c cleanup.c log.c routine.c
+SRCS	= main.c args.c init.c time_utils.c cleanup.c log.c routine.c monitor.c
 OBJDIR	= objs
 OBJS	= $(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
 
