@@ -1,118 +1,288 @@
+/*
+ * EXERCISE: BROKEN_GNL (Get Next Line)
+ *
+ * DESCRIPTION:
+ * Implement get_next_line that reads line by line from a file descriptor.
+ * This version may contain special cases or intentional "bugs".
+*/
+
 #include "get_next_line.h"
 
-/* gnl_strlen: retorna comprimento de string (0 se ponteiro NULL) */
-static size_t gnl_strlen(const char *s)
+/*
+ * Corrigido `ft_strchr`:
+ * - Trata quando `s` é NULL para evitar dereferência.
+ * - Percorre até o terminador '\0' em vez de assumir que o caractere
+ *   estará presente (anteriormente causava leitura além do buffer).
+ * - Retorna position quando encontra `c` e aceita `c == '\0'`.
+ */
+
+ /*
+ Verifica se o *s existe, caso nao, NULL.
+ Retira o iterador e incrementa direto no
+ ponteiro.
+ Se o c for \0, retorna s
+ */
+ char *ft_strchr(char *s, int c)
 {
-    size_t i = 0;
-    if (!s) return 0;       /* protege contra ponteiro NULL */
-    while (s[i]) i++;      /* itera até o terminador '\0' */
-    return i;
+  if (!s)
+    return NULL;
+  while (*s)
+  {
+    if (*s == (char)c)
+      return s;
+    s++;
+  }
+  if (c == '\0')
+    return s;
+  return NULL;
 }
 
-/* gnl_strchr: procura caractere `c` em `s`; retorna apontador ou NULL */
-static char *gnl_strchr(const char *s, int c)
+/*
+ * Corrigido `ft_memcpy`:
+ * - Garante cópia de exatamente `n` bytes em ordem crescente.
+ * - Retorna NULL se ambos ponteiros forem NULL (comportamento defensivo).
+ * - Evita os loops com índices incorretos que pulavam o primeiro byte.
+ */
+
+ /*
+ Apaga tudo.
+ Verifica de existe dest e src, caso nao, NULL.
+ dentro do while copia de src para dest e retorna dest.
+ */
+void *ft_memcpy(void *dest, const void *src, size_t n)
 {
-    if (!s) return NULL;   /* se s for NULL, não há busca */
-    while (*s) {           /* percorre até terminador */
-        if (*s == (char)c) return (char *)s; /* encontrou */
-        s++;
+  if (!dest && !src)
+    return NULL;
+  char *d = dest;
+  const char *s = src;
+  size_t i = 0;
+  while (i < n)
+  {
+    d[i] = s[i];
+    i++;
+  }
+  return dest;
+}
+
+/*
+ * `ft_strlen` com checagem NULL para evitar segfaults se chamado
+ * com ponteiro nulo (algumas rotinas usam essa verificação).
+ */
+
+ /*
+ Verificar se s existe, caso nao, NULL.
+ */
+size_t ft_strlen(char *s)
+{
+  size_t res = 0;
+  if (!s)
+    return 0;
+  while (*s)
+  {
+    s++;
+    res++;
+  }
+  return res;
+}
+
+/*
+ * `str_append_mem` e `str_append_str`:
+ * - Tratam o caso em que `*s1` é NULL (concatenação inicial).
+ * - Alocam exatamente size1+size2+1 e copiam apenas quando necessário.
+ * - Liberam o buffer antigo e atualizam `*s1`.
+ * - `str_append_str` aceita `s2 == NULL` como operação nula (retorna 1).
+ */
+
+
+ /*
+ verifica se s1 existe, caso sim, size1 = tamanho de s1. se nao, size1 = 0.
+ Malloca tmp com size2 + size1 + 1(\0).
+ Verifica novamente se s1 existe, caso sim, chama ft_memcpy(size2 + size1 + 1).
+ Verifica se s2 existe E se size2 > 0, caso sim,ft_memcpy(tmp + size1, s2, size2)
+ Coloca o terminator \0.
+ Da free em s1.
+ *s1 = tmp
+ */
+int str_append_mem(char **s1, char *s2, size_t size2)
+{
+  size_t size1;
+  if (*s1)
+    size1 = ft_strlen(*s1);
+  else
+    size1 = 0;
+  char *tmp = malloc(size2 + size1 + 1);
+  if (!tmp)
+    return 0;
+  if (*s1)
+    ft_memcpy(tmp, *s1, size1);
+  if (s2 && size2 > 0)
+    ft_memcpy(tmp + size1, s2, size2);
+  tmp[size1 + size2] = '\0';
+  free(*s1);
+  *s1 = tmp;
+  return 1;
+}
+/*
+Apenas verifique se s2 existe, caso nao, retorna (1)
+
+*/
+int str_append_str(char **s1, char *s2)
+{
+  if (!s2)
+    return 1;
+  return str_append_mem(s1, s2, ft_strlen(s2));
+}
+
+/*
+ * `ft_memmove` implementado para suportar sobreposição de origem/destino.
+ * - Copia para frente quando `dest < src`.
+ * - Copia para trás (do fim para o início) quando `dest > src`.
+ * - Evita recursão incorreta e índices sem sinal mal manipulados.
+ */
+
+
+/*
+Apaga tudo
+Verifica se dest E src existem, caso nao, NULL.
+*d recebe dest.
+*s recebe src.
+
+verifica de d < s, caso sim,
+declara um iterador como size_t = 0 e ENQUANTO o iterador i < n, o d[i] = s[i] e incrementa o i++
+
+ou entao se d > s,
+declara um iterador como size_t = n e ENQUANTO o iterador i > 0 decrementa o i-- e d[i] = s[i]
+
+por fim retorna dest
+*/
+
+void *ft_memmove(void *dest, const void *src, size_t n)
+{
+  if (!dest && !src)
+    return NULL;
+  char *d = dest;
+  const char *s = src;
+  if (d < s)
+  {
+    size_t i = 0;
+    while (i < n)
+    {
+      d[i] = s[i];
+      i++;
     }
-    return NULL;           /* não encontrou */
+  }
+  else if (d > s)
+  {
+    size_t i = n;
+    while (i > 0)
+    {
+      i--;
+      d[i] = s[i];
+    }
+  }
+  return dest;
 }
 
 /*
- * gnl_strjoin: concatena a string existente `s1` (pode ser NULL) com
- * `s2_len` bytes vindos de `s2`. A função aloca uma nova string, copia
- * os conteúdos e libera s1. Retorna a nova string (ou NULL em erro).
+ * `get_next_line`:
+ * - Usa um buffer estático `b` para armazenar dados lidos entre chamadas.
+ * - Valida `fd` e `BUFFER_SIZE` no início para comportamento definido.
+ * - Procura por '\n' no buffer atual; enquanto não achar, anexa o conteúdo
+ *   do buffer ao `ret` acumulador e lê mais do descritor.
+ * - Trata erros de `read` (retorna NULL e libera memória parcial).
+ * - No EOF (r == 0): se houver dados acumulados, retorna-os; caso
+ *   contrário libera e retorna NULL.
+ * - Ao encontrar '\n', anexa até e incluindo '\n', desloca o restante do
+ *   buffer para o início com `ft_memmove` e retorna a linha.
+ * - Garantia: quando retorna uma string não-NULL, ela é alocada e pode ser
+ *   liberada pelo chamador.
  */
-static char *gnl_strjoin(char *s1, const char *s2, size_t s2_len)
-{
-    size_t len1 = gnl_strlen(s1);                  /* comprimento atual */
-    char *res = malloc(len1 + s2_len + 1);         /* aloca espaço total */
-    if (!res) return NULL;                         /* erro de malloc */
-    size_t i = 0;
-    for (; i < len1; ++i) res[i] = s1[i];          /* copia s1, se existir */
-    for (size_t j = 0; j < s2_len; ++j)            /* copia `s2_len` bytes de s2 */
-        res[i + j] = s2[j];
-    res[len1 + s2_len] = '\0';                    /* termina string */
-    if (s1) free(s1);                              /* libera antigo stash */
-    return res;                                    /* retorna nova string */
-}
 
-/* gnl_substr_dup: duplica os primeiros n bytes de s em uma nova string terminada em '\0' */
-static char *gnl_substr_dup(const char *s, size_t n)
-{
-    char *res = malloc(n + 1); /* +1 para o terminador */
-    if (!res) return NULL;     /* malloc falhou */
-    for (size_t i = 0; i < n; ++i) res[i] = s[i];
-    res[n] = '\0';
-    return res;                /* string alocada do tamanho pedido */
-}
 
 /*
- * get_next_line: retorna a próxima linha do descritor `fd`.
- * Comportamento resumido:
- * - Mantém um `stash` estático entre chamadas com bytes lidos mas não ainda
- *   consumidos (restos após a última linha retornada).
- * - Lê de `fd` em blocos de BUFFER_SIZE até encontrar '\n' ou EOF.
- * - Quando encontra '\n', devolve a linha incluindo '\n' e atualiza o stash.
- * - Em EOF devolve o restante acumulado (se houver) ou NULL se não houver dados.
- */
+Aproveita as 2 primeiras linhas, o resto apaga
+Declara um char *nl (newline)
+Verifica se fd < 0 OU se o buffer_size <=0, caso sim, NULL.
+
+nl = ft_strchr(b, '\n');
+
+ENQUANTO nl nao existir faça :
+	size_t len recebe o tamanho de b
+	verifica se len é maior do que 0, caso sim, verifica se !str_append_mem(&ret, b, len), se a alocação falhar:
+		dar free no ret e retorna NULL
+
+	ssize_t r recebe read(fd, b, BUFFER_SIZE)
+	se r < 0 :
+		da free em ret e retorna NULL
+	se r == 0:
+		verifica se (ret && *ret):
+			b[0] = '\0'
+			return NULL
+		free(ret);
+      	b[0] = '\0';
+      	return NULL;
+	b[r] = '\0';
+    nl = ft_strchr(b, '\n');
+	
+size_t take = nl - b + 1;
+  if (!str_append_mem(&ret, b, take))
+  {
+    free(ret);
+    return NULL;
+  }
+  size_t rem = ft_strlen(b + take);
+  ft_memmove(b, b + take, rem + 1);
+  return ret;
+*/
 char *get_next_line(int fd)
 {
-    static char *stash = NULL; /* guarda dados lidos e não consumidos */
-    char buf[BUFFER_SIZE];     /* buffer de leitura temporário */
-    ssize_t r;
+  static char b[BUFFER_SIZE + 1] = "";
+  char *ret = NULL;
+  char *nl;
 
-    /* validação simples do descritor e do BUFFER_SIZE */
-    if (fd < 0 || BUFFER_SIZE <= 0) return NULL;
+  if (fd < 0 || BUFFER_SIZE <= 0)
+    return NULL;
 
-    /* Enquanto não houver '\n' no stash, lemos mais do descritor */
-    while (!gnl_strchr(stash, '\n')) {
-        r = read(fd, buf, BUFFER_SIZE); /* tenta ler até BUFFER_SIZE bytes */
-        if (r < 0) {                   /* erro de leitura */
-            if (stash) { free(stash); stash = NULL; } /* libera antes de sair */
-            return NULL;               /* propagamos o erro retornando NULL */
-        }
-        if (r == 0) break; /* EOF: sai do loop e processa o que há no stash */
-        /* anexa os bytes lidos (r bytes) ao stash */
-        stash = gnl_strjoin(stash, buf, (size_t)r);
-        if (!stash) return NULL; /* erro de malloc durante concatenação */
+  nl = ft_strchr(b, '\n');
+  while (!nl)
+  {
+    size_t len = ft_strlen(b);
+    if (len > 0)
+    {
+      if (!str_append_mem(&ret, b, len))
+      {
+        free(ret);
+        return NULL;
+      }
     }
-
-    /* Se não houver nada no stash => nada a retornar (EOF sem dados) */
-    if (!stash || stash[0] == '\0') {
-        if (stash) { free(stash); stash = NULL; } /* garante liberar stash */
-        return NULL; /* sem dados => NULL conforme especificação */
+    ssize_t r = read(fd, b, BUFFER_SIZE);
+    if (r < 0)
+    {
+      free(ret);
+      return NULL;
     }
-
-    /* Procura por '\n' no stash para determinar se há uma linha completa */
-    char *nl = gnl_strchr(stash, '\n');
-    if (nl) {
-        /* calcula o tamanho da linha a retornar (inclusive '\n') */
-        size_t line_len = (size_t)(nl - stash) + 1;
-        /* duplica os primeiros line_len bytes para retornar ao chamador */
-        char *line = gnl_substr_dup(stash, line_len);
-        if (!line) { free(stash); stash = NULL; return NULL; }
-        /* atualiza o stash para conter apenas o que ficou após a linha retornada */
-        size_t rem = gnl_strlen(stash) - line_len;
-        if (rem > 0) {
-            /* copia os bytes restantes para nova área alocada */
-            char *new_stash = gnl_substr_dup(stash + line_len, rem);
-            if (!new_stash) { free(line); free(stash); stash = NULL; return NULL; }
-            free(stash);          /* libera o antigo stash */
-            stash = new_stash;    /* stash agora contém apenas o remanescente */
-        } else {
-            /* não sobrou nada: libera stash e zera o ponteiro estático */
-            free(stash);
-            stash = NULL;
-        }
-        return line; /* retorna a linha incluindo '\n' */
+    if (r == 0)
+    {
+      if (ret && *ret)
+      {
+        b[0] = '\0';
+        return ret;
+      }
+      free(ret);
+      b[0] = '\0';
+      return NULL;
     }
+    b[r] = '\0';
+    nl = ft_strchr(b, '\n');
+  }
 
-    /* Se não há '\n' no stash, então estamos em EOF e devolvemos tudo que há */
-    char *line = gnl_substr_dup(stash, gnl_strlen(stash));
-    free(stash); /* limpa stash */
-    stash = NULL;
-    return line; /* retorna o conteúdo final (pode ser string vazia se arquivo vazio) */
+  size_t take = nl - b + 1;
+  if (!str_append_mem(&ret, b, take))
+  {
+    free(ret);
+    return NULL;
+  }
+  size_t rem = ft_strlen(b + take);
+  ft_memmove(b, b + take, rem + 1);
+  return ret;
 }
