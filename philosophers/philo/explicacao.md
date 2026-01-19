@@ -443,10 +443,87 @@ Ciclo por filósofo: ~400ms
 ```
 4 filósofos, 310ms para morrer, 200ms comer, 100ms dormir
 
-Ciclo: 200 + 100 = 300ms
-Mas com contenção de garfos, alguém passa de 310ms
-→ Um filósofo deve morrer
+Ciclo TEÓRICO: 200 + 100 = 300ms
+310ms - 300ms = apenas 10ms de margem!
 ```
+
+**Por que um filósofo morre?**
+
+Este teste é especialmente interessante porque demonstra o problema da **contenção de recursos**.
+
+**Análise do Problema:**
+
+1. **Limitação física**: Com 4 filósofos e 4 garfos, **no máximo 2 filósofos podem comer simultaneamente**
+   - Cada filósofo precisa de 2 garfos
+   - 4 garfos ÷ 2 garfos/filósofo = 2 filósofos comendo ao mesmo tempo
+
+2. **O que isso significa?**
+   - **2 filósofos sempre estão esperando** enquanto os outros 2 comem
+   - Quando os 2 que estavam comendo terminam, os outros 2 podem começar
+   - Isso cria um ciclo de espera
+
+3. **Cronograma Real (exemplo):**
+
+```
+t=0ms    → Filósofos 2 e 4 (pares) começam a comer
+         → Filósofos 1 e 3 (ímpares) esperam 100ms (dessincronização)
+
+t=100ms  → Filósofos 1 e 3 tentam pegar garfos
+         → MAS garfos ainda estão ocupados pelos filósofos 2 e 4!
+         → Filósofos 1 e 3 FICAM ESPERANDO
+
+t=200ms  → Filósofos 2 e 4 terminam de comer, soltam garfos
+         → Filósofos 2 e 4 começam a dormir (100ms)
+         → Filósofos 1 e 3 FINALMENTE pegam garfos e começam a comer
+
+t=300ms  → Filósofos 2 e 4 acordam, pensam, tentam pegar garfos
+         → MAS garfos estão com filósofos 1 e 3
+         → Filósofos 2 e 4 ESPERAM
+
+t=400ms  → Filósofos 1 e 3 terminam de comer (200ms depois de começar)
+         → Última refeição deles foi em t=200ms
+         → Próxima seria em t=200+200=400ms
+         → 400ms - 200ms = 200ms desde última refeição ✓ OK
+
+MAS... e os filósofos 2 e 4?
+         → Última refeição: t=0ms (quando começaram)
+         → Tentam comer de novo em t=300ms, mas esperam...
+         → Conseguem garfos só em t=400ms
+         → 400ms - 0ms = 400ms sem comer!
+         → 400ms > 310ms → MORTE! ☠️
+```
+
+4. **Por que a margem de 10ms não é suficiente?**
+   - O ciclo teórico de 300ms assume **acesso imediato aos garfos**
+   - Na prática, há **tempo de espera** para conseguir ambos os garfos
+   - Com 4 filósofos, a espera pode adicionar 100-200ms ao ciclo
+   - 300ms + espera > 310ms → Morte inevitável
+
+5. **Visualização do problema:**
+
+```
+Timeline de um filósofo "azarado":
+
+0ms     ─── Come (200ms) ───┐
+200ms                        │ última refeição registrada
+        ─── Dorme (100ms) ───┤
+300ms                        │
+        ─── Pensa ───────────┤
+        ─── ESPERA GARFOS ───┤ ← Tempo adicional!
+310ms   ← TIME_TO_DIE        │   (Os garfos estão ocupados)
+        ─── AINDA ESPERANDO ─┤
+320ms+  ─── MORREU! ☠️      │
+```
+
+**Conclusão:**
+
+Com `time_to_die = 310ms` e um ciclo de 300ms, a margem é de apenas 10ms. Como sempre há contenção (2 filósofos esperam enquanto 2 comem), o tempo de espera adicional pelos garfos faz com que pelo menos um filósofo ultrapasse os 310ms sem comer, resultando em morte.
+
+**Este teste valida:**
+- ✅ Seu programa detecta corretamente quando o tempo entre refeições é muito curto
+- ✅ A contenção de recursos é tratada adequadamente
+- ✅ A detecção de morte funciona com margem apertada (< 10ms de precisão)
+
 
 ### Testes Adicionais
 
