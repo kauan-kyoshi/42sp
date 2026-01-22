@@ -3,72 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/25 16:00:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/11/27 16:33:24 by kakubo-l         ###   ########.fr       */
+/*   Created: 2026/01/15 19:58:43 by kakubo-l          #+#    #+#             */
+/*   Updated: 2026/01/20 10:53:35 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-/* lexer/parser inspection removed; restore normal prompt behavior */
-
-volatile sig_atomic_t	g_last_signal = 0;
-
-void	sigint_handler(int sig)
+static int	handle_heredoc_child_mode(int argc, char **argv, char **envp)
 {
-	(void)sig;
-	g_last_signal = sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	int		expand;
 
-void	sigquit_handler(int sig)
-{
-	(void)sig;
-}
-
-static void	setup_signals(void)
-{
-	struct sigaction	sa;
-
-	memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = sigint_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		perror("sigaction(SIGINT)");
-	sa.sa_handler = sigquit_handler;
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		perror("sigaction(SIGQUIT)");
-}
-
-int	main(void)
-{
-	char	*line;
-
-	setup_signals();
-	while (1)
+	if (argc >= 5 && argv[1] && strcmp(argv[1], "--heredoc-child") == 0)
 	{
-		line = readline("minishell$ ");
-		if (!line)
-			break ;
-		if (line[0] != '\0')
-		{
-			printf("%s\n", line);
-			add_history(line);
-		}
-		free(line);
+		expand = atoi(argv[4]);
+		heredoc_child_exec_main(argv[2], argv[3], expand, envp);
+		return (1);
 	}
 	return (0);
 }
+
+int	main(int argc, char **argv, char **envp)
+{
+	char	**my_env;
+	int		last_status;
+
+	(void)argc;
+	(void)argv;
+	if (handle_heredoc_child_mode(argc, argv, envp))
+		return (0);
+	setup_signals();
+	my_env = dup_envp(envp);
+	if (!my_env)
+	{
+		ft_putstr_fd("minishell: failed to duplicate envp\n", STDERR_FILENO);
+		return (1);
+	}
+	register_envp_ref(&my_env);
+	set_locale_c(&my_env);
+	setup_terminal_pgrp();
+	last_status = run_shell_loop(&my_env);
+	rl_clear_history();
+	free_envp(my_env);
+	unregister_envp_ref();
+	return (last_status);
+}
+
+/* helper implementations moved to src/main_helpers.c */

@@ -60,7 +60,8 @@ int main(int argc, char **argv)
     ssize_t rr;
     while ((rr = read(STDIN_FILENO, tmpbuf, BUFSIZE)) > 0) {
         /* se não há espaço suficiente, dobra a capacidade até caber */
-        if (len + (size_t)rr > cap) {
+        if (len + (size_t)rr > cap)
+		{
             size_t newcap = cap * 2;
             while (newcap < len + (size_t)rr) newcap *= 2;
             char *tmp = realloc(data, newcap); /* aumenta o buffer */
@@ -79,7 +80,11 @@ int main(int argc, char **argv)
     /* preenche um buffer 'stars' com '*' do mesmo comprimento do padrão */
     char *stars = malloc(plen);
     if (!stars) { perror("Error"); free(data); return 1; }
-    for (size_t i = 0; i < plen; ++i) stars[i] = '*';
+    size_t j = 0;
+    while (j < plen) {
+        stars[j] = '*';
+        j++;
+    }
 
     /*
      * Varremos o buffer `data` byte a byte. Quando encontramos a sequência

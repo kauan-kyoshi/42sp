@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 16:04:12 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/11/27 16:16:08 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:23:40 by kyoshi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include <stdlib.h>
-#include <string.h>
+#include "minishell.h"
 #include <stdio.h>
 
 t_token	*token_new(t_token_type type, const char *str)
@@ -25,17 +23,19 @@ t_token	*token_new(t_token_type type, const char *str)
 	t->type = type;
 	t->raw = NULL;
 	t->no_expand = 0;
-	if (str)
+	t->in_double = 0;
+	t->segs = NULL;
+	if (str && str[0] != '\0')
 	{
-		t->raw = malloc(strlen(str) + 1);
+		t->raw = ft_strdup(str);
 		if (!t->raw)
 		{
 			free(t);
 			return (NULL);
 		}
-		strcpy(t->raw, str);
 	}
 	t->next = NULL;
+	(void)0;
 	return (t);
 }
 
@@ -56,6 +56,22 @@ void	token_append(t_token **head, t_token *node)
 	it->next = node;
 }
 
+static void	free_segments(t_seg *segs)
+{
+	t_seg	*s;
+	t_seg	*sn;
+
+	s = segs;
+	while (s)
+	{
+		sn = s->next;
+		if (s->str)
+			free(s->str);
+		free(s);
+		s = sn;
+	}
+}
+
 void	token_free_all(t_token *head)
 {
 	t_token	*tmp;
@@ -63,6 +79,8 @@ void	token_free_all(t_token *head)
 	while (head)
 	{
 		tmp = head->next;
+		if (head->segs)
+			free_segments(head->segs);
 		if (head->raw)
 			free(head->raw);
 		free(head);
@@ -70,17 +88,4 @@ void	token_free_all(t_token *head)
 	}
 }
 
-void	token_debug_print(const t_token *head)
-{
-	const char	*val;
-
-	while (head)
-	{
-		if (head->raw)
-			val = head->raw;
-		else
-			val = "(null)";
-		printf("type=%d raw=%s\n", head->type, val);
-		head = head->next;
-	}
-}
+/* debug printing removed */
