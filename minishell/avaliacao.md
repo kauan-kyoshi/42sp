@@ -2,6 +2,220 @@
 
 Este documento lista o que você deve demonstrar durante a defesa do Projeto Minishell e onde o avaliador pode encontrar cada parte no código-fonte.
 
+
+
+# Introdução
+
+Por favor, cumpra as seguintes regras:
+
+- Mantenha-se educado, cortês, respeitoso e construtivo durante todo o processo de avaliação. O bem-estar da comunidade depende disso.
+- Identifique com o aluno ou grupo avaliado as possíveis disfunções em seu projeto. Reserve um tempo para discutir e debater os problemas que possam ter sido identificados.
+- Você deve considerar que pode haver algumas diferenças na forma como seus colegas entenderam as instruções do projeto e o escopo de suas funcionalidades. Mantenha sempre a mente aberta e avalie-os da forma mais honesta possível. A pedagogia só é útil se a avaliação por pares for feita com seriedade.
+
+## Diretrizes
+
+- Avalie apenas o trabalho que foi entregue no repositório Git do aluno ou grupo avaliado.
+- Verifique novamente se o repositório Git pertence ao(s) aluno(s). Certifique-se de que o projeto é o esperado. Além disso, verifique se o `git clone` é usado em uma pasta vazia.
+- Verifique cuidadosamente se nenhum "alias" malicioso foi usado para enganá-lo e fazer você avaliar algo que não é o conteúdo do repositório oficial.
+- Para evitar surpresas e, se aplicável, revisem juntos quaisquer scripts usados para facilitar a avaliação (scripts de teste ou automação).
+- Se você não concluiu o projeto que vai avaliar, você deve ler o enunciado (subject) completo antes de iniciar o processo de avaliação.
+- Use as flags disponíveis para relatar um repositório vazio, um programa que não funciona, um erro de Norma, trapaça (cheating), etc. Nesses casos, o processo de avaliação termina e a nota final é 0 (ou -42 em caso de trapaça). Exceto em caso de trapaça, os alunos são fortemente incentivados a revisar juntos o trabalho entregue para identificar erros que não devem ser repetidos no futuro.
+- Lembre-se de que, durante a defesa, não deve ocorrer segfault nem qualquer outro encerramento inesperado, prematuro ou descontrolado do programa; caso contrário, a nota final é 0. Use a flag apropriada.
+- Você nunca deve editar nenhum arquivo, exceto o arquivo de configuração, se ele existir. Se quiser editar um arquivo, explique os motivos ao aluno avaliado e certifique-se de que ambos concordam com isso.
+- Você também deve verificar a ausência de vazamentos de memória (memory leaks). Qualquer memória alocada na heap deve ser devidamente liberada antes do fim da execução. Você pode usar ferramentas como `leaks`, `valgrind` ou `e_fence`. Em caso de vazamentos, marque a flag apropriada.
+
+## Anexos
+
+- `subject.pdf`
+
+## Parte Obrigatória
+
+### Compilação
+
+- Use `make -n` para ver se a compilação utiliza `-Wall -Wextra -Werror`. Se não, selecione a flag "invalid compilation".
+- O minishell deve compilar sem erros. Se não, selecione a flag correspondente.
+- O `Makefile` não deve "re-linkar". Se ocorrer, selecione a flag.
+
+Comando Simples & Variáveis Globais
+
+    Execute um comando simples com caminho absoluto como /bin/ls, ou qualquer outro comando sem opções.
+
+    Quantas variáveis globais são usadas? Por quê? Peça ao aluno avaliado um exemplo concreto de por que isso parece obrigatório ou lógico.
+
+    Verifique a variável global. Esta variável global não pode fornecer nenhuma outra informação ou acesso a dados além do número de um sinal recebido.
+
+    Teste um comando vazio.
+
+    Teste apenas espaços ou tabulações.
+
+    Se algo travar, use a flag "crash". Se algo não funcionar, use a flag "incomplete work".
+
+Argumentos
+
+    Execute um comando simples com caminho absoluto como /bin/ls, ou qualquer outro comando com argumentos, mas sem aspas simples ou duplas.
+
+    Repita várias vezes com diferentes comandos e argumentos.
+
+echo
+
+    Execute o comando echo com ou sem argumentos, ou a opção -n.
+
+    Repita várias vezes com argumentos diferentes.
+
+exit
+
+    Execute o comando exit com ou sem argumentos.
+
+    Repita várias vezes com diferentes argumentos.
+
+    Não esqueça de reiniciar o minishell após o teste.
+
+Valor de retorno de um processo
+
+    Execute um comando simples com caminho absoluto (ex: /bin/ls) ou qualquer comando com argumentos sem aspas.
+
+    Em seguida, execute echo $?.
+
+    Verifique o valor impresso. Você pode fazer o mesmo no bash para comparar os resultados.
+
+    Tente comandos errados como /bin/ls arquivo_que_nao_existe.
+
+    Tente algo como expr $? + $?.
+
+Sinais (Signals)
+
+    ctrl-C em um prompt vazio deve exibir uma nova linha com um novo prompt.
+
+    ctrl-\ em um prompt vazio não deve fazer nada.
+
+    ctrl-D em um prompt vazio deve sair do minishell -> REINICIE!
+
+    ctrl-C em um prompt após escrever algo deve exibir uma nova linha com um novo prompt.
+
+    O buffer deve ser limpo. Pressione "Enter" para garantir que nada da linha anterior seja executado.
+
+    ctrl-D em um prompt após escrever algo não deve fazer nada.
+
+    ctrl-\ em um prompt após escrever algo não deve fazer nada.
+
+    Tente ctrl-C, ctrl-\ e ctrl-D após executar um comando bloqueante como cat (sem argumentos) ou grep "algo".
+
+Aspas Duplas (Double Quotes)
+
+    Execute um comando simples com argumentos usando aspas duplas (tente incluir espaços em branco).
+
+    Tente um comando como: echo "cat lol.c | cat > lol.c".
+
+    Tente qualquer coisa, exceto o símbolo $.
+
+Aspas Simples (Single Quotes)
+
+    Execute comandos com aspas simples como argumentos.
+
+    Tente argumentos vazios.
+
+    Tente variáveis de ambiente, espaços, pipes e redirecionamentos dentro de aspas simples.
+
+    echo '$USER' deve imprimir $USER. Nada deve ser interpretado.
+
+env
+
+    Verifique se o comando env mostra as variáveis de ambiente atuais.
+
+export
+
+    Exporte variáveis de ambiente, crie novas e substitua as antigas.
+
+    Verifique o resultado com env.
+
+unset
+
+    Use unset para remover algumas variáveis de ambiente.
+
+    Verifique o resultado com env.
+
+cd
+
+    Use o comando cd para mudar o diretório de trabalho e verifique se você está no diretório correto com /bin/ls.
+
+    Repita várias vezes com caminhos que funcionam e que não funcionam.
+
+    Tente . e .. como argumentos.
+
+pwd
+
+    Use o comando pwd.
+
+    Repita várias vezes em diretórios diferentes.
+
+Caminho Relativo (Relative Path)
+
+    Execute comandos usando um caminho relativo.
+
+    Repita em diretórios diferentes com caminhos relativos complexos (muitos ..).
+
+Environment path ($PATH)
+
+    Execute comandos sem nenhum caminho (ex: ls, wc, awk).
+
+    Remova o $PATH (unset PATH) e garanta que os comandos não funcionem mais.
+
+    Defina o $PATH com múltiplos diretórios (dir1:dir2) e garanta que os diretórios sejam verificados em ordem da esquerda para a direita.
+
+Redirecionamento
+
+    Execute comandos com redirecionamentos < e/ou >.
+
+    Repita várias vezes e mude > por >>.
+
+    Verifique se tentativas múltiplas do mesmo redirecionamento falham.
+
+    Teste o redirecionamento << (heredoc) - ele não deve atualizar o histórico.
+
+Pipes
+
+    Execute comandos com pipes como cat arquivo | grep texto | more.
+
+    Tente comandos errados como ls arquivo_inexistente | grep texto | more.
+
+    Tente misturar pipes e redirecionamentos.
+
+"Go Crazy" e Histórico
+
+    Digite uma linha de comando, use ctrl-C e pressione "Enter". O buffer deve estar limpo.
+
+    É possível navegar no histórico usando as setas para Cima e Baixo? Podemos repetir um comando?
+
+    Execute comandos que não devem funcionar (ex: letras_aleatorias). Garanta que o minishell não trave e imprima um erro.
+
+    cat | cat | ls deve se comportar de forma "normal".
+
+    Tente executar um comando longo com muitos argumentos.
+
+    Divirta-se com este belo minishell!
+
+Variáveis de Ambiente
+
+    Execute echo com variáveis de ambiente ($variable) como argumentos.
+
+    Verifique se $ é interpretado como variável de ambiente.
+
+    Verifique se aspas duplas interpolam o $.
+
+    Verifique se USER existe. Caso contrário, defina-o.
+
+    echo "$USER" deve imprimir o valor da variável USER.
+
+
+
+
+
+
+
+
+
+
+
 **Como usar**
 - Compile: `make`
 - Rode: `./minishell`
