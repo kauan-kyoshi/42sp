@@ -266,6 +266,33 @@ Por favor, cumpra as seguintes regras:
 - Explique decisões de design: como separou lexer, parser, expander e executor.
 - Mostre exemplos concretos (comandos) e indique os arquivos que implementam cada parte.
 - Se houver limitações conhecidas, admita-as e explique por que (tempo, prioridade de funcionalidades).
+ - Explique decisões de design: como separou lexer, parser, expander e executor.
+ - Mostre exemplos concretos (comandos) e indique os arquivos que implementam cada parte.
+ - Se houver limitações conhecidas, admita-as e explique por que (tempo, prioridade de funcionalidades).
+
+**Respostas sugeridas (frases prontas que você pode dizer durante a defesa)**
+
+- **Quantas variáveis globais são usadas? Por quê?:** Utilizamos apenas uma variável global relevante, `g_last_signal`, para comunicar de forma simples o sinal recebido entre os handlers de sinal e o loop principal. Evitamos globals para estado da shell; a maioria do estado é passada por parâmetros ou aparece em estruturas alocadas dinamicamente.
+
+- **Como o `ctrl-C` e `ctrl-\` funcionam?:** O `ctrl-C` é tratado pelo `sigint_handler` que escreve uma nova linha, limpa o buffer do `readline` e redesenha o prompt — assim o comando atual não é executado. O `ctrl-\` é ignorado no prompt para não encerrar o shell. Em processos filhos em foreground, os sinais seguem o comportamento padrão do sistema.
+
+- **O que acontece ao digitar `ctrl-D`?:** `ctrl-D` envia EOF; no prompt vazio o shell interpreta como pedido de saída e chama `exit`, mas se houver conteúdo na linha, apenas não faz nada e permite continuar editando.
+
+- **Como funcionam as aspas e a expansão de variáveis?:** Aspas simples impedem expansão (o lexer marca segmentos `SEG_SINGLE_QUOTED`). Aspas duplas permitem expansão de `$VAR` e `$?`. A expansão é feita em `expand_tokens()` e `expand_segment()` usando o `envp` e o último status.
+
+- **Como encontrar um executável sem caminho? (`$PATH`):** `find_path()` divide `PATH` em diretórios (`create_array_path()`), tenta construir caminhos e usa `access()` para checar executáveis, tentando diretórios na ordem do `PATH`.
+
+- **Como funcionam pipes e redirecionamentos?:** O parser cria uma lista de `t_cmd` ligada por `next`. `spawn_children()` cria processos e conecta file descriptors com `pipe()` e `dup2()` (em `setup_child_io()`), enquanto redirecionamentos são parseados por `parse_redir_token()` e aplicados antes do `execve()`.
+
+- **Heredoc (<<) implementado corretamente?:** Sim — o projeto cria um reader de heredoc que escreve num arquivo temporário; o parser usa esse arquivo como entrada. O heredoc não atualiza o histórico do `readline`.
+
+- **E memory leaks / segfaults?:** Mostre o relatório do `valgrind` (ou `leaks`) — explico que o projeto libera `envp`, tokens, listas de comandos e buffers em `cleanup_and_exit()` e em `free_all_variables`. Se houver um segfault, explique onde ocorreu e que foi corrigido.
+
+- **Por que algumas funcionalidades não foram implementadas (se perguntarem)?:** Explique prioridades: focamos em parsing correto, execução, redirecionamentos e sinais primeiro; funcionalidades extras ficaram fora por limitação de tempo. Sempre diga o que implementaria a seguir.
+
+- **Resposta curta sobre arquitetura:** "A leitura passa pelo lexer -> parser -> expander -> executor. Cada etapa tem responsabilidades bem delimitadas para facilitar testes e manutenção."
+
+Se quiser, eu adapto ou encurto essas respostas para memorização rápida (ex.: cartões de 1-2 frases).
 
 
 **Comandos úteis para o avaliador**

@@ -347,9 +347,9 @@ for (cada filósofo)
     pthread_mutex_lock(&state_mutex);
     last_meal = philo->last_meal;
     pthread_mutex_unlock(&state_mutex);
-    
+
     now = get_time_ms();
-    
+
     if ((now - last_meal) > time_die)
     {
         pthread_mutex_lock(&state_mutex);
@@ -642,7 +642,7 @@ void destroy_table(t_table *table, t_philo *philos)
         pthread_mutex_destroy(&table->forks[i]);
     pthread_mutex_destroy(&table->print_mutex);
     pthread_mutex_destroy(&table->state_mutex);
-    
+
     // Liberar TODA a memória
     free(table->forks);
     free(philos);
@@ -702,7 +702,7 @@ count++;  // Sem proteção
 
 **No Philosophers**: Um filósofo pode nunca conseguir ambos os garfos
 
-**Prevenção**: 
+**Prevenção**:
 - Dessincronização (filósofos ímpares esperam)
 - Ordem diferenciada de pegar garfos
 
@@ -861,6 +861,165 @@ Dominar estes conceitos é essencial para programação de sistemas modernos!
 
 ---
 
-**Autor**: kakubo-l  
-**Data**: Janeiro 2026  
+**Autor**: kakubo-l
+**Data**: Janeiro 2026
 **Projeto**: 42 São Paulo - Philosophers
+
+
+
+
+
+Verifique se há uma thread por filósofo.
+
+em routine.c :
+```c
+int	create_thread(t_table *table, t_philo *philos)
+{
+	int	i;
+
+	i = 0;
+	// Cria uma thread para cada filósofo
+	while (i < table->n_philo)
+	{
+		// Tenta criar a thread
+		if (pthread_create(&philos[i].thread, NULL,       // <----------- AQUI CRIA UMA THREAD PARA CADA ITERAÇÃO
+				philo_routine, &philos[i]) != 0)
+		{
+			// Se falhar, aguarda todas as threads já criadas
+			while (i-- > 0)
+				pthread_join(philos[i].thread, NULL);
+			return (1);  // Erro
+		}
+		i++;
+	}
+	return (0);  // Sucesso
+}
+```
+
+Verifique se há apenas um garfo por filósofo.
+
+
+em init.c:
+```c
+static void	init_philos(t_table *table, t_philo *philos)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->n_philo)
+	{
+		philos[i].id = i + 1;                           // ID começa em 1
+		philos[i].left = i;                             // Garfo esquerdo
+		philos[i].right = (i + 1) % table->n_philo;     // Garfo direito (circular)
+		philos[i].meals = 0;                            // Ainda não comeu
+		philos[i].last_meal = 0;                        // Será definido depois
+		philos[i].thread = 0;                           // Thread ainda não criada
+		philos[i].table = table;                        // Referência à mesa compartilhada
+		i++;
+	}
+}
+
+```
+
+
+Verifique se há um mutex por garfo e se ele é usado para verificar e/ou alterar o valor do garfo.
+
+em init.c:
+```c
+static int	init_forks(t_table *table)
+{
+	int	i;
+
+	// Aloca memória para o array de mutexes (um para cada garfo)
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->n_philo);
+	if (!table->forks)
+		return (0);  // Falha na alocação
+	i = 0;
+	// Inicializa cada mutex
+	while (i < table->n_philo)
+	{
+		// Tenta inicializar o mutex do garfo i
+		if (pthread_mutex_init(&table->forks[i], NULL) != 0) // <-------- AQUI INICIALIZA UM MUTEX PARA CADA GARFO
+		{
+			// Se falhar, limpa os mutexes já inicializados
+			clean_init_part(table, i, 0, NULL);
+			return (0);
+		}
+		i++;
+	}
+	return (1);  // Sucesso
+}
+```
+
+Verifique se as saídas (outputs) nunca estão misturadas.
+
+em log.c:
+
+```c
+void	print_status(t_philo *philo, const char *msg)
+{
+	long long	now;
+
+	// Adquire mutex de estado para verificar se deve parar
+	pthread_mutex_lock(&philo->table->state_mutex);
+	// Se a simulação já foi parada, não imprime nada
+	if (philo->table->stop)
+	{
+		pthread_mutex_unlock(&philo->table->state_mutex);
+		return ;
+	}
+	// Adquire mutex de impressão para garantir atomicidade
+	// IMPORTANTE: mantém state_mutex locked para evitar race condition
+	// onde stop poderia mudar entre a verificação e a impressão
+	pthread_mutex_lock(&philo->table->print_mutex);
+	// Calcula timestamp relativo ao início da simulação
+	now = get_time_ms() - philo->table->start_time;
+	// Imprime no formato: timestamp ID mensagem
+	printf("%lld %d %s\n", now, philo->id, msg);
+	// Libera mutex de impressão
+	pthread_mutex_unlock(&philo->table->print_mutex);
+	// Libera mutex de estado
+	pthread_mutex_unlock(&philo->table->state_mutex);
+}
+```
+
+
+Verifique como a morte de um filósofo é verificada e se existe um mutex para evitar que um filósofo morra e comece a comer ao mesmo tempo.
+
+
+em monitor.c :
+
+```c
+
+void	*monitor_routine(void *arg)
+{
+	t_philo		*philos;
+	t_table		*table;
+
+	// Validação do argumento
+	if (!arg)
+		return (NULL);
+	philos = (t_philo *)arg;
+	table = philos[0].table;
+	// Loop principal de monitoramento
+	while (1)
+	{
+		// Verifica se algum filósofo morreu
+		if (check_philos(philos))
+			return (NULL);  // Morte detectada, encerra
+		// Verifica se todos terminaram de comer (REGIÃO CRÍTICA)
+		pthread_mutex_lock(&table->state_mutex);
+		if (check_finished(table))
+		{
+			pthread_mutex_unlock(&table->state_mutex);
+			return (NULL);  // Todos terminaram, encerra
+		}
+		pthread_mutex_unlock(&table->state_mutex);
+		// Pequena pausa para não sobrecarregar a CPU
+		// 500 microssegundos = 0.5 milissegundos
+		usleep(500);
+	}
+	return (NULL);
+}
+
+```
