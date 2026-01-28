@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 19:54:30 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/19 11:14:21 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 21:30:46 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	handle_wait_status(int status, int *last_status, int *seen_sigint)
 		*last_status = 128 + WTERMSIG(status);
 		if (WTERMSIG(status) == SIGINT)
 			*seen_sigint = 1;
+		else if (WTERMSIG(status) == SIGQUIT)
+			write(STDERR_FILENO, "Quit (core dumped)\n", 19);
 	}
 	else
 		*last_status = 1;
@@ -58,7 +60,7 @@ static	void	child_prepare_and_exec(t_cmd *cuntent, t_all_variables *all)
 	setpgid(0, 0);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	setup_child_io(cuntent, all->cmd);
+	setup_child_io(cuntent, all);
 	exec_cmd_type(cuntent, all->env, all);
 }
 

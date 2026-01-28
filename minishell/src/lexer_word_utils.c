@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_word_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:30:00 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/20 09:52:30 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/23 17:10:27 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	collect_unquoted(t_word_ctx *ctx, size_t *i)
 
 	start = *i;
 	while (*i < ctx->len && !is_space_char((unsigned char)ctx->line[*i])
-		&& ctx->line[*i] != '|' && ctx->line[*i] != '<'
+		&& ctx->line[*i] != '|' && ctx->line[*i] != '<' && ctx->line[*i] != '>'
 		&& ctx->line[*i] != '"' && ctx->line[*i] != '\'')
 		(*i)++;
 	seg_ctx.segs = ctx->segs;

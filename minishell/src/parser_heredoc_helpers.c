@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_helpers.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/20 10:00:00 by kyoshi            #+#    #+#             */
-/*   Updated: 2026/01/20 11:26:18 by kyoshi           ###   ########.fr       */
+/*   Created: 2026/01/21 11:12:38 by kakubo-l          #+#    #+#             */
+/*   Updated: 2026/01/27 22:54:47 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	heredoc_sigint(int sig);
 
 void	build_argv_child(char **argv_child, const char *exe_path,
 		const char *template, const char *delimiter)
@@ -30,14 +32,6 @@ void	set_expand_str(char *expand_str, int expand)
 	expand_str[1] = '\0';
 }
 
-static void	heredoc_sigint(int sig)
-{
-	(void)sig;
-	rl_free_line_state();
-	rl_cleanup_after_signal();
-	_exit(130);
-}
-
 void	heredoc_setup_signals(void)
 {
 	signal(SIGINT, heredoc_sigint);
@@ -49,5 +43,11 @@ void	heredoc_handle_error(int fd, const char *template)
 {
 	close(fd);
 	unlink(template);
+	exit(130);
+}
+
+static void	heredoc_sigint(int sig)
+{
+	(void)sig;
 	cleanup_and_exit(130);
 }

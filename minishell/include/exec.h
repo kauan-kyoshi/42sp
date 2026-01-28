@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:40:20 by armeneze          #+#    #+#             */
-/*   Updated: 2026/01/19 11:14:21 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/01/27 21:41:24 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			cleanup_child_and_exit(t_all_variables *all, int status);
 void			close_file(int fd);
 int				size_list_cmd(t_cmd *cmd);
 void			close_all_pipes(t_cmd *cmd);
-void			setup_child_io(t_cmd *cmd, t_cmd *head_list);
+void			setup_child_io(t_cmd *cmd, t_all_variables *head_list);
 int				get_fd(char *filename, int type);
 void			free_all_variables(t_all_variables *all_variables);
 char			*find_path(char *cmd, char **env);

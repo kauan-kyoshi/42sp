@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyoshi <kyoshi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 20:04:01 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/01/20 06:09:59 by kyoshi           ###   ########.fr       */
+/*   Updated: 2026/01/27 21:38:40 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	exec_cmd(t_all_variables *all_variables)
 	{
 		code = exec_builtin(all_variables->cmd,
 				all_variables->env, all_variables);
+		close_all_pipes(all_variables->cmd);
 		return (code);
 	}
 	spawn_children(all_variables);
