@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permutations - (42 Escola)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6; color: #333; background: #f4f7f6; padding: 20px;
+        }
+        .container {
+            max-width: 900px; margin: auto; background: white; padding: 30px;
+            border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50; text-align: center; border-bottom: 3px solid #3498db;
+            padding-bottom: 15px; margin-bottom: 30px;
+        }
+        h2 {
+            color: #e74c3c; margin-top: 30px; margin-bottom: 15px;
+            border-left: 4px solid #e74c3c; padding-left: 15px;
+        }
+
+        .func-card {
+            background: #f8f9fa; border: 2px solid #dee2e6;
+            padding: 20px; margin: 20px 0; border-radius: 8px;
+        }
+
+        .code-container {
+            background: #282c34; border-radius: 8px; margin: 15px 0;
+            overflow: hidden;
+        }
+        pre {
+            margin: 0; padding: 20px; color: #abb2bf;
+            font-family: 'Consolas', 'Monaco', monospace; font-size: 14px;
+            line-height: 1.6; overflow-x: auto;
+        }
+
+        .comment { color: #5c6370; font-style: italic; }
+        .keyword { color: #c678dd; }
+        .function { color: #61afef; }
+        .highlight { background: #fff59d; padding: 2px 6px; border-radius: 3px; }
+
+        .explanation {
+            background: #e3f2fd; border-left: 4px solid #2196f3;
+            padding: 15px; margin: 15px 0; border-radius: 4px;
+        }
+
+        ol, ul { margin-left: 25px; margin-top: 10px; }
+        li { margin: 8px 0; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            pre { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔀 Permutations - Solução com Rotação</h1>
+
+        <h2>📋 Enunciado</h2>
+        <div class="explanation">
+            <strong>Tarefa:</strong> Criar programa que imprime todas as permutações de uma string em ordem alfabética.<br>
+            <strong>Entrada:</strong> Uma string sem caracteres duplicados<br>
+            <strong>Saída:</strong> Todas as permutações, uma por linha, em ordem alfabética
+        </div>
+
+        <h2>🎯 Estratégia da Solução</h2>
+        <ol>
+            <li><strong>Ordenar</strong> a string primeiro (garante ordem alfabética)</li>
+            <li><strong>Rotacionar</strong> caracteres para gerar permutações</li>
+            <li><strong>Recursão</strong> para fixar cada caractere na posição inicial</li>
+            <li><strong>Backtrack</strong> desfazendo a rotação após cada recursão</li>
+        </ol>
+
+        <h2>📝 Código Completo</h2>
+        <div class="code-container">
+<pre>
+<span class="keyword">#include</span> &lt;unistd.h&gt;
+
+<span class="keyword">void</span> <span class="function">sort</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> len);
+<span class="keyword">void</span> <span class="function">rotate</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> reverse);
+<span class="keyword">void</span> <span class="function">solve</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> start, <span class="keyword">int</span> end);
+
+<span class="keyword">int</span> <span class="function">main</span>(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)
+{
+    <span class="keyword">char</span> *arg;
+    <span class="keyword">int</span> len;
+
+    <span class="keyword">if</span> (argc != 2)
+        <span class="keyword">return</span> (1);
+    arg = argv[1];
+    len = 0;
+    <span class="keyword">while</span> (arg[len])
+        len++;
+    sort(arg, len);
+    solve(arg, 0, len - 1);
+    <span class="keyword">return</span> (0);
+}
+
+<span class="keyword">void</span> <span class="function">solve</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> start, <span class="keyword">int</span> end)
+{
+    <span class="keyword">int</span> i;
+
+    <span class="keyword">if</span> (start == end)
+    {
+        i = 0;
+        <span class="keyword">while</span> (str[i])
+            write(1, &str[i++], 1);
+        write(1, <span class="string">"\n"</span>, 1);
+        <span class="keyword">return</span>;
+    }
+    i = start;
+    <span class="keyword">while</span> (i &lt;= end)
+    {
+        rotate(str, start, i, 0);
+        solve(str, start + 1, end);
+        rotate(str, start, i, 1);
+        i++;
+    }
+}
+
+<span class="keyword">void</span> <span class="function">rotate</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> reverse)
+{
+    <span class="keyword">char</span> tmp;
+    <span class="keyword">int</span> i;
+
+    <span class="keyword">if</span> (!reverse)
+    {
+        tmp = str[end];
+        i = end;
+        <span class="keyword">while</span> (i > start)
+        {
+            str[i] = str[i - 1];
+            i--;
+        }
+        str[start] = tmp;
+    }
+    <span class="keyword">else</span>
+    {
+        tmp = str[start];
+        i = start;
+        <span class="keyword">while</span> (i &lt; end)
+        {
+            str[i] = str[i + 1];
+            i++;
+        }
+        str[end] = tmp;
+    }
+}
+
+<span class="keyword">void</span> <span class="function">sort</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> len)
+{
+    <span class="keyword">char</span> tmp;
+    <span class="keyword">int</span> i;
+    <span class="keyword">int</span> j;
+
+    i = 0;
+    <span class="keyword">while</span> (i &lt; len - 1)
+    {
+        j = i + 1;
+        <span class="keyword">while</span> (j &lt; len)
+        {
+            <span class="keyword">if</span> (str[i] > str[j])
+            {
+                tmp = str[i];
+                str[i] = str[j];
+                str[j] = tmp;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+</pre>
+        </div>
+
+        <h2>🔧 Função: main()</h2>
+        <div class="func-card">
+            <strong>Objetivo:</strong> Ponto de entrada, valida argumentos e inicia o processo
+
+            <div class="code-container">
+<pre>
+<span class="keyword">int</span> <span class="function">main</span>(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)
+{
+    <span class="keyword">char</span> *arg;
+    <span class="keyword">int</span> len;
+
+    <span class="keyword">if</span> (argc != 2)        <span class="comment">// Verifica se recebeu 1 argumento</span>
+        <span class="keyword">return</span> (1);
+
+    arg = argv[1];
+    len = 0;
+    <span class="keyword">while</span> (arg[len])      <span class="comment">// Calcula tamanho da string</span>
+        len++;
+
+    sort(arg, len);         <span class="comment">// 1. Ordena alfabeticamente</span>
+    solve(arg, 0, len - 1); <span class="comment">// 2. Gera permutações</span>
+
+    <span class="keyword">return</span> (0);
+}
+</pre>
+            </div>
+
+            <div class="explanation">
+                <strong>Fluxo:</strong>
+                <ol>
+                    <li>Valida que recebeu exatamente 1 argumento</li>
+                    <li>Calcula o tamanho da string</li>
+                    <li>Ordena a string (garantir ordem alfabética)</li>
+                    <li>Chama solve() para gerar todas as permutações</li>
+                </ol>
+            </div>
+        </div>
+
+        <h2>🔧 Função: sort()</h2>
+        <div class="func-card">
+            <strong>Objetivo:</strong> Ordenar a string em ordem alfabética (bubble sort)
+
+            <div class="code-container">
+<pre>
+<span class="keyword">void</span> <span class="function">sort</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> len)
+{
+    <span class="keyword">char</span> tmp;
+    <span class="keyword">int</span> i, j;
+
+    i = 0;
+    <span class="keyword">while</span> (i &lt; len - 1)
+    {
+        j = i + 1;
+        <span class="keyword">while</span> (j &lt; len)
+        {
+            <span class="keyword">if</span> (str[i] > str[j])  <span class="comment">// Compara e troca se necessário</span>
+            {
+                tmp = str[i];
+                str[i] = str[j];
+                str[j] = tmp;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+</pre>
+            </div>
+
+            <div class="explanation">
+                <strong>Como funciona:</strong>
+                <ul>
+                    <li>Compara cada caractere com todos os seguintes</li>
+                    <li>Se encontrar um menor, troca de posição</li>
+                    <li>Ao final, a string está em ordem alfabética</li>
+                </ul>
+                <strong>Exemplo:</strong> "cba" → "abc"
+            </div>
+        </div>
+
+        <h2>🔧 Função: rotate()</h2>
+        <div class="func-card">
+            <strong>Objetivo:</strong> Rotacionar caracteres entre duas posições
+
+            <div class="code-container">
+<pre>
+<span class="keyword">void</span> <span class="function">rotate</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> reverse)
+{
+    <span class="keyword">char</span> tmp;
+    <span class="keyword">int</span> i;
+
+    <span class="keyword">if</span> (!reverse)  <span class="comment">// Rotação para frente</span>
+    {
+        tmp = str[end];       <span class="comment">// Salva último caractere</span>
+        i = end;
+        <span class="keyword">while</span> (i > start)
+        {
+            str[i] = str[i - 1];  <span class="comment">// Desloca todos para direita</span>
+            i--;
+        }
+        str[start] = tmp;     <span class="comment">// Coloca o último no início</span>
+    }
+    <span class="keyword">else</span>  <span class="comment">// Rotação reversa (desfaz)</span>
+    {
+        tmp = str[start];     <span class="comment">// Salva primeiro caractere</span>
+        i = start;
+        <span class="keyword">while</span> (i &lt; end)
+        {
+            str[i] = str[i + 1];  <span class="comment">// Desloca todos para esquerda</span>
+            i++;
+        }
+        str[end] = tmp;       <span class="comment">// Coloca o primeiro no fim</span>
+    }
+}
+</pre>
+            </div>
+
+            <div class="explanation">
+                <strong>Exemplo visual:</strong>
+                <ul>
+                    <li><code>rotate("abc", 0, 2, 0)</code> → "cab" (move 'c' para início)</li>
+                    <li><code>rotate("cab", 0, 2, 1)</code> → "abc" (desfaz)</li>
+                </ul>
+                <strong>Diferença do swap:</strong> Mantém ordem relativa dos outros caracteres!
+            </div>
+        </div>
+
+        <h2>🔧 Função: solve()</h2>
+        <div class="func-card">
+            <strong>Objetivo:</strong> Gerar todas as permutações usando recursão e backtracking
+
+            <div class="code-container">
+<pre>
+<span class="keyword">void</span> <span class="function">solve</span>(<span class="keyword">char</span> *str, <span class="keyword">int</span> start, <span class="keyword">int</span> end)
+{
+    <span class="keyword">int</span> i;
+
+    <span class="keyword">if</span> (start == end)  <span class="comment">// Caso base: chegou ao fim</span>
+    {
+        i = 0;
+        <span class="keyword">while</span> (str[i])
+            write(1, &str[i++], 1);
+        write(1, <span class="string">"\n"</span>, 1);
+        <span class="keyword">return</span>;
+    }
+
+    i = start;
+    <span class="keyword">while</span> (i &lt;= end)
+    {
+        rotate(str, start, i, 0);  <span class="comment">// 1. Rotaciona</span>
+        solve(str, start + 1, end);  <span class="comment">// 2. Recursão</span>
+        rotate(str, start, i, 1);  <span class="comment">// 3. Desfaz (backtrack)</span>
+        i++;
+    }
+}
+</pre>
+            </div>
+
+            <div class="explanation">
+                <strong>Lógica:</strong>
+                <ol>
+                    <li><strong>Caso base:</strong> Se start == end, imprime a permutação</li>
+                    <li><strong>Loop:</strong> Para cada posição de start até end:
+                        <ul>
+                            <li>Rotaciona para trazer caractere i para posição start</li>
+                            <li>Chama recursivamente para o restante (start+1 até end)</li>
+                            <li>Desfaz a rotação (backtrack) para próxima iteração</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <strong>Exemplo com "abc":</strong>
+                <ul>
+                    <li>i=0: "abc" → solve("abc", 1, 2) → imprime "abc", "acb"</li>
+                    <li>i=1: "bac" → solve("bac", 1, 2) → imprime "bac", "bca"</li>
+                    <li>i=2: "cab" → solve("cab", 1, 2) → imprime "cab", "cba"</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>🎯 Pontos-Chave para Memorizar</h2>
+        <ol>
+            <li><span class="highlight">sort()</span> primeiro - garante ordem alfabética</li>
+            <li><span class="highlight">rotate()</span> mantém ordem relativa - é isso que faz funcionar</li>
+            <li><span class="highlight">reverse=0</span> rotaciona, <span class="highlight">reverse=1</span> desfaz</li>
+            <li>Sempre <strong>desfazer</strong> a rotação após a recursão (backtrack)</li>
+            <li>Use <span class="highlight">write()</span>, nunca printf</li>
+        </ol>
+
+        <div style="text-align: center; margin-top: 30px; padding: 20px; background: #e8f5e9; border-radius: 8px;">
+            <h2 style="color: #27ae60;">✅ Solução Completa e Verificada</h2>
+            <p style="margin-top: 10px;">Boa sorte no exame! 🚀</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter - 42 Exam</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: #1a1a1a;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #242424;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            color: #61afef;
+            text-align: center;
+            border-bottom: 3px solid #61afef;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        h2 {
+            color: #98c379;
+            border-bottom: 2px solid #98c379;
+            padding-bottom: 8px;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        h3 {
+            color: #e5c07b;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        h4 {
+            color: #c678dd;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .box {
+            background: #2c2c2c;
+            border-left: 4px solid #61afef;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .box-yellow {
+            background: #3a3420;
+            border-left: 4px solid #e5c07b;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .box-green {
+            background: #243429;
+            border-left: 4px solid #98c379;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .box-red {
+            background: #3d2626;
+            border-left: 4px solid #e06c75;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .box-purple {
+            background: #332940;
+            border-left: 4px solid #c678dd;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .visual {
+            background: #1e1e1e;
+            border: 2px dashed #e5c07b;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #abb2bf;
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.6;
+            border: 1px solid #3a3a3a;
+            margin: 15px 0;
+        }
+
+        code {
+            background: #2c2c2c;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e06c75;
+            font-size: 0.95em;
+        }
+
+        .comment { color: #5c6370; font-style: italic; }
+        .keyword { color: #c678dd; font-weight: bold; }
+        .function { color: #61afef; }
+        .string { color: #98c379; }
+        .number { color: #d19a66; }
+        .operator { color: #56b6c2; }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            font-size: 14px;
+            background: #2c2c2c;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table td, table th {
+            border: 1px solid #3a3a3a;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        table th {
+            background-color: #61afef;
+            color: #1a1a1a;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) { background-color: #282828; }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        strong { color: #61afef; }
+
+        .step-badge {
+            display: inline-block;
+            background: #61afef;
+            color: #1a1a1a;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .emoji { font-size: 1.3em; margin-right: 8px; }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            h1 { font-size: 1.5em; }
+            h2 { font-size: 1.3em; }
+            pre, .visual { font-size: 11px; }
+            table { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Guia Filter - Substituição com Buffer Dinâmico</h1>
+
+        <div class="box">
+            <strong>📌 O Problema:</strong> Ler da entrada padrão (stdin), encontrar todas as ocorrências de uma string e substituí-las por asteriscos (*), escrevendo na saída padrão (stdout).
+            <br><br>
+            <strong>Exemplo:</strong> <code>echo "abcdefabc" | ./filter abc</code>
+            <br><strong>Saída:</strong> <code>***def***</code>
+            <br><br>
+            <strong class="emoji">⚠️</strong> <strong>O GRANDE DESAFIO:</strong> O <code>read()</code> pode ler qualquer quantidade de bytes a cada chamada! A string procurada pode ser <strong>cortada ao meio</strong> entre dois reads!
+        </div>
+
+        <h2>🧠 Conceito Central: O Problema da Sobra</h2>
+
+        <div class="box-yellow">
+            <strong>🎯 Cenário Problemático:</strong>
+            <div class="visual">Procurando "world" no texto "hello world bye"
+
+<strong>Read 1:</strong> "hello wor"  ← palavra cortada!
+<strong>Read 2:</strong> "ld bye"     ← resto da palavra
+
+Se processar separadamente:
+  ✗ "hello wor" → não encontra "world"
+  ✗ "ld bye"    → não encontra "world"
+  ✗ FALHA! A palavra nunca é encontrada!
+
+<strong>SOLUÇÃO:</strong>
+Guardar a SOBRA não processada do Read 1
+e juntar com os novos dados do Read 2:
+
+  Buffer combinado: "hello world bye"
+  ✓ Agora encontra "world" corretamente!</div>
+        </div>
+
+        <div class="box-green">
+            <strong class="emoji">💡</strong> <strong>A Chave do Algoritmo:</strong>
+            <p>Após processar cada read, movemos os bytes <strong>não processados</strong> (a "sobra") para o <strong>início do buffer</strong>. Na próxima leitura, lemos os novos dados <strong>DEPOIS</strong> dessa sobra, reconstruindo a continuidade do texto!</p>
+        </div>
+
+        <h2>📊 Variáveis do Programa</h2>
+
+        <table>
+            <tr>
+                <th style="width: 25%;">Variável</th>
+                <th style="width: 15%;">Tipo</th>
+                <th style="width: 60%;">Função</th>
+            </tr>
+            <tr>
+                <td><code>buffer[8192]</code></td>
+                <td>char[]</td>
+                <td>Buffer fixo de 8KB. Armazena: dados não processados (sobra) + novos dados lidos</td>
+            </tr>
+            <tr>
+                <td><code>achado</code></td>
+                <td>char*</td>
+                <td>Ponteiro retornado pelo <code>memmem()</code>. Aponta para onde a string foi encontrada (ou NULL)</td>
+            </tr>
+            <tr>
+                <td><code>buffer_pos</code></td>
+                <td>char*</td>
+                <td>Marca nossa posição atual de processamento no buffer. Começa em <code>buffer</code> e avança conforme encontramos matches</td>
+            </tr>
+            <tr>
+                <td><code>bytes_lidos</code></td>
+                <td>ssize_t</td>
+                <td>Quantidade de bytes lidos pelo <code>read()</code>. Valores: >0 (sucesso), 0 (EOF), -1 (erro)</td>
+            </tr>
+            <tr>
+                <td><code>sobra_len</code></td>
+                <td>size_t</td>
+                <td><strong>CRUCIAL!</strong> Número total de bytes válidos no buffer (sobra antiga + novos dados)</td>
+            </tr>
+            <tr>
+                <td><code>alvo_len</code></td>
+                <td>size_t</td>
+                <td>Tamanho da string que estamos procurando = <code>strlen(argv[1])</code></td>
+            </tr>
+            <tr>
+                <td><code>i</code></td>
+                <td>size_t</td>
+                <td>Contador para o loop que escreve os asteriscos</td>
+            </tr>
+        </table>
+
+        <h2>🎯 Fluxo Completo do Algoritmo</h2>
+
+        <div class="visual">
+<strong>INICIALIZAÇÃO:</strong>
+├─ Validar argumentos (exatamente 1 argumento não-vazio)
+├─ Calcular tamanho da string procurada
+└─ Inicializar sobra_len = 0
+
+<strong>LOOP PRINCIPAL (enquanto read() retorna > 0):</strong>
+│
+├─ <span class="step-badge">1</span> <strong>LER:</strong> read(0, buffer + sobra_len, espaço_disponível)
+│         ↳ Lê APÓS a sobra, não sobrescreve dados antigos
+│
+├─ <span class="step-badge">2</span> <strong>ATUALIZAR:</strong> sobra_len += bytes_lidos
+│         ↳ Total de bytes válidos = sobra + novos dados
+│
+├─ <span class="step-badge">3</span> <strong>RESETAR:</strong> buffer_pos = buffer
+│         ↳ Começamos a busca do início
+│
+├─ <span class="step-badge">4</span> <strong>BUSCAR E SUBSTITUIR (loop interno):</strong>
+│   │
+│   └─ ENQUANTO memmem() encontrar a string:
+│       ├─ a) Escreve tudo ANTES do match
+│       ├─ b) Escreve asteriscos (mesmo tamanho da string)
+│       └─ c) Avança buffer_pos para DEPOIS do match
+│
+├─ <span class="step-badge">5</span> <strong>CALCULAR SOBRA:</strong> sobra_len = bytes não processados
+│         ↳ sobra_len -= (buffer_pos - buffer)
+│
+└─ <span class="step-badge">6</span> <strong>MOVER SOBRA:</strong> memmove(buffer, buffer_pos, sobra_len)
+          ↳ Move dados não processados para o início
+
+<strong>FINALIZAÇÃO:</strong>
+├─ Se read() retornou -1: erro, usar perror()
+└─ Escrever sobra final (dados após último match)</div>
+
+        <h2>🔍 Código Linha por Linha</h2>
+
+        <h3><span class="step-badge">1</span> Headers e Inicialização</h3>
+
+        <pre><span class="keyword">#define</span> <span class="string">_GNU_SOURCE</span>          <span class="comment">// Necessário para memmem() no Linux</span>
+<span class="keyword">#include</span> <span class="operator">&lt;</span>unistd.h<span class="operator">&gt;</span>         <span class="comment">// read(), write()</span>
+<span class="keyword">#include</span> <span class="operator">&lt;</span>string.h<span class="operator">&gt;</span>         <span class="comment">// strlen(), memmem(), memmove()</span>
+<span class="keyword">#include</span> <span class="operator">&lt;</span>stdio.h<span class="operator">&gt;</span>          <span class="comment">// perror()</span>
+
+<span class="keyword">int</span> <span class="function">main</span>(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)
+{
+    <span class="keyword">char</span>    buffer[<span class="number">8192</span>];    <span class="comment">// Buffer de 8KB</span>
+    <span class="keyword">char</span>    *achado;
+    <span class="keyword">char</span>    *buffer_pos;
+    <span class="keyword">ssize_t</span> bytes_lidos;
+    <span class="keyword">size_t</span>  sobra_len = <span class="number">0</span>;  <span class="comment">// Começa sem sobra</span>
+    <span class="keyword">size_t</span>  alvo_len;
+    <span class="keyword">size_t</span>  i;</pre>
+
+        <h3><span class="step-badge">2</span> Validação de Argumentos</h3>
+
+        <pre>    <span class="comment">// Precisa de exatamente 1 argumento E não pode ser vazio</span>
+    <span class="keyword">if</span> (argc != <span class="number">2</span> || !argv[<span class="number">1</span>] || !argv[<span class="number">1</span>][<span class="number">0</span>])
+        <span class="keyword">return</span> (<span class="number">1</span>);
+
+    alvo_len = <span class="function">strlen</span>(argv[<span class="number">1</span>]);  <span class="comment">// Calcula tamanho da string alvo</span></pre>
+
+        <div class="box-yellow">
+            <strong>🔍 Entendendo a Validação:</strong>
+            <ul>
+                <li><code>argc != 2</code> → Precisa de exatamente 2 argumentos (programa + string)</li>
+                <li><code>!argv[1]</code> → Verifica se argv[1] não é NULL (defesa extra)</li>
+                <li><code>!argv[1][0]</code> → Verifica se não é string vazia (<code>./filter ""</code>)</li>
+            </ul>
+            <strong>Nota:</strong> Se <code>argc == 2</code>, o sistema operacional normalmente garante que <code>argv[1]</code> não é NULL, mas o check <code>!argv[1]</code> é uma segurança extra para casos extremos.
+        </div>
+
+        <h3><span class="step-badge">3</span> Loop Principal - Leitura Inteligente</h3>
+
+        <pre>    <span class="keyword">while</span> ((bytes_lidos = <span class="function">read</span>(<span class="number">0</span>, buffer + sobra_len,
+                              <span class="keyword">sizeof</span>(buffer) - sobra_len)) > <span class="number">0</span>)
+    {</pre>
+
+        <div class="box">
+            <strong class="emoji">🔑</strong> <strong>A Mágica do "buffer + sobra_len":</strong>
+            <div class="visual">
+<strong>Situação 1 - Primeiro read (sobra_len = 0):</strong>
+Buffer: [ ][ ][ ][ ][ ][ ][ ][ ][ ]...
+         ↑
+    buffer + 0 = buffer (início)
+
+    read(0, buffer, 8192)
+    → Lê para o início do buffer normalmente
+
+<strong>Situação 2 - Segundo read (sobra_len = 5):</strong>
+Buffer: [h][e][l][l][o][ ][ ][ ][ ]...
+         ↑              ↑
+       buffer      buffer + 5
+
+    read(0, buffer + 5, 8192 - 5)
+    → Lê APÓS "hello", preservando a sobra!
+
+<strong>RESULTADO:</strong>
+Buffer: [h][e][l][l][o][w][o][r][l][d]...
+         ↑──── sobra ────↑──── novo ────↑</div>
+        </div>
+
+        <div class="box-red">
+            <strong class="emoji">❌</strong> <strong>ERRO FATAL #1:</strong>
+            <p>Se você escrever <code>read(0, buffer, sizeof(buffer))</code> sem considerar a sobra, você <strong>SOBRESCREVE</strong> os dados não processados, perdendo parte do texto!</p>
+        </div>
+
+        <h3><span class="step-badge">4</span> Atualização da Sobra e Reset</h3>
+
+        <pre>        sobra_len += bytes_lidos;  <span class="comment">// Total de bytes válidos no buffer</span>
+        buffer_pos = buffer;       <span class="comment">// Volta para o início</span></pre>
+
+        <div class="visual">Exemplo numérico:
+
+sobra_len antes:   5 bytes ("hello")
+bytes_lidos:      +8 bytes (" world b")
+sobra_len depois: 13 bytes total
+
+Buffer: "hello world b"
+         ↑
+    buffer_pos = buffer (posição 0)</div>
+
+        <h3><span class="step-badge">5</span> Loop de Busca - memmem()</h3>
+
+        <pre>        <span class="keyword">while</span> ((achado = <span class="function">memmem</span>(buffer_pos,
+                               sobra_len - (buffer_pos - buffer),
+                               argv[<span class="number">1</span>],
+                               alvo_len)))
+        {</pre>
+
+        <div class="box-purple">
+            <strong>🔬 Anatomia do memmem():</strong>
+            <table style="margin-top: 15px; font-size: 13px;">
+                <tr>
+                    <th>Parâmetro</th>
+                    <th>Valor</th>
+                    <th>Significado</th>
+                </tr>
+                <tr>
+                    <td>1º - onde buscar</td>
+                    <td><code>buffer_pos</code></td>
+                    <td>Ponteiro para onde começar a busca</td>
+                </tr>
+                <tr>
+                    <td>2º - tamanho</td>
+                    <td><code>sobra_len - (buffer_pos - buffer)</code></td>
+                    <td>Quantos bytes faltam processar</td>
+                </tr>
+                <tr>
+                    <td>3º - o que buscar</td>
+                    <td><code>argv[1]</code></td>
+                    <td>String alvo</td>
+                </tr>
+                <tr>
+                    <td>4º - tamanho do alvo</td>
+                    <td><code>alvo_len</code></td>
+                    <td>Tamanho da string alvo</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="box">
+            <strong>📐 Por que "sobra_len - (buffer_pos - buffer)"?</strong>
+            <div class="visual">
+Buffer: [a][b][c][d][e][f][g][h]
+         ↑           ↑
+       buffer    buffer_pos
+
+sobra_len = 8          (total de bytes no buffer)
+buffer_pos - buffer = 4 (já processamos 4 bytes)
+
+Bytes restantes: 8 - 4 = 4
+
+memmem busca apenas em: [e][f][g][h]
+                         ↑
+                     buffer_pos</div>
+        </div>
+
+        <h3><span class="step-badge">6</span> Substituição - Escrever</h3>
+
+        <pre>            <span class="comment">// Escreve tudo que vem ANTES do match</span>
+            <span class="function">write</span>(<span class="number">1</span>, buffer_pos, achado - buffer_pos);
+
+            <span class="comment">// Escreve asteriscos (substitui a string)</span>
+            i = -<span class="number">1</span>;
+            <span class="keyword">while</span> (++i < alvo_len)
+                <span class="function">write</span>(<span class="number">1</span>, <span class="string">"*"</span>, <span class="number">1</span>);
+
+            <span class="comment">// Avança para DEPOIS do match</span>
+            buffer_pos = achado + alvo_len;
+        }</pre>
+
+        <div class="box-green">
+            <strong class="emoji">🎬</strong> <strong>Exemplo Visual - Processando "abcdefabc"</strong>
+            <p style="margin-top: 10px;"><strong>Procurando "abc"</strong> (alvo_len = 3)</p>
+            <div class="visual">
+Buffer: [a][b][c][d][e][f][a][b][c]
+         ↑
+    buffer_pos (posição 0)
+
+<strong>═══════════ ITERAÇÃO 1 ═══════════</strong>
+
+memmem encontra "abc" na posição 0
+achado = &buffer[0]
+
+① write(1, buffer_pos, achado - buffer_pos)
+   write(1, buffer[0], 0 - 0) = write(1, ..., 0)
+   → Não escreve nada (0 bytes antes)
+
+② Loop de asteriscos (3 vezes)
+   Saída até agora: "***"
+
+③ buffer_pos = achado + 3
+   buffer_pos agora → buffer[3] = 'd'
+
+<strong>═══════════ ITERAÇÃO 2 ═══════════</strong>
+
+Buffer: [a][b][c][d][e][f][a][b][c]
+                     ↑
+                buffer_pos
+
+memmem busca de 'd' até o fim
+encontra "abc" na posição 6
+achado = &buffer[6]
+
+① write(1, buffer_pos, achado - buffer_pos)
+   write(1, buffer[3], 6 - 3) = write(1, "def", 3)
+   Saída até agora: "***def"
+
+② Loop de asteriscos (3 vezes)
+   Saída até agora: "***def***"
+
+③ buffer_pos = achado + 3
+   buffer_pos agora → buffer[9] = fim
+
+<strong>═══════════ FIM DO LOOP ═══════════</strong>
+Nenhum match restante
+
+<strong>RESULTADO:</strong> "***def***" ✓</div>
+        </div>
+
+        <div class="box-red">
+            <strong class="emoji">❌</strong> <strong>ERRO FATAL #2:</strong>
+            <p>Esquecer de fazer <code>buffer_pos = achado + alvo_len</code> causa <strong>LOOP INFINITO</strong>! O memmem() continuará encontrando o mesmo match repetidamente.</p>
+        </div>
+
+        <h3><span class="step-badge">7</span> Recalcular Sobra e Mover</h3>
+
+        <pre>        <span class="comment">// Calcula quantos bytes NÃO foram processados</span>
+        sobra_len -= (buffer_pos - buffer);
+
+        <span class="comment">// Move a sobra para o INÍCIO do buffer</span>
+        <span class="function">memmove</span>(buffer, buffer_pos, sobra_len);
+    }</pre>
+
+        <div class="box">
+            <strong class="emoji">🔄</strong> <strong>Entendendo a Movimentação:</strong>
+            <div class="visual">
+<strong>SITUAÇÃO:</strong> Buffer tinha 20 bytes, processamos até posição 17
+
+Buffer: [.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|x|y|z]
+         ↑                                   ↑   ↑
+       buffer                          buffer_pos fim
+       (posição 0)                     (posição 17)
+
+sobra_len original:    20 bytes
+buffer_pos - buffer:   17 bytes (já processamos)
+sobra_len nova:         3 bytes (restam: "xyz")
+
+<strong>ANTES do memmove:</strong>
+[.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|x|y|z]
+                                   ↑─────↑
+                                  3 bytes
+
+<strong>memmove(buffer, buffer_pos, 3):</strong>
+Copia "xyz" para o início
+
+<strong>DEPOIS do memmove:</strong>
+[x|y|z|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.]
+ ↑─────↑
+3 bytes válidos
+
+<strong>PRÓXIMO READ:</strong>
+Lerá para buffer[3], adicionando APÓS "xyz"!
+[x|y|z|n|o|v|o|s| |d|a|d|o|s|...
+ ↑─────↑ ↑──────────────────────↑
+ sobra        novos dados</div>
+        </div>
+
+        <div class="box-yellow">
+            <strong>🤔 Por que memmove() e não memcpy()?</strong>
+            <ul>
+                <li><code>memcpy()</code> → Origem e destino <strong>NÃO podem se sobrepor</strong></li>
+                <li><code>memmove()</code> → Funciona <strong>mesmo com overlap</strong></li>
+            </ul>
+            <p>Aqui, origem (<code>buffer_pos</code>) e destino (<code>buffer</code>) estão no <strong>mesmo array</strong>, então podem se sobrepor!</p>
+            <p><strong>Usar memcpy() = comportamento indefinido (bug)!</strong></p>
+        </div>
+
+        <h3><span class="step-badge">8</span> Tratamento de Erros</h3>
+
+        <pre>    <span class="comment">// Se read() retornou -1 (erro)</span>
+    <span class="keyword">if</span> (bytes_lidos < <span class="number">0</span>)
+    {
+        <span class="function">perror</span>(<span class="string">"Error"</span>);  <span class="comment">// Imprime "Error: mensagem_do_sistema"</span>
+        <span class="keyword">return</span> (<span class="number">1</span>);
+    }</pre>
+
+        <div class="box-purple">
+            <strong>📝 O que é perror()?</strong>
+            <p><code>perror("Error")</code> imprime no stderr:</p>
+            <ul>
+                <li>A string que você passou ("Error")</li>
+                <li>Dois pontos e espaço (": ")</li>
+                <li>A mensagem de erro do sistema (baseada em <code>errno</code>)</li>
+            </ul>
+            <p><strong>Exemplo:</strong> Se read() falhou porque o file descriptor é inválido:</p>
+            <p style="background: #1e1e1e; padding: 10px; border-radius: 5px; margin-top: 10px;"><code>Error: Bad file descriptor</code></p>
+        </div>
+
+        <h3><span class="step-badge">9</span> Finalização</h3>
+
+        <pre>    <span class="comment">// Escreve qualquer sobra final (dados após último match)</span>
+    <span class="function">write</span>(<span class="number">1</span>, buffer, sobra_len);
+    <span class="keyword">return</span> (<span class="number">0</span>);
+}</pre>
+
+        <div class="box-yellow">
+            <strong>🔍 Por que write(1, buffer, sobra_len) no final?</strong>
+            <p>Após o loop terminar (EOF), pode haver dados no buffer que <strong>não formaram match</strong> ou que vieram <strong>depois do último match</strong>.</p>
+            <p><strong>Exemplo 1:</strong> Input "abc123", procurando "xyz"</p>
+            <p>→ Nenhum match, mas "abc123" está no buffer e precisa ser escrito!</p>
+            <p><strong>Exemplo 2:</strong> Input "abcdefghijk", procurando "abc"</p>
+            <p>→ Substitui "abc" por "***", mas "defghijk" ficou no buffer e precisa ser escrito!</p>
+        </div>
+
+        <h2>🎬 Exemplo Completo: Match Dividi entre Reads</h2>
+    <div class="box-green">
+        <strong>Cenário:</strong> Input "hello worldabc", procurando "abc"
+        <br><strong>Complicação:</strong> Read 1 lê só "hello worl", Read 2 lê "dabc"
+
+        <div class="visual">
+<strong>═══════════════════════════════════════════════════</strong>
+<strong>INICIALIZAÇÃO:</strong>
+argv[1] = "abc"
+alvo_len = 3
+sobra_len = 0
+<strong>═══════════════════════════════════════════════════</strong>
+<strong>READ 1:</strong> bytes_lidos = 10 ("hello worl")
+read(0, buffer + 0, 8192) lê "hello worl"
+buffer: [h][e][l][l][o][ ][w][o][r][l]
+↑
+buffer_pos = buffer
+sobra_len = 0 + 10 = 10
+<strong>Busca "abc":</strong>
+memmem(buffer, 10, "abc", 3) → NULL (não encontrou)
+<strong>Após busca:</strong>
+buffer_pos não se moveu (nenhum match)
+sobra_len = 10 - (buffer_pos - buffer)
+sobra_len = 10 - 0 = 10 (guarda tudo!)
+<strong>memmove:</strong>
+memmove(buffer, buffer, 10)
+→ Não faz nada (origem = destino)
+Buffer ainda: [h][e][l][l][o][ ][w][o][r][l]
+<strong>═══════════════════════════════════════════════════</strong>
+<strong>READ 2:</strong> bytes_lidos = 4 ("dabc")
+<strong>IMPORTANTE:</strong> read(0, buffer + 10, 8192 - 10)
+↑ lê APÓS a sobra!
+buffer: [h][e][l][l][o][ ][w][o][r][l][d][a][b][c]
+↑                                       ↑
+buffer_pos                               fim (14)
+sobra_len = 10 + 4 = 14
+<strong>Busca "abc":</strong>
+memmem(buffer, 14, "abc", 3) → encontra na posição 11!
+achado = &buffer[11] = 'a' de "abc"
+<strong>Iteração do loop interno:</strong>
+① write(1, buffer, 11) → "hello world"
+② Loop asteriscos (3x) → "***"
+③ buffer_pos = buffer + 14 (fim)
+<strong>Busca de novo:</strong>
+memmem(buffer + 14, 0, "abc", 3) → NULL (acabou)
+<strong>Após busca:</strong>
+sobra_len = 14 - 14 = 0 (tudo processado)
+<strong>memmove:</strong>
+memmove(buffer, buffer + 14, 0) → move 0 bytes
+<strong>═══════════════════════════════════════════════════</strong>
+<strong>READ 3:</strong> bytes_lidos = 0 (EOF)
+Loop termina!
+<strong>Finalização:</strong>
+write(1, buffer, 0) → não escreve nada
+<strong>SAÍDA COMPLETA:</strong> "hello world***" ✓</div>
+</div>
+    <h2>🎓 Funções Importantes - Referência</h2>
+
+    <table>
+        <tr>
+            <th style="width: 20%;">Função</th>
+            <th style="width: 80%;">Explicação</th>
+        </tr>
+        <tr>
+            <td><code>memmem()</code></td>
+            <td>Busca uma sequência de bytes dentro de outra. Retorna ponteiro para o início do match ou NULL se não encontrar.
+            <br><strong>Uso:</strong> <code>memmem(onde_buscar, tamanho, o_que_buscar, tamanho_alvo)</code></td>
+        </tr>
+        <tr>
+            <td><code>memmove()</code></td>
+            <td>Copia bytes de um lugar para outro, funcionando corretamente mesmo se as áreas se sobrepõem.
+            <br><strong>Uso:</strong> <code>memmove(destino, origem, quantos_bytes)</code></td>
+        </tr>
+        <tr>
+            <td><code>read()</code></td>
+            <td>Lê bytes de um file descriptor. Retorna: >0 (bytes lidos), 0 (EOF), -1 (erro).
+            <br><strong>Uso:</strong> <code>read(0, buffer, tamanho)</code> → 0 = stdin</td>
+        </tr>
+        <tr>
+            <td><code>write()</code></td>
+            <td>Escreve bytes em um file descriptor.
+            <br><strong>Uso:</strong> <code>write(1, buffer, tamanho)</code> → 1 = stdout, 2 = stderr</td>
+        </tr>
+        <tr>
+            <td><code>perror()</code></td>
+            <td>Imprime uma mensagem de erro no stderr, incluindo a descrição do último erro do sistema.
+            <br><strong>Uso:</strong> <code>perror("Error")</code> → imprime "Error: mensagem"</td>
+        </tr>
+        <tr>
+            <td><code>strlen()</code></td>
+            <td>Retorna o tamanho de uma string (sem contar o '\0').
+            <br><strong>Uso:</strong> <code>strlen("abc")</code> → retorna 3</td>
+        </tr>
+    </table>
+
+    <h2>🐛 Casos de Teste</h2>
+
+    <div class="box-green">
+        <strong>✅ Bateria de Testes:</strong>
+
+        <table style="margin-top: 15px;">
+            <tr>
+                <th style="width: 35%;">Comando</th>
+                <th style="width: 65%;">Saída Esperada</th>
+            </tr>
+            <tr>
+                <td><code>echo "abcdefabc" | ./filter abc</code></td>
+                <td><code>***def***</code></td>
+            </tr>
+            <tr>
+                <td><code>echo "abcabcabc" | ./filter abc</code></td>
+                <td><code>*********</code></td>
+            </tr>
+            <tr>
+                <td><code>echo "ababcabababc" | ./filter ababc</code></td>
+                <td><code>*****ab*****</code></td>
+            </tr>
+            <tr>
+                <td><code>echo "hello world" | ./filter xyz</code></td>
+                <td><code>hello world</code> (sem match)</td>
+            </tr>
+            <tr>
+                <td><code>echo "abcdef" | ./filter abc</code></td>
+                <td><code>***def</code></td>
+            </tr>
+            <tr>
+                <td><code>echo "defabc" | ./filter abc</code></td>
+                <td><code>def***</code></td>
+            </tr>
+            <tr>
+                <td><code>./filter</code></td>
+                <td>return 1 (sem output)</td>
+            </tr>
+            <tr>
+                <td><code>./filter ""</code></td>
+                <td>return 1 (string vazia)</td>
+            </tr>
+            <tr>
+                <td><code>./filter abc def</code></td>
+                <td>return 1 (muitos args)</td>
+            </tr>
+            <tr>
+                <td><code>echo 'abcdefaaaabcdeabcabcdabc' | ./filter abc</code></td>
+                <td><code>***defaaa***de******d***</code></td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>⚠️ Armadilhas Comuns</h2>
+
+    <div class="box-red">
+        <strong class="emoji">❌</strong> <strong>TOP 8 ERROS FATAIS:</strong>
+
+        <ol style="margin-top: 15px; line-height: 2;">
+            <li><strong>Esquecer <code>#define _GNU_SOURCE</code></strong> → memmem() não compila!</li>
+
+            <li><strong>Ler para <code>buffer</code> em vez de <code>buffer + sobra_len</code></strong> → Sobrescreve dados não processados!</li>
+
+            <li><strong>Esquecer <code>sobra_len += bytes_lidos</code></strong> → Contagem errada!</li>
+
+            <li><strong>Tamanho errado no memmem()</strong> → Usar <code>sobra_len</code> em vez de <code>sobra_len - (buffer_pos - buffer)</code></li>
+
+            <li><strong>Não avançar <code>buffer_pos</code></strong> → Loop infinito!</li>
+
+            <li><strong>Usar <code>memcpy()</code> em vez de <code>memmove()</code></strong> → Comportamento indefinido!</li>
+
+            <li><strong>Esquecer <code>write(1, buffer, sobra_len)</code> final</strong> → Perde dados!</li>
+
+            <li><strong>Não validar <code>!argv[1][0]</code></strong> → String vazia não retorna 1!</li>
+        </ol>
+    </div>
+
+    <h2>✅ Checklist Pré-Compilação</h2>
+
+    <div class="box-green">
+        <strong>Antes de submeter, verifique:</strong>
+
+        <table style="margin-top: 15px;">
+            <tr>
+                <th style="width: 8%;">☑</th>
+                <th>Item</th>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td><code>#define _GNU_SOURCE</code> está na primeira linha</td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>Includes: <code>unistd.h</code>, <code>string.h</code>, <code>stdio.h</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>Todas as variáveis declaradas no topo</td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>Validação: <code>argc != 2 || !argv[1] || !argv[1][0]</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td><code>sobra_len = 0</code> inicializado</td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td><code>read(0, buffer + sobra_len, sizeof(buffer) - sobra_len)</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td><code>sobra_len += bytes_lidos</code> após cada read</td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td><code>buffer_pos = buffer</code> antes do loop interno</td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>memmem() com tamanho <code>sobra_len - (buffer_pos - buffer)</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>write antes do match: <code>write(1, buffer_pos, achado - buffer_pos)</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>Loop de asteriscos: <code>i = -1; while (++i < alvo_len)</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>Avança posição: <code>buffer_pos = achado + alvo_len</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>Calcula sobra: <code>sobra_len -= (buffer_pos - buffer)</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td><code>memmove(buffer, buffer_pos, sobra_len)</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>Trata erro: <code>if (bytes_lidos < 0)</code> com <code>perror("Error")</code></td>
+            </tr>
+            <tr>
+                <td>☐</td>
+                <td>Escreve sobra final: <code>write(1, buffer, sobra_len)</code></td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>🧪 Como Testar</h2>
+
+    <div class="box">
+        <pre style="background: #1e1e1e; color: #abb2bf;">
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+<span class="comment"># COMPILAÇÃO</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+gcc -Wall -Wextra -Werror filter.c -o filter
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+<span class="comment"># TESTES BÁSICOS</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+echo "abcdefabc" | ./filter abc
+<span class="string"># Esperado: def</span>
+echo "ababcabababc" | ./filter ababc
+<span class="string"># Esperado: ab</span>
+echo 'abcdefaaaabcdeabcabcdabc' | ./filter abc
+<span class="string"># Esperado: defaaade***d</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+<span class="comment"># TESTE COM ARQUIVO GRANDE</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+cat /etc/passwd | ./filter root
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+<span class="comment"># COMPARAÇÃO COM SED</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+echo "test abc test abc" | ./filter abc > out1.txt
+echo "test abc test abc" | sed 's/abc/***/g' > out2.txt
+diff out1.txt out2.txt
+<span class="string"># Deve ser idêntico (sem output)!</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+<span class="comment"># TESTE DE VALIDAÇÃO</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+./filter; echo $?
+<span class="string"># Esperado: 1</span>
+./filter ""; echo $?
+<span class="string"># Esperado: 1</span>
+./filter abc def; echo $?
+<span class="string"># Esperado: 1</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+<span class="comment"># TESTE COM cat -e (mostra \n)</span>
+<span class="comment"># ═════════════════════════════════════════════════════</span>
+echo 'abcdefaaaabcdeabcabcdabc' | ./filter abc | cat -e
+<span class="string"># Esperado: defaaade***d$</span></pre>
+</div>
+    <h2>🎯 Os 3 Conceitos-Chave</h2>
+
+    <div class="box-purple">
+        <h4>1️⃣ A Sobra (sobra_len)</h4>
+        <p>Preserva dados não processados entre leituras, permitindo reconstruir strings cortadas.</p>
+
+        <h4>2️⃣ A Posição Móvel (buffer_pos)</h4>
+        <p>Avança conforme encontramos matches, marcando até onde já processamos.</p>
+
+        <h4>3️⃣ O memmove Final</h4>
+        <p>Move a sobra para o início, preparando para o próximo read adicionar mais dados.</p>
+    </div>
+
+    <h2>📝 Código Completo Comentado</h2>
+
+    <pre><span class="keyword">#define</span> _GNU_SOURCE
+<span class="keyword">#include</span> <unistd.h>
+<span class="keyword">#include</span> <string.h>
+<span class="keyword">#include</span> <stdio.h>
+<span class="keyword">int</span> <span class="function">main</span>(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)
+{
+<span class="keyword">char</span>    buffer[<span class="number">8192</span>];
+<span class="keyword">char</span>    *achado;
+<span class="keyword">char</span>    *buffer_pos;
+<span class="keyword">ssize_t</span> bytes_lidos;
+<span class="keyword">size_t</span>  sobra_len = <span class="number">0</span>;
+<span class="keyword">size_t</span>  alvo_len;
+<span class="keyword">size_t</span>  i;
+<span class="comment">// Valida: exatamente 1 argumento E não vazio</span>
+<span class="keyword">if</span> (argc != <span class="number">2</span> || !argv[<span class="number">1</span>] || !argv[<span class="number">1</span>][<span class="number">0</span>])
+    <span class="keyword">return</span> (<span class="number">1</span>);
+
+alvo_len = <span class="function">strlen</span>(argv[<span class="number">1</span>]);
+
+<span class="comment">// Loop principal: lê até EOF (bytes_lidos == 0)</span>
+<span class="keyword">while</span> ((bytes_lidos = <span class="function">read</span>(<span class="number">0</span>, buffer + sobra_len,
+                          <span class="keyword">sizeof</span>(buffer) - sobra_len)) > <span class="number">0</span>)
+{
+    <span class="comment">// Atualiza total de bytes válidos</span>
+    sobra_len += bytes_lidos;
+    buffer_pos = buffer;
+
+    <span class="comment">// Busca todos os matches neste buffer</span>
+    <span class="keyword">while</span> ((achado = <span class="function">memmem</span>(buffer_pos,
+                           sobra_len - (buffer_pos - buffer),
+                           argv[<span class="number">1</span>],
+                           alvo_len)))
+    {
+        <span class="comment">// Escreve tudo ANTES do match</span>
+        <span class="function">write</span>(<span class="number">1</span>, buffer_pos, achado - buffer_pos);
+
+        <span class="comment">// Escreve asteriscos (substitui)</span>
+        i = -<span class="number">1</span>;
+        <span class="keyword">while</span> (++i < alvo_len)
+            <span class="function">write</span>(<span class="number">1</span>, <span class="string">"*"</span>, <span class="number">1</span>);
+
+        <span class="comment">// Avança para DEPOIS do match</span>
+        buffer_pos = achado + alvo_len;
+    }
+
+    <span class="comment">// Calcula bytes não processados</span>
+    sobra_len -= (buffer_pos - buffer);
+
+    <span class="comment">// Move sobra para o início</span>
+    <span class="function">memmove</span>(buffer, buffer_pos, sobra_len);
+}
+
+<span class="comment">// Trata erro de leitura</span>
+<span class="keyword">if</span> (bytes_lidos < <span class="number">0</span>)
+{
+    <span class="function">perror</span>(<span class="string">"Error"</span>);
+    <span class="keyword">return</span> (<span class="number">1</span>);
+}
+
+<span class="comment">// Escreve sobra final</span>
+<span class="function">write</span>(<span class="number">1</span>, buffer, sobra_len);
+<span class="keyword">return</span> (<span class="number">0</span>);
+}</pre>
+    <div class="box-purple" style="margin-top: 30px;">
+        <strong class="emoji">🚀</strong> <strong>Dica Final:</strong>
+        <p>Este exercício é <strong>o mais difícil</strong> dos 3 (N-Queens, Powerset, Filter) porque envolve gerenciamento de buffer dinâmico e ponteiros móveis.</p>
+        <p><strong>Estratégia de estudo:</strong></p>
+        <ul>
+            <li>Desenhe no papel o estado do buffer a cada iteração</li>
+            <li>Trace manualmente com um exemplo pequeno ("abcdefabc")</li>
+            <li>Entenda PROFUNDAMENTE o conceito de "sobra"</li>
+            <li>Decore a fórmula: <code>sobra_len - (buffer_pos - buffer)</code></li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #3a3a3a;">
+        <p style="color: #98c379; font-size: 1.2em;"><strong>✅ Você está pronto para a prova!</strong></p>
+        <p style="color: #abb2bf;">Boa sorte! 🎯</p>
+    </div>
+
+</div>
+</body>
+</html>
