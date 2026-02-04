@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNL (42 Escola)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4ec9b0;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #569cd6;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #569cd6;
+            padding-bottom: 10px;
+        }
+        h3 {
+            color: #dcdcaa;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .section {
+            background: #252526;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        .code-block {
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        .wrong {
+            border-left: 4px solid #f44336;
+        }
+        .correct {
+            border-left: 4px solid #4caf50;
+        }
+        .code-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 3px;
+        }
+        .wrong .code-title {
+            background: #f443361a;
+            color: #f44336;
+        }
+        .correct .code-title {
+            background: #4caf501a;
+            color: #4caf50;
+        }
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .explanation {
+            background: #2d2d30;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #dcdcaa;
+            border-radius: 3px;
+        }
+        .logic-flow {
+            background: #2d2d30;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .logic-step {
+            padding: 10px;
+            margin: 10px 0;
+            background: #1e1e1e;
+            border-left: 3px solid #4ec9b0;
+            border-radius: 3px;
+        }
+        .highlight {
+            color: #ce9178;
+            font-weight: bold;
+        }
+        .keyword {
+            color: #569cd6;
+        }
+        .function {
+            color: #dcdcaa;
+        }
+        .comment {
+            color: #6a9955;
+        }
+        .final-code {
+            background: #0d1117;
+            border: 2px solid #4caf50;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        ul, ol {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .critical {
+            background: #4a2d2d;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Guia Completo: Correção da GNL</h1>
+
+        <div class="section">
+            <h2>🎯 Objetivo do Exercício</h2>
+            <p>Criar uma função que lê um arquivo linha por linha, retornando uma linha por vez (incluindo o '\n'). A função deve:</p>
+            <ul>
+                <li>Retornar cada linha terminada em '\n' (ou EOF)</li>
+                <li>Usar um buffer estático para guardar dados entre chamadas</li>
+                <li>Não ter memory leaks</li>
+                <li>Retornar NULL ao terminar o arquivo (após última linha)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🔍 Análise dos Erros no Código da Prova</h2>
+
+            <h3>1️⃣ Erro no ft_strchr</h3>
+            <div class="comparison">
+                <div class="code-block wrong">
+                    <div class="code-title">❌ CÓDIGO DA PROVA (ERRADO)</div>
+                    <pre><code>char *ft_strchr(char *s, int c)
+{
+    int i = 0;
+    while (s[i] != c)
+        i++;
+    if (s[i] == c)
+        return (s + i);
+    else
+        return (NULL);
+}</code></pre>
+                </div>
+                <div class="code-block correct">
+                    <div class="code-title">✅ CÓDIGO CORRIGIDO</div>
+                    <pre><code>char *ft_strchr(char *s, int c)
+{
+    int i;
+
+    i = 0;
+    while (s[i] && s[i] != c)
+        i++;
+    if (s[i] == c)
+        return (s + i);
+    return (NULL);
+}</code></pre>
+                </div>
+            </div>
+            <div class="explanation">
+                <strong>❌ Problema:</strong> O loop não verifica se chegou ao fim da string ('\0'). Se o caractere não existir, continua lendo memória inválida → <strong>SEGFAULT</strong><br><br>
+                <strong>✅ Solução:</strong> Adicionar <code>s[i] != '\0' &&</code> na condição do while.
+            </div>
+
+            <h3>2️⃣ Erro no ft_memcpy</h3>
+            <div class="comparison">
+                <div class="code-block wrong">
+                    <div class="code-title">❌ CÓDIGO DA PROVA (ERRADO)</div>
+                    <pre><code>void *ft_memcpy(void *dest, const void *src, size_t n)
+{
+    while (--n > 0)
+        ((char *)dest)[n - 1] = ((char *)src)[n - 1];
+    return (dest);
+}</code></pre>
+                </div>
+                <div class="code-block correct">
+                    <div class="code-title">✅ CÓDIGO CORRIGIDO</div>
+                    <pre><code>void *ft_memcpy(void *dest, const void *src, size_t n)
+{
+    size_t i;
+
+    i = 0;
+    while (i < n)
+    {
+        ((char *)dest)[i] = ((char *)src)[i];
+        i++;
+    }
+    return (dest);
+}</code></pre>
+                </div>
+            </div>
+            <div class="explanation">
+                <strong>❌ Problema:</strong> Decrementa <code>n</code> antes de usar, causando:<br>
+                • Acesso a <code>[n-1]</code> quando <code>n</code> já foi decrementado → índice errado<br>
+                • Não copia o primeiro byte<br>
+                • Acessa posições inválidas<br><br>
+                <strong>✅ Solução:</strong> Loop crescente de 0 até n, copiando byte por byte.
+            </div>
+
+            <h3>3️⃣ Melhoria no ft_strlen</h3>
+            <div class="comparison">
+                <div class="code-block wrong">
+                    <div class="code-title">❌ CÓDIGO DA PROVA (VULNERÁVEL)</div>
+                    <pre><code>size_t ft_strlen(char *s)
+{
+    size_t ret = 0;
+    while (*s)
+    {
+        s++;
+        ret++;
+    }
+    return (ret);
+}</code></pre>
+                </div>
+                <div class="code-block correct">
+                    <div class="code-title">✅ CÓDIGO CORRIGIDO</div>
+                    <pre><code>size_t ft_strlen(char *s)
+{
+    size_t ret;
+
+    if (!s)
+        return (0);
+    ret = 0;
+    while (s[ret])
+        ret++;
+    return (ret);
+}</code></pre>
+                </div>
+            </div>
+            <div class="explanation">
+                <strong>❌ Problema:</strong> Se receber NULL → <strong>SEGFAULT</strong><br><br>
+                <strong>✅ Solução:</strong> Adicionar <code>if (!s) return (0);</code> no início. Isso protege TODAS as outras funções que usam strlen!
+            </div>
+
+            <h3>4️⃣ Correção no str_append_mem</h3>
+            <div class="comparison">
+                <div class="code-block wrong">
+                    <div class="code-title">❌ CÓDIGO DA PROVA (INCOMPLETO)</div>
+                    <pre><code>int str_append_mem(char **s1, char *s2, size_t size2)
+{
+    size_t size1 = ft_strlen(*s1);
+    char *tmp = malloc(size2 + size1 + 1);
+    if (!tmp)
+        return (0);
+    ft_memcpy(tmp, *s1, size1);
+    ft_memcpy(tmp + size1, s2, size2);
+    tmp[size1 + size2] = 0;
+    free(*s1);
+    *s1 = tmp;
+    return (1);
+}</code></pre>
+                </div>
+                <div class="code-block correct">
+                    <div class="code-title">✅ CÓDIGO CORRIGIDO</div>
+                    <pre><code>int str_append_mem(char **s1, char *s2, size_t size2)
+{
+    size_t size1;
+    char *tmp;
+
+    size1 = ft_strlen(*s1);
+    tmp = malloc(size1 + size2 + 1);
+    if (!tmp)
+        return (0);
+    if (*s1)
+        ft_memcpy(tmp, *s1, size1);
+    ft_memcpy(tmp + size1, s2, size2);
+    tmp[size1 + size2] = 0;
+    free(*s1);
+    *s1 = tmp;
+    return (1);
+}</code></pre>
+                </div>
+            </div>
+            <div class="explanation">
+                <strong>❌ Problema:</strong> Se *s1 for NULL, faz <code>ft_memcpy(tmp, NULL, 0)</code> → undefined behavior<br><br>
+                <strong>✅ Solução:</strong> Adicionar <code>if (*s1)</code> antes do primeiro memcpy.
+            </div>
+
+            <h3>5️⃣ Erro no ft_memmove</h3>
+            <div class="comparison">
+                <div class="code-block wrong">
+                    <div class="code-title">❌ CÓDIGO DA PROVA (ERRADO)</div>
+                    <pre><code>void *ft_memmove(void *dest, const void *src, size_t n)
+{
+    if (dest > src)
+        return (ft_memcpy(dest, src, n));
+    else if (dest == src)
+        return (dest);
+    size_t i = ft_strlen((char *)src) - 1;
+    while (i >= 0)
+    {
+        ((char *)dest)[i] = ((char *)src)[i];
+        i--;
+    }
+    return (dest);
+}</code></pre>
+                </div>
+                <div class="code-block correct">
+                    <div class="code-title">✅ CÓDIGO CORRIGIDO</div>
+                    <pre><code>void *ft_memmove(void *dest, const void *src, size_t n)
+{
+    size_t i;
+
+    if (dest == src || n == 0)
+        return (dest);
+    if (dest < src)
+        return (ft_memcpy(dest, src, n));
+    i = n;
+    while (i > 0)
+    {
+        i--;
+        ((char *)dest)[i] = ((char *)src)[i];
+    }
+    return (dest);
+}</code></pre>
+                </div>
+            </div>
+            <div class="explanation">
+                <strong>❌ Problemas:</strong><br>
+                1. Usa <code>strlen</code> em dados binários (pode não ter '\0')<br>
+                2. Loop com <code>size_t</code> (unsigned) indo negativo → overflow infinito<br>
+                3. Lógica de sobreposição invertida (dest > src deveria copiar ao contrário)<br><br>
+                <strong>✅ Solução:</strong><br>
+                • Usar o tamanho <code>n</code> fornecido<br>
+                • Se dest < src: sem risco de sobreposição, chamar memcpy<br>
+                • Se dest > src: copiar do fim para o início
+            </div>
+
+            <h3>6️⃣ ERRO CRÍTICO no get_next_line</h3>
+            <div class="critical">
+                ⚠️ ESTE É O ERRO MAIS IMPORTANTE! São 2 problemas que você DEVE corrigir.
+            </div>
+            <div class="comparison">
+                <div class="code-block wrong">
+                    <div class="code-title">❌ CÓDIGO DA PROVA (2 ERROS)</div>
+                    <pre><code>char *get_next_line(int fd)
+{
+    static char b[BUFFER_SIZE + 1] = "";
+    char *ret = NULL;
+    char *tmp = ft_strchr(b, '\n');
+    while (!tmp)
+    {
+        if (!str_append_str(&ret, b))
+            return (NULL);
+        int read_ret = read(fd, b, BUFFER_SIZE);
+        if (read_ret == -1)
+            return (NULL);
+        b[read_ret] = 0;
+    }
+    if (!str_append_mem(&ret, b, tmp - b + 1))
+    {
+        free(ret);
+        return (NULL);
+    }
+    <span class="comment">/* ❌ ERRO 1: FALTA MOVER O BUFFER! */</span>
+    return (ret);
+}</code></pre>
+                </div>
+                <div class="code-block correct">
+                    <div class="code-title">✅ CÓDIGO CORRIGIDO</div>
+                    <pre><code>char *get_next_line(int fd)
+{
+    static char b[BUFFER_SIZE + 1] = "";
+    char *ret = NULL;
+    char *tmp;
+    int read_ret;
+
+    while (!(tmp = ft_strchr(b, '\n')))
+    {
+        if (!str_append_str(&ret, b))
+            return (NULL);
+        read_ret = read(fd, b, BUFFER_SIZE);
+        if (read_ret <= 0)
+        {
+            b[0] = 0;
+            <span class="comment">/* ✅ CORREÇÃO 1: Tratar EOF vazio */</span>
+            if (read_ret == -1 || !ret || !*ret)
+            {
+                free(ret);
+                return (NULL);
+            }
+            return (ret);
+        }
+        b[read_ret] = 0;
+    }
+    if (!str_append_mem(&ret, b, tmp - b + 1))
+    {
+        free(ret);
+        return (NULL);
+    }
+    <span class="comment">/* ✅ CORREÇÃO 2: Mover buffer */</span>
+    ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);
+    return (ret);
+}</code></pre>
+                </div>
+            </div>
+            <div class="critical">
+                <strong>❌ ERRO 1:</strong> Não trata EOF quando arquivo está vazio ou ret está vazio<br>
+                • Se read retorna 0 mas ret é NULL ou "", deve retornar NULL<br>
+                • Sem isso, retorna ponteiro inválido<br><br>
+                <strong>✅ CORREÇÃO 1:</strong> <code>if (read_ret == -1 || !ret || !*ret)</code><br><br>
+
+                <strong>❌ ERRO 2:</strong> Não move o resto do buffer para o início!<br>
+                • Buffer: "linha1\nlinha2\n"<br>
+                • Retorna: "linha1\n"<br>
+                • Buffer fica inalterado → próxima chamada retorna "linha1\n" de novo!<br><br>
+                <strong>✅ CORREÇÃO 2:</strong> <code>ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);</code>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🧠 Lógica da Solução</h2>
+            <div class="logic-flow">
+                <div class="logic-step">
+                    <strong>PASSO 1:</strong> Procurar '\n' no buffer estático
+                </div>
+                <div class="logic-step">
+                    <strong>PASSO 2:</strong> Enquanto NÃO encontrar '\n':
+                    <ul>
+                        <li>Adicionar todo o buffer ao resultado</li>
+                        <li>Ler mais BUFFER_SIZE bytes do arquivo</li>
+                        <li>Se read ≤ 0: tratar EOF/erro</li>
+                        <li>Adicionar '\0' no fim do buffer</li>
+                    </ul>
+                </div>
+                <div class="logic-step">
+                    <strong>PASSO 3:</strong> Quando encontrar '\n':
+                    <ul>
+                        <li>Adicionar do buffer até '\n' (inclusive) ao resultado</li>
+                        <li><strong>CRÍTICO:</strong> Mover o resto do buffer para o início</li>
+                        <li>Retornar a linha completa</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>📌 Detalhando as correções críticas:</h3>
+            <div class="explanation">
+                <strong>Correção 1 - Tratamento de EOF:</strong><br>
+                <code>if (read_ret == -1 || !ret || !*ret)</code><br><br>
+                • <code>read_ret == -1</code> → erro de leitura<br>
+                • <code>!ret</code> → ret é NULL (nunca alocou)<br>
+                • <code>!*ret</code> → ret é string vazia "" (arquivo vazio)<br><br>
+
+                <strong>Correção 2 - Mover buffer:</strong><br>
+                <code>ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);</code><br><br>
+                • <code>b</code> → destino (início do buffer)<br>
+                • <code>tmp + 1</code> → origem (pula o '\n')<br>
+                • <code>ft_strlen(tmp + 1)</code> → tamanho do resto<br>
+                • <code>+ 1</code> → inclui o '\0' final<br><br>
+
+                <strong>Exemplo:</strong><br>
+                Buffer = "abc\ndefgh"<br>
+                • tmp aponta para '\n'<br>
+                • tmp + 1 aponta para 'd'<br>
+                • ft_strlen(tmp + 1) = 5<br>
+                • + 1 = 6 (copia o '\0')<br>
+                • Resultado: buffer = "defgh"
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📝 Código Final Completo e Comentado</h2>
+
+            <div class="final-code">
+                <h3>get_next_line.h</h3>
+                <pre><code><span class="keyword">#ifndef</span> GET_NEXT_LINE_H
+<span class="keyword"># define</span> GET_NEXT_LINE_H
+
+<span class="keyword">#include</span> &lt;stdlib.h&gt;
+<span class="keyword">#include</span> &lt;unistd.h&gt;
+
+<span class="keyword">#ifndef</span> BUFFER_SIZE
+<span class="keyword"># define</span> BUFFER_SIZE 42
+<span class="keyword">#endif</span>
+
+<span class="keyword">char</span>	*<span class="function">get_next_line</span>(<span class="keyword">int</span> fd);
+
+<span class="keyword">#endif</span></code></pre>
+            </div>
+
+            <div class="final-code">
+                <h3>get_next_line.c</h3>
+                <pre><code><span class="keyword">#include</span> "get_next_line.h"
+
+<span class="comment">/* Procura um caractere em uma string */</span>
+<span class="keyword">char</span>	*<span class="function">ft_strchr</span>(<span class="keyword">char</span> *s, <span class="keyword">int</span> c)
+{
+	<span class="keyword">int</span>	i;
+
+	i = 0;
+	<span class="comment">/* Verifica '\0' para não ler além da string */</span>
+	<span class="keyword">while</span> (s[i] && s[i] != c)
+		i++;
+	<span class="keyword">if</span> (s[i] == c)
+		<span class="keyword">return</span> (s + i);
+	<span class="keyword">return</span> (NULL);
+}
+
+<span class="comment">/* Copia n bytes de src para dest */</span>
+<span class="keyword">void</span>	*<span class="function">ft_memcpy</span>(<span class="keyword">void</span> *dest, <span class="keyword">const void</span> *src, <span class="keyword">size_t</span> n)
+{
+	<span class="keyword">size_t</span>	i;
+
+	i = 0;
+	<span class="comment">/* Loop crescente: copia byte por byte */</span>
+	<span class="keyword">while</span> (i < n)
+	{
+		((<span class="keyword">char</span> *)dest)[i] = ((<span class="keyword">char</span> *)src)[i];
+		i++;
+	}
+	<span class="keyword">return</span> (dest);
+}
+
+<span class="comment">/* Calcula o tamanho da string */</span>
+<span class="keyword">size_t</span>	<span class="function">ft_strlen</span>(<span class="keyword">char</span> *s)
+{
+	<span class="keyword">size_t</span>	ret;
+
+	<span class="comment">/* Proteção contra NULL */</span>
+	<span class="keyword">if</span> (!s)
+		<span class="keyword">return</span> (0);
+	ret = 0;
+	<span class="keyword">while</span> (s[ret])
+		ret++;
+	<span class="keyword">return</span> (ret);
+}
+
+<span class="comment">/* Adiciona size2 bytes de s2 ao final de s1 */</span>
+<span class="keyword">int</span>	<span class="function">str_append_mem</span>(<span class="keyword">char</span> **s1, <span class="keyword">char</span> *s2, <span class="keyword">size_t</span> size2)
+{
+	<span class="keyword">size_t</span>	size1;
+	<span class="keyword">char</span>	*tmp;
+
+	size1 = <span class="function">ft_strlen</span>(*s1);
+	tmp = <span class="function">malloc</span>(size1 + size2 + 1);
+	<span class="keyword">if</span> (!tmp)
+		<span class="keyword">return</span> (0);
+	<span class="comment">/* Só copia se *s1 existir */</span>
+	<span class="keyword">if</span> (*s1)
+		<span class="function">ft_memcpy</span>(tmp, *s1, size1);
+	<span class="function">ft_memcpy</span>(tmp + size1, s2, size2);
+	tmp[size1 + size2] = <span class="highlight">0</span>;
+	<span class="function">free</span>(*s1);
+	*s1 = tmp;
+	<span class="keyword">return</span> (1);
+}
+
+<span class="comment">/* Adiciona string completa s2 ao final de s1 */</span>
+<span class="keyword">int</span>	<span class="function">str_append_str</span>(<span class="keyword">char</span> **s1, <span class="keyword">char</span> *s2)
+{
+	<span class="keyword">return</span> (<span class="function">str_append_mem</span>(s1, s2, <span class="function">ft_strlen</span>(s2)));
+}
+
+<span class="comment">/* Move n bytes de src para dest (lida com sobreposição) */</span>
+<span class="keyword">void</span>	*<span class="function">ft_memmove</span>(<span class="keyword">void</span> *dest, <span class="keyword">const void</span> *src, <span class="keyword">size_t</span> n)
+{
+	<span class="keyword">size_t</span>	i;
+
+	<span class="keyword">if</span> (dest == src || n == 0)
+		<span class="keyword">return</span> (dest);
+	<span class="comment">/* Se dest < src: sem sobreposição, usa memcpy */</span>
+	<span class="keyword">if</span> (dest < src)
+		<span class="keyword">return</span> (<span class="function">ft_memcpy</span>(dest, src, n));
+	<span class="comment">/* Se dest > src: copia do fim para o início */</span>
+	i = n;
+	<span class="keyword">while</span> (i > 0)
+	{
+		i--;
+		((<span class="keyword">char</span> *)dest)[i] = ((<span class="keyword">char</span> *)src)[i];
+	}
+	<span class="keyword">return</span> (dest);
+}
+
+<span class="comment">/* FUNÇÃO PRINCIPAL: Lê e retorna a próxima linha */</span>
+<span class="keyword">char</span>	*<span class="function">get_next_line</span>(<span class="keyword">int</span> fd)
+{
+	<span class="comment">/* Buffer estático: mantém dados entre chamadas */</span>
+	<span class="keyword">static char</span>	b[BUFFER_SIZE + 1] = "";
+	<span class="keyword">char</span>		*ret;
+	<span class="keyword">char</span>		*tmp;
+	<span class="keyword">int</span>		read_ret;
+
+	ret = NULL;
+	<span class="comment">/* Loop: enquanto não encontrar '\n' */</span>
+	<span class="keyword">while</span> (!(tmp = <span class="function">ft_strchr</span>(b, <span class="highlight">'\n'</span>)))
+	{
+		<span class="comment">/* Adiciona todo o buffer ao resultado */</span>
+		<span class="keyword">if</span> (!<span class="function">str_append_str</span>(&ret, b))
+			<span class="keyword">return</span> (NULL);
+		<span class="comment">/* Lê mais dados do arquivo */</span>
+		read_ret = <span class="function">read</span>(fd, b, BUFFER_SIZE);
+		<span class="comment">/* Se EOF ou erro */</span>
+		<span class="keyword">if</span> (read_ret <= 0)
+		{
+			b[0] = <span class="highlight">0</span>; <span class="comment">/* Limpa buffer */</span>
+			<span class="comment">/* Se erro OU ret vazio: retorna NULL */</span>
+			<span class="keyword">if</span> (read_ret == -1 || !ret || !*ret)
+			{
+				<span class="function">free</span>(ret);
+				<span class="keyword">return</span> (NULL);
+			}
+			<span class="keyword">return</span> (ret); <span class="comment">/* Retorna última linha */</span>
+		}
+		b[read_ret] = <span class="highlight">0</span>; <span class="comment">/* Termina string */</span>
+	}
+	<span class="comment">/* Encontrou '\n': adiciona até '\n' (inclusive) */</span>
+	<span class="keyword">if</span> (!<span class="function">str_append_mem</span>(&ret, b, tmp - b + 1))
+	{
+		<span class="function">free</span>(ret);
+		<span class="keyword">return</span> (NULL);
+	}
+	<span class="comment">/* CRÍTICO: Move o resto do buffer para o início */</span>
+	<span class="function">ft_memmove</span>(b, tmp + 1, <span class="function">ft_strlen</span>(tmp + 1) + 1);
+	<span class="keyword">return</span> (ret);
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎓 Resumo para Memorizar</h2
+            <div class="logic-flow">
+                <h3>6 Erros que você PRECISA corrigir:</h3>
+                <ol>
+                    <li><strong>ft_strchr:</strong> Adicionar <code>s[i] != '\0'</code> no while</li>
+                    <li><strong>ft_memcpy:</strong> Loop crescente: <code>i = 0; i < n; i++</code></li>
+                    <li><strong>ft_strlen:</strong> Retornar 0 se <code>!s</code></li>
+<li><strong>str_append_mem:</strong> Verificar <code>if (*s1)</code> antes do memcpy</li>
+<li><strong>ft_memmove:</strong> Se <code>dest < src</code> chamar memcpy; senão copiar do fim</li>
+<li><strong>get_next_line:</strong> Adicionar <code>ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1)</code> no final</li>
+</ol>
+
+            <h3 style="margin-top: 30px;">O Erro Mais Crítico:</h3>
+            <div class="critical">
+                <strong>SEMPRE MOVER O BUFFER após encontrar '\n'!</strong><br><br>
+                <code>ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);</code><br><br>
+                Sem isso, você perde os dados que sobraram no buffer!
+            </div>
+
+            <h3 style="margin-top: 30px;">Teste Mental Rápido:</h3>
+            <p><strong>Arquivo: "abc\ndef\n"</strong></p>
+            <ul>
+                <li>Leitura 1: buffer = "abc\ndef\n"</li>
+                <li>Retorna: "abc\n"</li>
+                <li>Após memmove: buffer = "def\n"</li>
+                <li>Leitura 2: retorna "def\n"</li>
+                <li>Após memmove: buffer = ""</li>
+                <li>Leitura 3: retorna NULL</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" style="background: #1a472a; border: 2px solid #4caf50;">
+        <h2 style="color: #4caf50;">✅ Checklist Final da Prova</h2>
+        <ul style="font-size: 1.1em;">
+            <li>☐ <strong>ft_strchr:</strong> while com <code>s[i] != '\0' && s[i] != c</code></li>
+            <li>☐ <strong>ft_memcpy:</strong> loop <code>i = 0; i < n; i++</code></li>
+            <li>☐ <strong>ft_strlen:</strong> <code>if (!s) return (0);</code> no início</li>
+            <li>☐ <strong>str_append_mem:</strong> <code>if (*s1)</code> antes do primeiro memcpy</li>
+            <li>☐ <strong>ft_memmove:</strong> <code>if (dest < src) return ft_memcpy(...)</code></li>
+            <li>☐ <strong>get_next_line:</strong> <code>ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);</code> antes do return</li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>

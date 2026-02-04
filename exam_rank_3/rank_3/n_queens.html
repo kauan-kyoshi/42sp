@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>N-Queens (42 Escola)</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; color: #333; background: #f4f4f9; padding: 20px; }
+        .container { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .logic-step { background: #e8f4fd; border-left: 5px solid #3498db; padding: 15px; margin: 20px 0; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 14px; }
+        .comment { color: #5c6370; }
+        .highlight { color: #e06c75; font-weight: bold; }
+        .green { color: #98c379; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>♛ Guia N-Queens: Lógica e Implementação</h1>
+
+        <div class="logic-step">
+            <strong>O que memorizar:</strong> O array <code>board</code> armazena a <strong>linha</strong> em que a rainha está, e o índice do array representa a <strong>coluna</strong>.
+            <br>Exemplo: <code>board[0] = 2</code> significa: Coluna 0, Linha 2.
+        </div>
+
+        <h3>1. A Verificação de Segurança (is_safe)</h3>
+        <p>Esta é a parte mais importante. Ela verifica duas coisas em relação às rainhas já colocadas:</p>
+        <ul>
+            <li><strong>Mesma Linha:</strong> <code>board[prev] == row</code></li>
+            <li><strong>Mesma Diagonal:</strong> A distância entre as linhas é igual à distância entre as colunas.</li>
+        </ul>
+
+        <pre>
+int is_safe(int *board, int col, int row)
+{
+    int prev = 0;
+    while (prev < col)
+    {
+        <span class="comment">// Checa linha</span>
+        if (board[prev] == row)
+            return (0);
+        <span class="comment">// Checa diagonais (Distância Y == Distância X)</span>
+        if (ft_abs(board[prev] - row) == col - prev)
+            return (0);
+        prev++;
+    }
+    return (1);
+}</pre>
+
+        <h3>2. O Algoritmo de Backtracking (solve)</h3>
+        <p>A função tenta colocar uma rainha em cada linha da coluna atual. Se conseguir, pula para a próxima coluna.</p>
+        <pre>
+void solve(int *board, int col, int n)
+{
+    int row = 0;
+
+    <span class="comment">// Condição de parada: colocamos rainhas em todas as colunas</span>
+    if (col == n)
+    {
+        print_solution(board, n);
+        return ;
+    }
+    while (row < n)
+    {
+        if (is_safe(board, col, row))
+        {
+            board[col] = row;     <span class="comment">// Coloca a rainha</span>
+            solve(board, col + 1, n); <span class="comment">// Tenta a próxima coluna</span>
+            <span class="comment">// O backtrack ocorre naturalmente ao testar a próxima 'row'</span>
+        }
+        row++;
+    }
+}</pre>
+
+        <div class="logic-step" style="background: #fff3cd; border-color: #f1c40f;">
+            <strong>Dica para a Prova:</strong>
+            Sempre use <code>malloc</code> e <code>free</code> corretamente. Na 42, falhar em liberar a memória do <code>board</code> no final resultará em reprovação por <em>Memory Leak</em>.
+        </div>
+
+        <h3>3. Código Completo para Estudo</h3>
+        <pre>
+              #include <stdlib.h>
+              #include <stdio.h>
+
+              int	ft_abs(int n)
+              {
+                  //return (n < 0 ? -n : n);
+                  if (n < 0)
+                      return (-n);
+                  return (n);
+              }
+
+              int	is_safe(int *board, int col, int row)
+              {
+                  int	prev = 0;
+
+                  while (prev < col)
+                  {
+                      if (board[prev] == row)
+                          return (0);
+                      if (ft_abs(board[prev] - row) == col - prev)
+                          return (0);
+                      prev++;
+                  }
+                  return (1);
+              }
+
+              void	print_solution(int *board, int n)
+              {
+                  int	i = 0;
+
+                  while (i < n)
+                  {
+                      fprintf(stdout, "%d", board[i]);
+                      if (i < n - 1)
+                          fprintf(stdout, " ");
+                      i++;
+                  }
+                  fprintf(stdout, "\n");
+              }
+
+              void	solve(int *board, int col, int n)
+              {
+                  int	row = 0;
+
+                  if (col == n)
+                  {
+                      print_solution(board, n);
+                      return ;
+                  }
+                  while (row < n)
+                  {
+                      if (is_safe(board, col, row))
+                      {
+                          board[col] = row;
+                          solve(board, col + 1, n);
+                      }
+                      row++;
+                  }
+              }
+
+              int	main(int ac, char **av)
+              {
+                  int	n;
+                  int	*board;
+
+                  if (ac != 2)
+                      return (1);
+                  n = atoi(av[1]);
+                  if (n <= 0)
+                      return (1);
+                  board = malloc(sizeof(int) * n);
+                  if (!board)
+                      return (1);
+                  solve(board, 0, n);
+                  free(board);
+                  return (0);
+              }
+
+}</pre>
+    </div>
+</body>
+</html>

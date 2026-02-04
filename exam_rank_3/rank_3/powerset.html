@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Powerset (42 Escola)</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; color: #333; background: #f4f4f9; padding: 20px; }
+        .container { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .logic-step { background: #e8f4fd; border-left: 5px solid #3498db; padding: 15px; margin: 20px 0; }
+        .example-box { background: #f0f9ff; border: 2px solid #3498db; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 14px; }
+        .comment { color: #5c6370; font-style: italic; }
+        .highlight { color: #e06c75; font-weight: bold; }
+        .green { color: #98c379; }
+        .yellow { color: #e5c07b; }
+        .purple { color: #c678dd; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        table td, table th { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        table th { background-color: #3498db; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Guia Powerset: Subconjuntos com Soma Alvo</h1>
+
+        <div class="logic-step">
+            <strong>📌 O Problema:</strong> Dado um conjunto de números e um valor alvo, encontrar TODOS os subconjuntos cuja soma é igual ao alvo.
+            <br><br>
+            <strong>Exemplo:</strong> <code>./powerset 5 1 2 3 4 5</code>
+            <br>Saída: <code>1 4</code>, <code>2 3</code>, <code>5</code> (todos somam 5)
+        </div>
+
+        <h3>🧠 Conceito Central: Árvore de Decisão</h3>
+        <p>Para cada elemento do conjunto, você tem <strong>2 escolhas</strong>:</p>
+        <ol>
+            <li><strong>INCLUIR</strong> o elemento no subconjunto atual</li>
+            <li><strong>NÃO INCLUIR</strong> o elemento</li>
+        </ol>
+
+        <div class="example-box">
+            <strong>Visualização com [1, 2, 3] e alvo = 3:</strong>
+            <pre style="background: white; color: #333;">
+                          início (sum=0, sub=[])
+                         /                    \
+                   INCLUI 1                NÃO INCLUI 1
+                  (sum=1)                    (sum=0)
+                 /        \                 /        \
+            INCLUI 2    NÃO INCLUI 2   INCLUI 2   NÃO INCLUI 2
+            (sum=3)✓    (sum=1)        (sum=2)     (sum=0)
+               |            |              |            |
+            [1,2]        [1]            [2]          []
+            </pre>
+            <p><strong>✓ = Solução válida!</strong> O subconjunto [1,2] soma 3.</p>
+        </div>
+
+        <h3>📊 Parâmetros da Função solve()</h3>
+        <table>
+            <tr>
+                <th>Parâmetro</th>
+                <th>Significado</th>
+                <th>Exemplo</th>
+            </tr>
+            <tr>
+                <td><code>*set</code></td>
+                <td>Conjunto original de números</td>
+                <td>[1, 2, 3, 4, 5]</td>
+            </tr>
+            <tr>
+                <td><code>*sub</code></td>
+                <td>Subconjunto atual sendo construído</td>
+                <td>[1, 4] (em construção)</td>
+            </tr>
+            <tr>
+                <td><code>size</code></td>
+                <td>Tamanho total do conjunto</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td><code>target</code></td>
+                <td>Soma alvo que queremos atingir</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td><code>idx</code></td>
+                <td>Índice atual no conjunto (qual elemento estamos analisando)</td>
+                <td>0, 1, 2...</td>
+            </tr>
+            <tr>
+                <td><code>s_idx</code></td>
+                <td>Índice atual no subconjunto (quantos elementos já adicionamos)</td>
+                <td>0, 1, 2...</td>
+            </tr>
+            <tr>
+                <td><code>sum</code></td>
+                <td>Soma acumulada do subconjunto atual</td>
+                <td>0, 1, 5...</td>
+            </tr>
+        </table>
+
+        <h3>🔍 Análise Passo a Passo do Código</h3>
+
+        <h4>1️⃣ Main: Preparação</h4>
+        <pre>
+int main(int ac, char **av)
+{
+    int *set, *sub, i = -1;
+
+    if (ac < 2)           <span class="comment">// Precisa de pelo menos o target</span>
+        return (0);
+
+    set = malloc(sizeof(int) * (ac - 2));  <span class="comment">// Aloca para os números</span>
+    sub = malloc(sizeof(int) * (ac - 2));  <span class="comment">// Aloca para o subconjunto</span>
+
+    if (!set || !sub)
+        return (1);
+
+    while (++i < ac - 2)
+        set[i] = atoi(av[i + 2]);  <span class="comment">// av[0]=programa, av[1]=target, av[2+]=números</span>
+
+    solve(set, sub, ac - 2, atoi(av[1]), 0, 0, 0);
+
+    free(set);
+    free(sub);
+    return (0);
+}</pre>
+
+        <div class="logic-step" style="background: #fff9e6; border-color: #f39c12;">
+            <strong>⚠️ Atenção aos Índices:</strong>
+            <ul style="margin: 10px 0;">
+                <li><code>av[0]</code> = nome do programa</li>
+                <li><code>av[1]</code> = target (soma alvo)</li>
+                <li><code>av[2]</code> em diante = números do conjunto</li>
+                <li>Por isso <code>ac - 2</code> é o tamanho do conjunto!</li>
+            </ul>
+        </div>
+
+        <h4>2️⃣ Solve: O Coração do Algoritmo</h4>
+        <pre>
+void solve(int *set, int *sub, int size, int target, int idx, int s_idx, int sum)
+{
+    int i;
+
+    <span class="comment">// 🛑 CONDIÇÃO DE PARADA: Percorremos todo o conjunto</span>
+    if (idx == size)
+    {
+        <span class="comment">// ✅ Se a soma atual é igual ao target, imprime!</span>
+        if (sum == target)
+        {
+            i = -1;
+            while (++i < s_idx)
+                printf("%d%s", sub[i], (i == s_idx - 1) ? "" : " ");
+            printf("\n");
+        }
+        return;
+    }
+
+    <span class="comment">// 🌿 RAMO 1: INCLUIR o elemento atual (set[idx])</span>
+    sub[s_idx] = set[idx];              <span class="comment">// Adiciona ao subconjunto</span>
+    solve(set, sub, size, target,
+          idx + 1,                      <span class="comment">// Próximo elemento do conjunto</span>
+          s_idx + 1,                    <span class="comment">// Incrementa posição no subconjunto</span>
+          sum + set[idx]);              <span class="comment">// Adiciona à soma</span>
+
+    <span class="comment">// 🌿 RAMO 2: NÃO INCLUIR o elemento atual</span>
+    solve(set, sub, size, target,
+          idx + 1,                      <span class="comment">// Próximo elemento</span>
+          s_idx,                        <span class="comment">// Mantém posição no subconjunto</span>
+          sum);                         <span class="comment">// Mantém a soma</span>
+}</pre>
+
+        <h3>🎬 Exemplo Completo: ./powerset 5 1 2 3</h3>
+        <div class="example-box">
+            <strong>Passo a passo da recursão:</strong>
+            <pre style="background: #f9f9f9; color: #333; font-size: 12px;">
+solve(set=[1,2,3], sub=[], size=3, target=5, idx=0, s_idx=0, sum=0)
+│
+├─ INCLUI 1: sub=[1], sum=1
+│  │
+│  ├─ INCLUI 2: sub=[1,2], sum=3
+│  │  │
+│  │  ├─ INCLUI 3: sub=[1,2,3], sum=6 ❌ (não imprime, 6≠5)
+│  │  └─ NÃO INCLUI 3: sub=[1,2], sum=3 ❌ (não imprime, 3≠5)
+│  │
+│  └─ NÃO INCLUI 2: sub=[1], sum=1
+│     │
+│     ├─ INCLUI 3: sub=[1,3], sum=4 ❌
+│     └─ NÃO INCLUI 3: sub=[1], sum=1 ❌
+│
+└─ NÃO INCLUI 1: sub=[], sum=0
+   │
+   ├─ INCLUI 2: sub=[2], sum=2
+   │  │
+   │  ├─ INCLUI 3: sub=[2,3], sum=5 ✅ <span class="highlight">IMPRIME "2 3"</span>
+   │  └─ NÃO INCLUI 3: sub=[2], sum=2 ❌
+   │
+   └─ NÃO INCLUI 2: sub=[], sum=0
+      │
+      ├─ INCLUI 3: sub=[3], sum=3 ❌
+      └─ NÃO INCLUI 3: sub=[], sum=0 ❌
+            </pre>
+            <p><strong>Resultado:</strong> Apenas <code>2 3</code> é impresso!</p>
+        </div>
+
+        <h3>💡 Conceitos-Chave para Memorizar</h3>
+        <div class="logic-step">
+            <ol>
+                <li><strong>Backtracking Binário:</strong> Cada elemento tem 2 escolhas (incluir/não incluir)</li>
+                <li><strong>Não precisa desfazer:</strong> Os arrays <code>sub</code> e <code>sum</code> são sobrescritos naturalmente pela recursão</li>
+                <li><strong>Ordem preservada:</strong> Sempre avançamos <code>idx</code>, nunca voltamos, então a ordem dos elementos é mantida</li>
+                <li><strong>Subconjunto vazio:</strong> Quando <code>s_idx=0</code> e <code>sum=target</code>, imprime linha vazia</li>
+            </ol>
+        </div>
+
+        <h3>🎯 Por Que Funciona?</h3>
+        <div class="example-box">
+            <p><strong>Número total de subconjuntos = 2^n</strong></p>
+            <p>Para um conjunto de tamanho <code>n</code>, existem <code>2^n</code> subconjuntos possíveis (incluindo o vazio).</p>
+            <p><strong>Exemplo:</strong> {1, 2, 3} tem 2³ = 8 subconjuntos:</p>
+            <code>[], [1], [2], [3], [1,2], [1,3], [2,3], [1,2,3]</code>
+            <p>O algoritmo explora TODOS eles e imprime apenas os que somam o target!</p>
+        </div>
+
+        <h3>⚠️ Armadilhas Comuns na Prova</h3>
+        <div class="logic-step" style="background: #ffe6e6; border-color: #e74c3c;">
+            <strong>❌ ERROS FREQUENTES:</strong>
+            <ul>
+                <li>Esquecer de alocar <code>sub</code> além de <code>set</code></li>
+                <li>Usar <code>ac - 1</code> em vez de <code>ac - 2</code> para o tamanho</li>
+                <li>Não fazer <code>free()</code> de <code>set</code> e <code>sub</code> → Memory Leak</li>
+                <li>Inverter a ordem das chamadas recursivas (testar não-incluir antes de incluir)</li>
+                <li>Esquecer de incrementar <code>s_idx</code> quando incluir o elemento</li>
+            </ul>
+        </div>
+
+        <h3>✅ Checklist para a Prova</h3>
+        <div class="logic-step" style="background: #e8f8e8; border-color: #27ae60;">
+            <ol>
+                <li>✓ Verifica <code>ac < 2</code></li>
+                <li>✓ Aloca <code>set</code> e <code>sub</code> com tamanho <code>ac - 2</code></li>
+                <li>✓ Verifica se os <code>malloc</code> falharam</li>
+                <li>✓ Preenche o <code>set</code> começando de <code>av[2]</code></li>
+                <li>✓ Chama <code>solve</code> com parâmetros iniciais corretos (0, 0, 0)</li>
+                <li>✓ Libera <code>set</code> e <code>sub</code> no final</li>
+                <li>✓ Condição de parada: <code>idx == size</code></li>
+                <li>✓ Dentro da parada: verifica se <code>sum == target</code></li>
+                <li>✓ Primeira recursão: inclui elemento (atualiza sub, s_idx e sum)</li>
+                <li>✓ Segunda recursão: não inclui elemento (só atualiza idx)</li>
+            </ol>
+        </div>
+
+        <h3>📝 Código Completo Comentado</h3>
+        <pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void solve(int *set, int *sub, int size, int target, int idx, int s_idx, int sum);
+
+int main(int ac, char **av)
+{
+    int *set, *sub, i = -1;
+
+    if (ac &lt; 2)                           <span class="comment">// Precisa pelo menos do target</span>
+        return (0);
+
+    set = malloc(sizeof(int) * (ac - 2)); <span class="comment">// Conjunto original</span>
+    sub = malloc(sizeof(int) * (ac - 2)); <span class="comment">// Subconjunto atual</span>
+
+    if (!set || !sub)                     <span class="comment">// Verifica malloc</span>
+        return (1);
+
+    while (++i &lt; ac - 2)                  <span class="comment">// Preenche o conjunto</span>
+        set[i] = atoi(av[i + 2]);
+
+    <span class="comment">// Inicia: idx=0 (primeiro elemento), s_idx=0 (sub vazio), sum=0</span>
+    solve(set, sub, ac - 2, atoi(av[1]), 0, 0, 0);
+
+    free(set);                            <span class="comment">// Libera memória!</span>
+    free(sub);
+    return (0);
+}
+
+void solve(int *set, int *sub, int size, int target, int idx, int s_idx, int sum)
+{
+    int i;
+
+    <span class="comment">// BASE CASE: Chegamos ao fim do conjunto</span>
+    if (idx == size)
+    {
+        <span class="comment">// Se a soma bate com o target, imprime</span>
+        if (sum == target)
+        {
+            i = -1;
+            while (++i &lt; s_idx)
+                printf("%d%s", sub[i], (i == s_idx - 1) ? "" : " ");
+            printf("\n");
+        }
+        return;
+    }
+
+    <span class="comment">// OPÇÃO 1: INCLUIR o elemento atual</span>
+    sub[s_idx] = set[idx];                <span class="comment">// Adiciona ao subconjunto</span>
+    solve(set, sub, size, target,
+          idx + 1,                        <span class="comment">// Avança no conjunto</span>
+          s_idx + 1,                      <span class="comment">// Avança no subconjunto</span>
+          sum + set[idx]);                <span class="comment">// Adiciona à soma</span>
+
+    <span class="comment">// OPÇÃO 2: NÃO INCLUIR o elemento atual</span>
+    solve(set, sub, size, target,
+          idx + 1,                        <span class="comment">// Avança no conjunto</span>
+          s_idx,                          <span class="comment">// NÃO avança no subconjunto</span>
+          sum);                           <span class="comment">// NÃO adiciona à soma</span>
+}</pre>
+
+        <div class="logic-step" style="background: #f3e5f5; border-color: #9c27b0;">
+            <strong>🚀 Dica Final:</strong> Este problema é mais simples que o N-Queens! A diferença é que aqui você não precisa de verificação de segurança (<code>is_safe</code>). Você apenas explora todas as combinações possíveis e imprime as que somam o target. É backtracking puro!
+        </div>
+
+    </div>
+</body>
+</html>
