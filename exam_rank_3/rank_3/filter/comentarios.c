@@ -40,4 +40,3 @@
 
 
 	// Escreve o último residual que sobrou após o fim do arquivo (EOF)
-}
