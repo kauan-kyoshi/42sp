@@ -44,14 +44,6 @@ int	main(int argc, char **argv)
 		// Move esse residual para o início do buffer para a próxima rodada
 		memmove(buffer, pos_buffer, res_len);
 	}
-
-	// Se o read retornar -1, houve um erro de sistema
-	if (chunk < 0)
-	{
-		perror("Error");
-		return (1);
-	}
-
 	// Escreve o último residual que sobrou após o fim do arquivo (EOF)
 	write(1, buffer, res_len);
 	return (0);
