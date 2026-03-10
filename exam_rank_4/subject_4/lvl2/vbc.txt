@@ -1,0 +1,55 @@
+Aqui está a tradução para o formato .txt, focada na lógica de precedência matemática exigida pelo exercício:
+Plaintext
+
+Nome do Exercício: vbc
+Arquivos esperados: *.c *.h
+Funções permitidas: malloc, calloc, realloc, free, printf, isdigit, write
+--------------------------------------------------------------------------------
+
+Escreva um programa que imprima o resultado de uma expressão matemática fornecida 
+como argumento.
+
+REGRAS DA EXPRESSÃO:
+- Você deve gerenciar as operações de adição (+) e multiplicação (*), além de 
+  parênteses ().
+- Não é necessário tratar espaços em branco na expressão.
+- Todos os valores numéricos na expressão estarão entre 0 e 9 (inclusive).
+- O programa deve respeitar a precedência matemática (multiplicação antes da 
+  adição, a menos que haja parênteses).
+
+ERROS E SAÍDA:
+- Em caso de símbolo inesperado ou parênteses mal posicionados, imprima:
+  "Unexpected token '%c'\n" e saia com o código 1.
+- Se o símbolo for o fim da entrada (EOF), imprima:
+  "Unexpected end of input\n" e saia com o código 1.
+- Em caso de falha em uma chamada de sistema (syscall), saia com o código 1.
+
+Exemplos de funcionamento:
+
+$> ./vbc '2+3' | cat -e
+5$
+$> ./vbc '3*4+5' | cat -e
+17$
+$> ./vbc '3+4*5' | cat -e
+23$
+$> ./vbc '(3+4)*5' | cat -e
+35$
+$> ./vbc '1+' | cat -e
+Unexpected end of input$
+$> ./vbc '1+2)' | cat -e
+Unexpected token ')'$
+$> ./vbc '((1+3)*12' | cat -e
+Unexpected token '2'$ 
+(Nota: '12' é inválido pois os números devem ser de 0 a 9)
+
+--------------------------------------------------------------------------------
+
+Dicas:
+- Este é um problema clássico de "Recursive Descent Parser" (Analisador 
+  Sintático Descendente Recursivo).
+- Estrutura sugerida:
+    1. Uma função para lidar com os números e parênteses (nível de maior prioridade).
+    2. Uma função para lidar com multiplicações (prioridade média).
+    3. Uma função para lidar com adições (prioridade baixa).
+- Lembre-se que um parêntese aberto '(' deve sempre encontrar um parêntese 
+  fechado ')'.

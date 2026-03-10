@@ -1,0 +1,42 @@
+Aqui está a tradução para o formato .txt, mantendo a clareza sobre a lógica de pipelines:
+Plaintext
+
+Nome do Exercício: picoshell
+Arquivos esperados: picoshell.c
+Funções permitidas: close, fork, wait, exit, execvp, dup2, pipe
+___________________________________________________________________
+
+Escreva a seguinte função:
+
+int    picoshell(char **cmds[]);
+
+O objetivo desta função é executar uma "pipeline". Ela deve executar cada 
+comando presente em 'cmds' e conectar a saída de um à entrada do próximo 
+comando (exatamente como um shell faz com o caractere '|').
+
+'cmds' contém uma lista de comandos válidos terminada em NULL. Cada linha 
+de 'cmds' é um array 'argv' diretamente utilizável para uma chamada de 
+execvp. O primeiro argumento de cada comando é o nome ou caminho do 
+executável.
+
+Se qualquer erro ocorrer, a função deve retornar 1 (você deve, 
+obrigatoriamente, fechar todos os descritores de arquivo abertos antes). 
+Caso contrário, a função deve aguardar (wait) todos os processos filhos 
+e retornar 0.
+
+Exemplos:
+./picoshell /bin/ls "|" /usr/bin/grep picoshell
+saída: picoshell
+
+./picoshell echo 'squalala' "|" cat "|" sed 's/a/b/g'
+saída: squblblb
+
+___________________________________________________________________
+
+Resumo (Dicas):
+O 'cmds' funciona como uma matriz de strings tridimensional simplificada. 
+Quando há um pipe no comando original, os comandos seguintes ficam no 
+próximo índice do array. Você deve criar a sequência de pipes, conectar 
+os STDIN/STDOUT de cada processo filho adequadamente e garantir que 
+nenhum FD (file descriptor) fique aberto no processo pai ou nos filhos 
+após o uso.

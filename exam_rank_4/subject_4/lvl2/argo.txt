@@ -1,0 +1,53 @@
+Nome do Exercício: argo
+Arquivos esperados: argo.c
+Funções permitidas: getc, ungetc, printf, malloc, calloc, realloc, free, 
+                   isdigit, fscanf, write
+--------------------------------------------------------------------------------------
+
+Escreva uma função 'argo' que faça o parsing (análise) de um arquivo JSON 
+para a estrutura declarada em argo.h:
+
+int     argo(json *dst, FILE *stream);
+
+        dst    - é o ponteiro para a AST (árvore sintática) que você criará.
+        stream - é o arquivo para analisar (man FILE).
+
+Sua função deve retornar 1 em caso de sucesso e -1 em caso de falha.
+Se um token inesperado for encontrado, você deve imprimir a seguinte mensagem 
+no stdout:
+"Unexpected token '%c'\n"
+
+Ou, se o token for o fim do arquivo (EOF):
+"Unexpected end of input\n"
+
+REGRAS DE PARSING:
+- Trate apenas: Números, Strings e Objetos (Maps/Dicionários).
+- Números: Serão apenas inteiros básicos, como em scanf("%d").
+- Strings: Trate o caractere de escape '\' apenas para barras invertidas 
+  e aspas (não trate \u, etc.).
+- Espaços: NÃO trate espaços. Considere-os como tokens inválidos.
+
+Em caso de dúvida sobre como analisar JSON, leia a rfc8259. Mas o formato 
+aqui é simples. Quando testado com o main, a saída deve ser exatamente 
+igual à entrada (exceto em caso de erros).
+
+Exemplos de funcionamento:
+
+$> echo -n '1' | ./argo /dev/stdin | cat -e
+1$
+$> echo -n '"bonjour"' | ./argo /dev/stdin | cat -e
+"bonjour"$
+$> echo -n '{"tomatoes":42,"potatoes":234}' | ./argo /dev/stdin | cat -e
+{"tomatoes":42,"potatoes":234}$
+$> echo -n '"string inacabada' | ./argo /dev/stdin | cat -e
+unexpected end of input$
+$> echo -n '{"sem valor?":}' | ./argo /dev/stdin | cat -e
+unexpected token '}'$
+--------------------------------------------------------------------------------------
+
+Dicas:
+- Use 'getc' e 'ungetc' para "espiar" o próximo caractere sem consumi-lo 
+  definitivamente, o que ajuda a decidir se o token é uma string (começa 
+  com ") ou um número (começa com dígito).
+- Como espaços são inválidos, qualquer caractere ' ' ou '\n' deve disparar 
+  o erro de "Unexpected token".

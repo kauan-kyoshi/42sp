@@ -1,0 +1,43 @@
+Aqui está a tradução no formato .txt:
+Plaintext
+
+Nome do Exercício: sandbox
+Arquivos esperados: sandbox.c
+Funções permitidas: fork, waitpid, exit, alarm, sigaction, kill, printf, 
+                   strsignal, errno, sigaddset, sigemptyset, sigfillset, 
+                   sigdelset, sigismember
+--------------------------------------------------------------------------------------
+
+Escreva a seguinte função:
+
+#include <stdbool.h>
+int sandbox(void (*f)(void), unsigned int timeout, bool verbose);
+
+Esta função deve testar se a função 'f' fornecida é uma função "boa" (nice) ou 
+"ruim" (bad). Você deve retornar 1 se 'f' for boa, 0 se for ruim ou -1 em caso 
+de erro na sua própria função.
+
+Uma função é considerada RUIM se:
+1. For encerrada ou interrompida por um sinal (segfault, abort, etc.);
+2. Encerrar com qualquer código de saída (exit code) diferente de 0;
+3. Ultrapassar o tempo limite (timeout).
+
+Se o parâmetro 'verbose' for verdadeiro (true), você deve exibir a mensagem 
+apropriada entre as seguintes:
+
+"Nice function!\n"
+"Bad function: exited with code <exit_code>\n"
+"Bad function: <descrição do sinal>\n"
+"Bad function: timed out after <timeout> seconds\n"
+
+Você não deve deixar processos "vazarem" (nem mesmo em estado zumbi; isso será 
+verificado usando wait).
+
+O seu código será testado com funções "muito ruins".
+--------------------------------------------------------------------------------------
+
+Dicas:
+- Use 'strsignal()' para obter a descrição textual do sinal.
+- Lembre-se que o sinal SIGALRM é essencial para implementar o timeout.
+- Certifique-se de tratar o status retornado pelo waitpid com as macros 
+  WIFEXITED, WEXITSTATUS, WIFSIGNALED e WTERMSIG.
