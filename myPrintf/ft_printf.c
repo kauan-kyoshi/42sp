@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:32:57 by kakubo-l          #+#    #+#             */
-/*   Updated: 2025/08/01 14:19:55 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/06/03 10:33:51 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			len += ft_format_check(format[i], args);
+			len +=  ft_format_check(format[i], args);
 		}
 		else
 			len += write(1, &format[i], 1);

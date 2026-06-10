@@ -44,6 +44,7 @@ int picoshell(char **cmds[])
 				dup2(prev_fd, 0);
 				// Fecha descritor antigo após dup2.
 				close(prev_fd);
+		
 			}
 
 			// Se existe próximo comando, redireciona stdout para pipe atual.
