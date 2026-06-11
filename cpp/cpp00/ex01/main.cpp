@@ -40,6 +40,12 @@ int main()
 				continue;
 			}
 		}
+		else
+		{
+			std::cout << "Comando ignorado. User apenas ADD, SEARCH ou EXIT" << std::endl;
+		}
+	}
+	return (0);
 
 
 
