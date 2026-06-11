@@ -32,7 +32,30 @@ void PhoneBook::add()
 	}
 
 	id = _count % 8;
-	_contact[id] = FirstName, 
+	_contact[id].setInfo(FirstName,LastName,NickName,PhoneNumber,Secret);
+
+	_count++;
+
+}
+
+void PhoneBook::search()
+{
+	int max,i;
+
+	std::cout << "Índice    |Nome      |Sobrenome |Apelido   " <<std::endl;
+
+	if (_count > 8)
+	{
+		max =8;
+	}
+	max = _count;
+
+	i=0;
+	while (i <max)
+	{
+		_contact[i].display()
+	}
 
 
 }
+
