@@ -40,7 +40,7 @@ void PhoneBook::add()
 
 void PhoneBook::search()
 {
-	int max,i;
+	int max,i,id;
 
 	std::cout << "Índice    |Nome      |Sobrenome |Apelido   " <<std::endl;
 
@@ -53,9 +53,20 @@ void PhoneBook::search()
 	i=0;
 	while (i <max)
 	{
-		_contact[i].display()
+		_contact[i].display(i);
 	}
 
+	std::cout << "Digite o id do contato para mais informações: ";
 
+	std::cin >> id;
+
+	if (std::cin.fail() || id < 0 || id >= max)
+	{
+		std::cout << "Id inválido." << std::endl;
+		std::cin.clear();
+		std::cin.ignore(10000,'\n');
+	}
+	_contact[id].fullDisplay();
+	std::cin.ignore(10000,'\n');
 }
 

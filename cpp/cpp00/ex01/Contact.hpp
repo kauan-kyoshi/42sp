@@ -16,6 +16,9 @@ class Contact
 			std::string _darkestSecret;
 	public:
 			void setInfo(std::string first, std::string last, std::string nick, std::string number, std::string secret);
+			void display(int i);
+			void fullDisplay();
+			std::string truncate(std::string str);
 
 };
 
