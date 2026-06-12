@@ -7,7 +7,7 @@ int main()
 
 	while (true)
 	{
-		std::cout << "\n Digite um comando (ADD, SEARCH, EXIT): ";
+		std::cout << "\nDigite um comando (ADD, SEARCH, EXIT): ";
 		if (!std::getline(std::cin,cmd))
 		{
 			break;
@@ -22,11 +22,11 @@ int main()
 		}
 		else if (cmd == "EXIT")
 		{
-			std::cout << "Todos os contatos serão perdidos para sempre, deseja continuar? S/N" << std::endl;
+			std::cout << std::endl << "Todos os contatos serão perdidos para sempre, deseja continuar? (S/N)" << std::endl;
 			getline(std::cin,confirm);
 			while (confirm != "N" && confirm != "S")
 			{
-				std::cout << "S/N" << std::endl;
+				std::cout << "(S/N)" << std::endl;
 				getline(std::cin, confirm);
 			}
 

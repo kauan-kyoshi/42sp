@@ -27,7 +27,6 @@ void PhoneBook::add()
 	if (FirstName.empty() || LastName.empty() || NickName.empty() || PhoneNumber.empty() || Secret.empty())
 	{
 		std::cout << "Preencha todos os campos, por favor. \n";
-		//testar sem retorno dps.
 		return;
 	}
 
@@ -40,33 +39,46 @@ void PhoneBook::add()
 
 void PhoneBook::search()
 {
-	int max,i,id;
+	int max, i, id;
 
-	std::cout << "Índice    |Nome      |Sobrenome |Apelido   " <<std::endl;
+	std::cout << "Índice    |Nome      |Sobrenome |Apelido   " << std::endl;
 
 	if (_count > 8)
-	{
-		max =8;
-	}
-	max = _count;
+		max = 8;
+	else
+		max = _count;
 
-	i=0;
-	while (i <max)
+	if (max == 0)
+	{
+		std::cout << "Nenhum contato salvo." << std::endl;
+		return;
+	}
+
+	i = 0;
+	while (i < max)
 	{
 		_contact[i].display(i);
+		i++;
 	}
 
 	std::cout << "Digite o id do contato para mais informações: ";
 
-	std::cin >> id;
-
-	if (std::cin.fail() || id < 0 || id >= max)
+	if (!(std::cin >> id))
 	{
 		std::cout << "Id inválido." << std::endl;
 		std::cin.clear();
-		std::cin.ignore(10000,'\n');
+		std::cin.ignore(10000, '\n');
+		return;
 	}
+
+	if (id < 0 || id >= max)
+	{
+		std::cout << "Id inválido." << std::endl;
+		std::cin.ignore(10000, '\n');
+		return;
+	}
+
 	_contact[id].fullDisplay();
-	std::cin.ignore(10000,'\n');
+	std::cin.ignore(10000, '\n');
 }
 
