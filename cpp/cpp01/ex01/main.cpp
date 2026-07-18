@@ -2,6 +2,7 @@
 
 int main ()
 {
-	zombieHorde(15,"teste");
+	Zombie* horde = zombieHorde(15, "teste");
+	delete[] horde;
 	return 0;
 }
