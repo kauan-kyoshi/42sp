@@ -26,16 +26,25 @@ void Harl::error(void)
 
 void Harl::complain(std::string level)
 {
-	const std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
-	void (Harl::*actions[4])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
 	int index = 0;
+	const std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
 	while (index < 4 && levels[index] != level)
 		++index;
-	if (index == 4)
+
+	switch (index)
 	{
-		std::cout << "[ Provavelmente reclamando sobre problemas insignificante ]" << std::endl;
-		return;
+		case 0:
+			debug();
+		case 1:
+			info();
+		case 2:
+			warning();
+		case 3:
+			error();
+			break;
+		default:
+			std::cout << "[ Provavelmente reclamando sobre problemas insignificante ]" << std::endl;
+			break;
 	}
-	(this->*actions[index])();
 }
