@@ -6,7 +6,7 @@
 /*   By: kakubo-l <kakubo-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/20 05:57:31 by kakubo-l          #+#    #+#             */
-/*   Updated: 2026/06/20 05:57:32 by kakubo-l         ###   ########.fr       */
+/*   Updated: 2026/07/07 17:07:10 by kakubo-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,7 @@ int main()
 		}
 		else if (cmd == "EXIT")
 		{
-			std::cout << std::endl << "Todos os contatos serão perdidos para sempre, deseja continuar? (S/N)" << std::endl;
-			getline(std::cin,confirm);
-			while (confirm != "N" && confirm != "S")
-			{
-				std::cout << "(S/N)" << std::endl;
-				getline(std::cin, confirm);
-			}
-
-			if (confirm == "S")
-			{
-				std::cout << "Até a próxima!!" << std::endl;
-				break;
-			}
-			else if (confirm == "N")
-			{
-				continue;
-			}
+			break;
 		}
 		else
 		{
