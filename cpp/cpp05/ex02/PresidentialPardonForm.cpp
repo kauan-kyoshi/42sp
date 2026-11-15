@@ -1,2 +1,13 @@
 #include "PresidentialPardonForm.hpp"
-PresidentialPardonForm::PresidentialPardonForm(const std::string&t):AForm("presidential pardon",25,5),_target(t){}PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm&o):AForm(o),_target(o._target){}PresidentialPardonForm&PresidentialPardonForm::operator=(const PresidentialPardonForm&o){if(this!=&o){AForm::operator=(o);_target=o._target;}return*this;}PresidentialPardonForm::~PresidentialPardonForm(){}void PresidentialPardonForm::executeAction()const{std::cout<<_target<<" has been pardoned by Zaphod Beeblebrox"<<std::endl;}
+#include <iostream>
+
+PresidentialPardonForm::PresidentialPardonForm(const std::string &target)
+    : AForm("PresidentialPardonForm", 25, 5), target(target) {}
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other)
+    : AForm(other), target(other.target) {}
+PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm &other)
+{ if (this != &other) AForm::operator=(other); return *this; }
+PresidentialPardonForm::~PresidentialPardonForm() {}
+const std::string &PresidentialPardonForm::getTarget() const { return target; }
+void PresidentialPardonForm::executeAction() const
+{ std::cout << target << " foi perdoado por Zaphod Beeblebrox." << std::endl; }
