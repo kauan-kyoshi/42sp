@@ -1,0 +1,3 @@
+#include "RobotomyRequestForm.hpp"
+#include <cstdlib>
+RobotomyRequestForm::RobotomyRequestForm(const std::string&t):AForm("robotomy request",72,45),_target(t){}RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm&o):AForm(o),_target(o._target){}RobotomyRequestForm&RobotomyRequestForm::operator=(const RobotomyRequestForm&o){if(this!=&o){AForm::operator=(o);_target=o._target;}return*this;}RobotomyRequestForm::~RobotomyRequestForm(){}void RobotomyRequestForm::executeAction()const{std::cout<<"BZZZZZZZZ... drilling noises"<<std::endl;if(std::rand()%2)std::cout<<_target<<" has been robotomized successfully"<<std::endl;else std::cout<<"Robotomy failed"<<std::endl;}
